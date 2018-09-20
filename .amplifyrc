@@ -1,0 +1,14 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "utreach-20180918190654-authRole",
+            "UnauthRoleArn": "arn:aws:iam::182357684404:role/utreach-20180918190654-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::182357684404:role/utreach-20180918190654-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "utreach-20180918190654-deployment",
+            "UnauthRoleName": "utreach-20180918190654-unauthRole",
+            "StackName": "utreach-20180918190654",
+            "StackId": "arn:aws:cloudformation:us-west-2:182357684404:stack/utreach-20180918190654/4ce424c0-bba8-11e8-a488-028e369bfbbe"
+        }
+    }
+}

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Emotions</string>
+    <string name="title_activity_form_2">formActivity_2</string>
+    <string name="activity_question">What are you doing right now ?</string>
+    <string name="location_question">Where are you right now ?</string>
+    <string name="emotions_question">What are you feeling right now ? you can choose up to two items</string>
+    <string name="env_quesion">Please answer the following environmental questions</string>
+</resources>

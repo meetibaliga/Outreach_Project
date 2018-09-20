@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--EMOTIONS ARRAY-->
+    <string-array
+        name="emotions">
+        <item>Surprised</item>
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Loved</item>
+        <item>Disgusting</item>
+        <item>Excited</item>
+        <item>Relaxed</item>
+        <item>Angry</item>
+        <item>Fearful</item>
+        <item>Confused</item>
+        <item>Stressed</item>
+        <item>Bored</item>
+    </string-array>
+    <!--ACTIVITIES ARRAY-->
+    <string-array
+        name="activities">
+        <item>Working</item>
+        <item>Eating</item>
+        <item>Studying</item>
+        <item>Exercise</item>
+        <item>Cooking</item>
+        <item>Shopping</item>
+        <item>Socializing</item>
+        <item>TV/Movies</item>
+        <item>Social Media</item>
+        <item>Musical </item>
+        <item>Reading</item>
+        <item>In-Between</item>
+        <item>Religious</item>
+        <item>Other</item>
+    </string-array>
+    <!--LOCATIONS ARRAY-->
+    <string-array
+        name="locations">
+        <item >Work</item>
+        <item >Home</item>
+        <item >School</item>
+        <item >Grocery</item>
+        <item >Store/Mall</item>
+        <item >Restaurant</item>
+        <item >Coffee Shop</item>
+        <item >Gym</item>
+        <item >Outdoor </item>
+        <item >Party/Club</item>
+        <item >Religious</item>
+        <item >Other </item>
+    </string-array>
+</resources>

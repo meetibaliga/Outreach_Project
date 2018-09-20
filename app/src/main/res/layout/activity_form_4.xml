@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.FormActivity_4"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/titlesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:lines="2"
+        android:text="@string/env_quesion"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:text="Done"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        android:onClick="DoneClicked"/>
+
+    <TextView
+        android:id="@+id/textView_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="How acceptable is the air quality around you"
+        android:textAlignment="textStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_a"
+        android:onClick="RadioAClicked">
+
+
+
+        <RadioButton
+            android:id="@+id/radioButton_a0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="0 (Bad)"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_a1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_a" />
+
+
+        <RadioButton
+            android:id="@+id/radioButton_a1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="1"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_a2"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_a0"/>
+
+        <RadioButton
+            android:id="@+id/radioButton_a2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="2"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_a3"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_a0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_a3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="3"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_a4"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_a0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_a4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="4 (Good)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_a0" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView_b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="How acceptable is the noise near you"
+        android:textAlignment="textStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup_a" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup_b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_b"
+        android:onClick="RadioBClicked">
+
+
+        <RadioButton
+            android:id="@+id/radioButton_b0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="0 (Bad)"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_b1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <RadioButton
+            android:id="@+id/radioButto_b1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="1"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_b2"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_b0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_b2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="2"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_b3"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_b0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_b3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="3"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_b4"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_b0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_b4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="4 (Good)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_b0" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView_c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="How acceptable was your transportation today"
+        android:textAlignment="textStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup_b" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup_c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_c"
+        android:onClick="RadioCClicked">
+
+
+        <RadioButton
+            android:id="@+id/radioButton_c0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="0 (Bad)"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_c1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_c" />
+
+        <RadioButton
+            android:id="@+id/radioButton_c1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="1"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_c2"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_c0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_c2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="2"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_c3"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_c0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_c3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="3"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_c4"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_c0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_c4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="4 (Good)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_c0" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView_d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="How active were you during the last 6 hours"
+        android:textAlignment="textStart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup_c" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup_d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_d"
+        android:onClick="RadioDClicked">
+
+
+        <RadioButton
+            android:id="@+id/radioButto_d0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="0 (Bad)"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_d1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_d" />
+
+        <RadioButton
+            android:id="@+id/radioButton_d1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="1"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_d2"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_d0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_d2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="2"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_d3"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_d0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_d3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="3"
+            app:layout_constraintEnd_toStartOf="@+id/radioButton_d4"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_d0" />
+
+        <RadioButton
+            android:id="@+id/radioButton_d4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:text="4 (Good)"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/radioButton_d0" />
+
+    </RadioGroup>
+
+</android.support.constraint.ConstraintLayout>
