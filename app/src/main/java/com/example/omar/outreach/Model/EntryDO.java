@@ -9,6 +9,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,18 +38,25 @@ public class EntryDO implements Serializable {
     private String _odor;
     private String _place;
     private String _transportation;
+    private Map<String, String> _location;
+
+    public EntryDO(String _userId, String _entryId, String _active, String _activity, String _creationDate, List<String> _emotions, String _noise, String _odor, String _place, String _transportation, Map<String, String> _location) {
+        this._userId = _userId;
+        this._entryId = _entryId;
+        this._active = _active;
+        this._activity = _activity;
+        this._creationDate = _creationDate;
+        this._emotions = _emotions;
+        this._noise = _noise;
+        this._odor = _odor;
+        this._place = _place;
+        this._transportation = _transportation;
+        this._location = _location;
+    }
 
     public EntryDO(){
-        _userId = "";
-        _entryId = "0";
-        _active = "0";
-        _activity = "0";
-        _creationDate = "0";
-        _emotions = new ArrayList<>();
-        _noise = "0";
-        _odor = "0";
-        _place = "0";
-        _transportation = "0";
+        this._emotions = new ArrayList<String>();
+        this._location = new HashMap<String,String>();
     }
 
     @DynamoDBHashKey(attributeName = "userId")
@@ -134,6 +142,22 @@ public class EntryDO implements Serializable {
         this._transportation = _transportation;
     }
 
+    @DynamoDBAttribute(attributeName = "location")
+    public Map<String, String> getLocation() {
+        return _location;
+    }
+
+    public void setLocation(final Map<String,String> _location) {
+        this._location = _location;
+    }
+
+    public void setLatLng(String lt, String lg){
+        HashMap<String,String> map = new HashMap<String,String>();
+        map.put("latitude",lt);
+        map.put("longitude",lg);
+        setLocation(map);
+    }
+
     @Override
     public String toString() {
         return "EntryDO{" +
@@ -147,6 +171,7 @@ public class EntryDO implements Serializable {
                 ", _odor='" + _odor + '\'' +
                 ", _place='" + _place + '\'' +
                 ", _transportation='" + _transportation + '\'' +
+                ", _location=" + _location +
                 '}';
     }
 }

@@ -15,18 +15,18 @@ public class Entery {
     private Timestamp timestamp;
     private ArrayList<Emotion> emotions;
     private Activity activity;
-    private Location location;
+    private Places places;
     private AcceptanceScale noise;
     private AcceptanceScale odor;
     private AcceptanceScale active;
     private AcceptanceScale transportation;
 
-    public Entery(String userId, Timestamp timestamp, ArrayList<Emotion> emotions, Activity activity, Location location, AcceptanceScale noise, AcceptanceScale odor, AcceptanceScale active, AcceptanceScale transportation) {
+    public Entery(String userId, Timestamp timestamp, ArrayList<Emotion> emotions, Activity activity, Places places, AcceptanceScale noise, AcceptanceScale odor, AcceptanceScale active, AcceptanceScale transportation) {
         this.userId = userId;
         this.timestamp = timestamp;
         this.emotions = emotions;
         this.activity = activity;
-        this.location = location;
+        this.places = places;
         this.noise = noise;
         this.odor = odor;
         this.active = active;
@@ -47,8 +47,8 @@ public class Entery {
         return activity;
     }
 
-    public Location getLocation() {
-        return location;
+    public Places getLocation() {
+        return places;
     }
 
     public String getUserId() {
@@ -81,8 +81,8 @@ public class Entery {
         this.activity = activity;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocation(Places location) {
+        this.places = location;
     }
 
     public void setUserId(String userId) {
@@ -118,7 +118,7 @@ public class Entery {
                 ", timestamp=" + timestamp +
                 ", emotions=" + emotions +
                 ", activity=" + activity +
-                ", location=" + location +
+                ", location=" + places +
                 ", noise=" + noise +
                 ", odor=" + odor +
                 ", active=" + active +
@@ -137,6 +137,6 @@ public class Entery {
 
     @Override
     public int hashCode() {
-        return Objects.hash(emotions, activity, location);
+        return Objects.hash(emotions, activity, places);
     }
 }

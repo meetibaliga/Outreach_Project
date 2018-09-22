@@ -1,6 +1,6 @@
 package com.example.omar.outreach.Model;
 
-public enum Location {
+public enum Places {
 
     Work("Work"),
     Home("Home"),
@@ -17,6 +17,6 @@ public enum Location {
     Religious("Religious"),
     Other("Other");
 
-    Location(String location){
+    Places(String location){
     }
 }

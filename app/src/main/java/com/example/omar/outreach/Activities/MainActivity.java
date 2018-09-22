@@ -1,46 +1,34 @@
 package com.example.omar.outreach.Activities;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.mobile.auth.core.IdentityManager;
-import com.amazonaws.mobile.auth.core.SignInStateChangeListener;
-import com.amazonaws.mobile.client.AWSMobileClient;
-import com.amazonaws.mobile.config.AWSConfiguration;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.omar.outreach.App;
-import com.example.omar.outreach.DBManager;
-import com.example.omar.outreach.Model.AcceptanceScale;
-import com.example.omar.outreach.Model.Activity;
-import com.example.omar.outreach.Model.Emotion;
-import com.example.omar.outreach.Model.EntryDO;
-import com.example.omar.outreach.Model.Location;
+import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
+import com.example.omar.outreach.Managers.DBManager;
+import com.example.omar.outreach.Managers.LocationManager;
+import com.example.omar.outreach.Managers.MapsConnectionManager;
 import com.example.omar.outreach.R;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
+public class MainActivity extends AppCompatActivity implements CallBackMapsConnection {
 
-public class MainActivity extends AppCompatActivity {
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // set the user id and num of entries of this user
-
-        App.USER_ID = IdentityManager.getDefaultIdentityManager().getCachedUserID();
-
-        // if the user has no user id go to the authentication screen
-
-        if(App.USER_ID == ""){
-            IdentityManager.getDefaultIdentityManager().signOut();
+        if(!App.mainActivityViewd){
+            oneTimeCode();
         }
 
         // set the number of entries
@@ -52,6 +40,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void oneTimeCode() {
+        // run code only one time
+
+        App.mainActivityViewd = true;
+
+        // set the user id and num of entries of this user
+        App.USER_ID = IdentityManager.getDefaultIdentityManager().getCachedUserID();
+
+        // if the user has no user id go to the authentication screen
+        if(App.USER_ID == ""){
+            IdentityManager.getDefaultIdentityManager().signOut();
+        }
+
+        // check location
+        if(!LocationManager.isLocationEnabled(this)){
+            goToPermissionsScreen();
+        }
+
+        // Create connection with maps
+        new MapsConnectionManager(this);
+    }
+
 
     public void btnClicked(View view) {
         Intent intent = new Intent(this, FormActivity_1.class);
@@ -59,9 +69,74 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void signoutClicked(View view){
-        IdentityManager.getDefaultIdentityManager().signOut();
+//    public void signoutClicked(View view){
+//        IdentityManager.getDefaultIdentityManager().signOut();
+//    }
+
+    @Override
+    public void callbackMapsConnected() {
+        askForLocationPermission();
     }
+
+    @Override
+    public void callbackMapsFailed() {
+        Toast.makeText(this,"Failed Connection",Toast.LENGTH_SHORT);
+    }
+
+    @Override
+    public void callbackMapsSuspended() {
+
+    }
+
+    public void askForLocationPermission() {
+
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED)
+        {
+
+            // NOT GRANTED
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION))
+
+            {
+
+                // Give Grant
+                permissionNotGranted();
+
+            }
+
+            else {
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // Request Grant
+
+            }
+
+        } else
+        {
+            // GRANTED
+            permissionGranted();
+        }
+
+    }
+
+    private void permissionGranted(){
+    }
+
+    private void permissionNotGranted(){
+        goToPermissionsScreen();
+    }
+
+    private void goToPermissionsScreen() {
+        Intent intent = new Intent(this,PermissionsActivity.class);
+        startActivity(intent);
+    }
+
 
 
 

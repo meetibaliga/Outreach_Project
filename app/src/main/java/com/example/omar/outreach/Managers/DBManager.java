@@ -1,4 +1,4 @@
-package com.example.omar.outreach;
+package com.example.omar.outreach.Managers;
 
 import android.util.Log;
 
@@ -9,18 +9,20 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBQueryExpression;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
+import com.example.omar.outreach.App;
+import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Model.EntryDO;
 
 public class DBManager {
 
     private DynamoDBMapper dynamoDBMapper;
-    private CallBack callback;
+    private CallBackDB callback;
 
     public DBManager(){
         this(null);
     }
 
-    public DBManager(CallBack callBack){
+    public DBManager(CallBackDB callBack){
         initializeDB();
         this.callback = callBack;
     }
@@ -51,15 +53,11 @@ public class DBManager {
                 // save
                 dynamoDBMapper.save(App.inputEntry);
                 Log.d("MainActivity","Entry Saved with ID : "+App.inputEntry.getEntryId());
-                callback.callback();
+                callback.callbackDB(null);
             }
         }).start();
 
     }
-
-
-
-
 
 
     // PRIVATE METHODS
