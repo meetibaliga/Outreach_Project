@@ -11,19 +11,24 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
 import com.example.omar.outreach.Managers.DBManager;
 import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.MapsConnectionManager;
+import com.example.omar.outreach.Model.EntryDO;
+import com.example.omar.outreach.Model.UserDO;
 import com.example.omar.outreach.R;
 
-public class MainActivity extends AppCompatActivity implements CallBackMapsConnection {
+public class MainActivity extends AppCompatActivity implements CallBackMapsConnection, CallBackDB {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -31,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             oneTimeCode();
         }
 
-        // set the number of entries
+        // set the number of entries for the entry id
 
         new DBManager().setNumberOfEntries();
 
@@ -42,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     private void oneTimeCode() {
         // run code only one time
-
         App.mainActivityViewd = true;
 
         // set the user id and num of entries of this user
@@ -60,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         // Create connection with maps
         new MapsConnectionManager(this);
+
+
+        //check if the user has filled the first time form
+        new DBManager(this).getUserFirstForm();
+
     }
 
 
@@ -69,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     }
 
-//    public void signoutClicked(View view){
-//        IdentityManager.getDefaultIdentityManager().signOut();
-//    }
+    public void signoutClicked(View view){
+        IdentityManager.getDefaultIdentityManager().signOut();
+    }
 
     @Override
     public void callbackMapsConnected() {
@@ -138,6 +147,12 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     }
 
 
-
-
+    @Override
+    public void callbackDB(Object object) {
+        PaginatedList<UserDO> results = (PaginatedList<UserDO>) object;
+        if(results.size() == 0){
+            Intent intent = new Intent(this,Registration_1.class);
+            startActivity(intent);
+        }
+    }
 }

@@ -12,6 +12,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Model.EntryDO;
+import com.example.omar.outreach.Model.UserDO;
 
 public class DBManager {
 
@@ -45,6 +46,23 @@ public class DBManager {
         }).start();
     }
 
+    public void getUserFirstForm(){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // save
+                UserDO userDo = new UserDO();
+                userDo.setUserId(App.USER_ID);
+                DynamoDBQueryExpression queryExpression = new DynamoDBQueryExpression()
+                        .withHashKeyValues(userDo)
+                        .withConsistentRead(false);
+                PaginatedList<UserDO> result = dynamoDBMapper.query(UserDO.class, queryExpression);
+                callback.callbackDB(result);
+            }
+        }).start();
+    }
+
     public void saveEntry() {
 
         new Thread(new Runnable() {
@@ -59,16 +77,34 @@ public class DBManager {
 
     }
 
+    public void saveUserForm(){
+
+        Log.d("DB","HERE ATE SAVE USER");
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // save
+                dynamoDBMapper.save(App.userDo);
+                Log.d("DB","User Saved");
+                callback.callbackDB(null);
+            }
+        }).start();
+
+    }
+
 
     // PRIVATE METHODS
 
     private void initializeDB() {
 
         // AWSMobileClient enables AWS user credentials to access your table
+
         AWSCredentialsProvider credentialsProvider = AWSMobileClient.getInstance().getCredentialsProvider();
         AWSConfiguration configuration = AWSMobileClient.getInstance().getConfiguration();
 
         // Add code to instantiate a AmazonDynamoDBClient
+
         AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(credentialsProvider);
 
         this.dynamoDBMapper = DynamoDBMapper.builder()

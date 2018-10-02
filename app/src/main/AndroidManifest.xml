@@ -18,11 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activities.AuthenticatorActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity android:name=".Activities.MainActivity" />
         <activity
@@ -47,7 +46,13 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".Activities.LocationsActivity" />
-        <activity android:name=".Activities.PermissionsActivity"></activity>
+        <activity android:name=".Activities.PermissionsActivity" />
+        <activity android:name=".Activities.Registration_1">
+        </activity>
+        <activity android:name=".Activities.Registration_2"></activity>
+        <activity android:name=".Activities.Registration_3"></activity>
+        <activity android:name=".Activities.Registration_4"></activity>
+        <activity android:name=".Activities.RegistrationCompletedActivity"></activity>
     </application>
 
 </manifest>

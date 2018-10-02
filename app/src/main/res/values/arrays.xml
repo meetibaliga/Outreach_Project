@@ -16,6 +16,7 @@
         <item>Stressed</item>
         <item>Bored</item>
     </string-array>
+
     <!--ACTIVITIES ARRAY-->
     <string-array
         name="activities">
@@ -34,6 +35,7 @@
         <item>Religious</item>
         <item>Other</item>
     </string-array>
+
     <!--LOCATIONS ARRAY-->
     <string-array
         name="locations">
@@ -50,4 +52,93 @@
         <item >Religious</item>
         <item >Other </item>
     </string-array>
+
+    <!--Months ARRAY-->
+    <string-array
+        name="months">
+        <item >January</item>
+        <item >February</item>
+        <item >March</item>
+        <item >April</item>
+        <item >May</item>
+        <item >June</item>
+        <item >July</item>
+        <item >August</item>
+        <item >September </item>
+        <item >October</item>
+        <item >November</item>
+        <item >December</item>
+    </string-array>
+
+    <!--Type of homes-->
+    <string-array
+        name="type_of_homes">
+        <item >Apartment</item>
+        <item >Hometown</item>
+        <item >Other</item>
+    </string-array>
+
+    <!--How long-->
+    <string-array
+        name="how_long">
+        <item >1 year or less</item>
+        <item >2 years </item>
+        <item >3 years</item>
+    </string-array>
+
+    <!--Ventilation-->
+    <string-array
+        name="ventilation_type">
+        <item >Forced air heating</item>
+    </string-array>
+
+    <!--Filteration system-->
+    <string-array name="filteration_sysytem">
+        <item>Standard</item>
+    </string-array>
+
+    <!--furnace system-->
+    <string-array name="furnace_system">
+        <item>gas</item>
+    </string-array>
+
+    <!--ventilation practice summer-->
+    <string-array name="ventilation_practice_summer">
+        <item>Openning window</item>
+    </string-array>
+
+    <!--ventilation practice winter-->
+    <string-array name="ventilation_practice_winter">
+        <item>Openning window</item>
+    </string-array>
+
+    <!--windows open-->
+    <string-array name="windows_open">
+        <item>with each use</item>
+    </string-array>
+
+    <!--ventilation type window-->
+    <string-array name="ventilation_type_window">
+        <item>Open day and night and during summer</item>
+    </string-array>
+
+    <!--ventilation type window-->
+    <string-array name="exhaust_fan_use">
+        <item>with each use</item>
+    </string-array>
+
+    <!--satisfaction scale-->
+    <string-array name="satisfaction_scale">
+        <item>Extremely Dissatisfied</item>
+        <item>Dissatisfied</item>
+        <item>Satisfied</item>
+    </string-array>
+
+    <!--agreement scale-->
+    <string-array name="agreement_scale">
+        <item>Strongly agree</item>
+        <item>Agree</item>
+        <item>Don't agree</item>
+    </string-array>
+
 </resources>

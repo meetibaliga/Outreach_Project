@@ -24,4 +24,18 @@
         <item name="android:textSize">16dp</item>
     </style>
 
+    <!--Text Styles Big -->
+
+    <style name="titlesTextBig">
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">24dp</item>
+    </style>
+
+    <!--Text Styles Label -->
+
+    <style name="labelText">
+        <item name="android:textSize">16dp</item>
+    </style>
+
 </resources>

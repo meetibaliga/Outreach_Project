@@ -36,6 +36,7 @@
         android:horizontalSpacing="15dp"
         android:numColumns="auto_fit"
         android:verticalSpacing="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
