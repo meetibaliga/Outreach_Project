@@ -2,8 +2,8 @@ package com.example.omar.outreach;
 
 import android.app.Application;
 
-import com.example.omar.outreach.Model.EntryDO;
-import com.example.omar.outreach.Model.UserDO;
+import com.example.omar.outreach.Models.EntryDO;
+import com.example.omar.outreach.Models.UserDO;
 
 public class App extends Application {
 

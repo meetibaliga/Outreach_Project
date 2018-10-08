@@ -1,4 +1,4 @@
-package com.example.omar.outreach.Model;
+package com.example.omar.outreach.Models;
 
 public enum Places {
 

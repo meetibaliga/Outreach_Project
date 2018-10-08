@@ -1,8 +1,7 @@
-package com.example.omar.outreach.Model;
+package com.example.omar.outreach.Models;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -20,6 +19,11 @@ public class Entery {
     private AcceptanceScale odor;
     private AcceptanceScale active;
     private AcceptanceScale transportation;
+    private Boolean _asthmaAttack;
+    private Boolean _asthmaMedication;
+    private Boolean _cough;
+    private Boolean _limitedActivities;
+
 
     public Entery(String userId, Timestamp timestamp, ArrayList<Emotion> emotions, Activity activity, Places places, AcceptanceScale noise, AcceptanceScale odor, AcceptanceScale active, AcceptanceScale transportation) {
         this.userId = userId;

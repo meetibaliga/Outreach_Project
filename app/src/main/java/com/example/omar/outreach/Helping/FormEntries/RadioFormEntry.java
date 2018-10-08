@@ -1,12 +1,15 @@
 package com.example.omar.outreach.Helping.FormEntries;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import com.example.omar.outreach.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,11 @@ public class RadioFormEntry extends FormEntry{
         radioLayout.setLayoutParams(getFormEntryParams());
         radioLayout.setOrientation(LinearLayout.VERTICAL);
 
+        // set padding and background color for view
+        radioLayout.setBackgroundResource(R.drawable.view_corner_radius);
+        GradientDrawable dr = (GradientDrawable)radioLayout.getBackground();
+        dr.setColor(getResources().getColor(R.color.colorLightGrey));
+
         // text view
         TextView tv = new TextView(getContext());
         tv.setLayoutParams(getNestedFormEntryParams());
@@ -71,13 +79,16 @@ public class RadioFormEntry extends FormEntry{
 
     @Override
     public List<String> getValues() {
+
         ArrayList<String> list = new ArrayList<String>();
+        
         int checkedID = radioGroup.getCheckedRadioButtonId();
         for(RadioButton r : radioButtons){
             if (r.getId() == checkedID){
                 list.add(r.getText().toString());
             }
         }
+
         return list;
     }
 

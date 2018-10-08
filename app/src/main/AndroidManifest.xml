@@ -17,27 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.AuthenticatorActivity">
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-        </activity>
-        <activity android:name=".Activities.MainActivity" />
-        <activity
-            android:name=".Activities.FormActivity_1"
-            android:parentActivityName=".Activities.MainActivity" />
-        <activity
-            android:name=".Activities.FormActivity_2"
-            android:parentActivityName=".Activities.FormActivity_1" />
-        <activity
-            android:name=".Activities.FormActivity_3"
-            android:parentActivityName=".Activities.FormActivity_2" />
-        <activity
-            android:name=".Activities.FormActivity_4"
-            android:parentActivityName=".Activities.FormActivity_3" />
-        <activity android:name=".Activities.FormCompletedActivity" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAuznTjuv35yWT7z3qB7b-IPJBYuV3AVbI" />
@@ -45,14 +24,50 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity android:name=".Activities.AuthenticatorActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Activities.MainActivity" >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".Activities.PeriodicalFormActivity_1"
+            android:parentActivityName=".Activities.MainActivity">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".Activities.PeriodicalFormActivity_2"
+            android:parentActivityName=".Activities.PeriodicalFormActivity_1" />
+        <activity
+            android:name=".Activities.PeriodicalFormActivity_3"
+            android:parentActivityName=".Activities.PeriodicalFormActivity_2" />
+        <activity
+            android:name=".Activities.PeriodicalFormActivity_4"
+            android:parentActivityName=".Activities.PeriodicalFormActivity_3"></activity>
+        <activity android:name=".Activities.PeriodicalFormActivity_5"></activity>
+        <activity android:name=".Activities.FormCompletedActivity"></activity>
         <activity android:name=".Activities.LocationsActivity" />
         <activity android:name=".Activities.PermissionsActivity" />
-        <activity android:name=".Activities.Registration_1">
+        <activity android:name=".Activities.OneTimeForm_1">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
-        <activity android:name=".Activities.Registration_2"></activity>
-        <activity android:name=".Activities.Registration_3"></activity>
-        <activity android:name=".Activities.Registration_4"></activity>
-        <activity android:name=".Activities.RegistrationCompletedActivity"></activity>
+        <activity android:name=".Activities.OneTimeForm_2" />
+        <activity android:name=".Activities.OneTimeForm_3" />
+        <activity android:name=".Activities.OneTimeForm_4" />
+        <activity android:name=".Activities.RegistrationCompletedActivity" />
     </application>
 
 </manifest>

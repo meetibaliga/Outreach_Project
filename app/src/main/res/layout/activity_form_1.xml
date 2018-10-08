@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/selectableItemBackground"
-    tools:context=".Activities.FormActivity_1">
+    tools:context=".Activities.PeriodicalFormActivity_1">
 
     <TextView
         android:id="@+id/textView"

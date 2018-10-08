@@ -1,9 +1,8 @@
 package com.example.omar.outreach.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -12,13 +11,9 @@ import android.widget.Toast;
 
 import com.example.omar.outreach.Adapters.AdapterForActivities;
 import com.example.omar.outreach.App;
-import com.example.omar.outreach.Model.EntryDO;
 import com.example.omar.outreach.R;
 
-public class FormActivity_2 extends AppCompatActivity {
-
-    //models
-    public EntryDO entryDO;
+public class PeriodicalFormActivity_2 extends AppCompatActivity {
 
     // UI
     protected static AdapterForActivities activityAdapter;
@@ -53,7 +48,7 @@ public class FormActivity_2 extends AppCompatActivity {
 
     private void navigateToNextScreen() {
 
-        Intent intent = new Intent(this,FormActivity_3.class);
+        Intent intent = new Intent(this,PeriodicalFormActivity_3.class);
         startActivity(intent);
 
     }

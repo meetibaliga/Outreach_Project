@@ -6,4 +6,58 @@
     <string name="emotions_question">What are you feeling right now ? you can choose up to two items</string>
     <string name="env_quesion">Please answer the following environmental questions</string>
     <string name="fillForm">Please fill out the form</string>
+
+    <!--Environmentak Periodical form qeuestions -->
+    <string name="air_quality_question">How acceptable is the air quality near you</string>
+    <string name="noise_question">How acceptable is the noise near you</string>
+    <string name="transportation_question">How acceptable is your transportation today</string>
+    <string name="active_question">How active are you in the past 6 hours?</string>
+
+    <!--Health Periodical form qeuestions -->
+    <string name="cough_question">Is coughing bothering you recently?</string>
+    <string name="limited_activities_question">Have your activities been limited due to respiratory issues?</string>
+    <string name="asthma_attack_question">Have you had an asthma attack recently?</string>
+    <string name="asthma_medication_question">Have you taken asthma medication recently</string>
+
+    <!--one time form titles-->
+    <string name="personal_title">Household and Personal Information</string>
+    <string name="home_title">Home Information</string>
+    <string name="ventilation_title">Information on home ventilation and Air-Conditioning</string>
+    <string name="well_title">Well-being and climate change questions</string>
+
+    <!--one time form quations-->
+    <string name="firstName_question">First Name</string>
+    <string name="lastName_question">Last Name</string>
+    <string name="relationship_question">Relationship with household head</string>
+    <string name="sex_question">Sex</string>
+    <string name="dateOfBirth_question">Date of Birth</string>
+    <string name="martialStatus_question">Martial Status</string>
+    <string name="highest_question">Highest Degree</string>
+    <string name="employed_question">Are you currently employed?</string>
+    <string name="race_question">What race do you consider yourself ?</string>
+    <string name="income_question">What is your yearly average income?</string>
+    <string name="typeOfHome_question">What type of home are you living in?</string>
+    <string name="yearBuilt_question">Year home built</string>
+    <string name="stories_question">How many stories is the house</string>
+    <string name="squareFeet_question">What is your home area in square feets?</string>
+    <string name="pets_question">How many pets do you have ?</string>
+    <string name="occupants_question">How long have the occupants lived there ?</string>
+    <string name="ventilationType_question">Ventilation type</string>
+    <string name="filterationSystem_question">Air handling unit (AHU) filtration system, if AHU is present</string>
+    <string name="furnace_question">Furnace / Heating System</string>
+    <string name="practice_summer_question">Most common ventilation practice during summer</string>
+    <string name="practice_winter_question">Most common ventilation practice during winter</string>
+    <string name="window_open_question">How often are the windows open in any given day?</string>
+    <string name="ventilation_windo_question">Window Ventilation type</string>
+    <string name="exhaust_fan_question">How often are the kitchen/bathroom exhaust fans used?</string>
+    <string name="kerosen_question">Do the residents use kerosene heaters/ovens to heat the home?</string>
+    <string name="radon_question">Do the residents have a radon mitigation system in place?</string>
+    <string name="fresh_air_question">Do you think that the air is fresh in your home?</string>
+    <string name="life_satisfied_question">How satisfied are you with how your life has turned out so far?</string>
+    <string name="all_things_question">Taking all things together, how happy would you say you are?</string>
+    <string name="standard_question">How satisfied are you with your present standard of living </string>
+    <string name="concerns_question">I have concerns about the potential impacts due to the pollution or adverse effects caused by the construction outside my home</string>
+    <string name="connected_question">How much do you feel connected with you community</string>
+    <string name="asthma_question">Have you been diagnosed with asthma</string>
+    <string name="helpless_question">Helpless quesstion ... change later</string>
 </resources>

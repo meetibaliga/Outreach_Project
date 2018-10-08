@@ -1,4 +1,4 @@
-package com.example.omar.outreach.Model;
+package com.example.omar.outreach.Models;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;

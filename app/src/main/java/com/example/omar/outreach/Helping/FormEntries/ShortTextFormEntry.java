@@ -1,9 +1,13 @@
 package com.example.omar.outreach.Helping.FormEntries;
 
 import android.content.Context;
-import android.util.Log;
+import android.graphics.drawable.GradientDrawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+
+import com.example.omar.outreach.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +27,23 @@ public class ShortTextFormEntry extends FormEntry{
 
     @Override
     public View getView() {
+
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setLayoutParams(getFormEntryParams());
+
+        // set padding and background color for view
+        layout.setBackgroundResource(R.drawable.view_corner_radius);
+        GradientDrawable dr = (GradientDrawable)layout.getBackground();
+        dr.setColor(getResources().getColor(R.color.colorLightGrey));
+
+        // text view
         et = new EditText(getContext());
-        et.setLayoutParams(getFormEntryParams());
+        et.setLayoutParams(getNestedFormEntryParams());
         et.setHint(getTitle());
-        return et;
+
+        layout.addView(et);
+
+        return layout;
     }
 
     @Override

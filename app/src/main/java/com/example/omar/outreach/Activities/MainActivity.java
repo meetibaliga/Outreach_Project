@@ -18,8 +18,7 @@ import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
 import com.example.omar.outreach.Managers.DBManager;
 import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.MapsConnectionManager;
-import com.example.omar.outreach.Model.EntryDO;
-import com.example.omar.outreach.Model.UserDO;
+import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.R;
 
 public class MainActivity extends AppCompatActivity implements CallBackMapsConnection, CallBackDB {
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
 
     public void btnClicked(View view) {
-        Intent intent = new Intent(this, FormActivity_1.class);
+        Intent intent = new Intent(this, PeriodicalFormActivity_1.class);
         startActivity(intent);
 
     }
@@ -151,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     public void callbackDB(Object object) {
         PaginatedList<UserDO> results = (PaginatedList<UserDO>) object;
         if(results.size() == 0){
-            Intent intent = new Intent(this,Registration_1.class);
+            Intent intent = new Intent(this,OneTimeForm_1.class);
             startActivity(intent);
         }
     }

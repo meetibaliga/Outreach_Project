@@ -11,8 +11,8 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
-import com.example.omar.outreach.Model.EntryDO;
-import com.example.omar.outreach.Model.UserDO;
+import com.example.omar.outreach.Models.EntryDO;
+import com.example.omar.outreach.Models.UserDO;
 
 public class DBManager {
 

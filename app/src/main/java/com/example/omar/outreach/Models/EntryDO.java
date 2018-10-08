@@ -1,58 +1,33 @@
-package com.example.omar.outreach.Model;
+package com.example.omar.outreach.Models;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexHashKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexRangeKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 @DynamoDBTable(tableName = "outreach-mobilehub-787670546-Entry")
 
-public class EntryDO implements Serializable {
+public class EntryDO {
     private String _userId;
     private String _entryId;
     private String _active;
     private String _activity;
+    private Boolean _asthmaAttack;
+    private Boolean _asthmaMedication;
+    private Boolean _cough;
     private String _creationDate;
     private List<String> _emotions;
+    private Boolean _limitedActivities;
+    private Map<String, String> _location;
     private String _noise;
     private String _odor;
     private String _place;
     private String _transportation;
-    private Map<String, String> _location;
-
-    public EntryDO(String _userId, String _entryId, String _active, String _activity, String _creationDate, List<String> _emotions, String _noise, String _odor, String _place, String _transportation, Map<String, String> _location) {
-        this._userId = _userId;
-        this._entryId = _entryId;
-        this._active = _active;
-        this._activity = _activity;
-        this._creationDate = _creationDate;
-        this._emotions = _emotions;
-        this._noise = _noise;
-        this._odor = _odor;
-        this._place = _place;
-        this._transportation = _transportation;
-        this._location = _location;
-    }
 
     public EntryDO(){
         this._emotions = new ArrayList<String>();
@@ -93,6 +68,30 @@ public class EntryDO implements Serializable {
     public void setActivity(final String _activity) {
         this._activity = _activity;
     }
+    @DynamoDBAttribute(attributeName = "asthma_attack")
+    public Boolean getAsthmaAttack() {
+        return _asthmaAttack;
+    }
+
+    public void setAsthmaAttack(final Boolean _asthmaAttack) {
+        this._asthmaAttack = _asthmaAttack;
+    }
+    @DynamoDBAttribute(attributeName = "asthma_medication")
+    public Boolean getAsthmaMedication() {
+        return _asthmaMedication;
+    }
+
+    public void setAsthmaMedication(final Boolean _asthmaMedication) {
+        this._asthmaMedication = _asthmaMedication;
+    }
+    @DynamoDBAttribute(attributeName = "cough")
+    public Boolean getCough() {
+        return _cough;
+    }
+
+    public void setCough(final Boolean _cough) {
+        this._cough = _cough;
+    }
     @DynamoDBAttribute(attributeName = "creationDate")
     public String getCreationDate() {
         return _creationDate;
@@ -109,6 +108,23 @@ public class EntryDO implements Serializable {
     public void setEmotions(final List<String> _emotions) {
         this._emotions = _emotions;
     }
+    @DynamoDBAttribute(attributeName = "limited_activities")
+    public Boolean getLimitedActivities() {
+        return _limitedActivities;
+    }
+
+    public void setLimitedActivities(final Boolean _limitedActivities) {
+        this._limitedActivities = _limitedActivities;
+    }
+    @DynamoDBAttribute(attributeName = "location")
+    public Map<String, String> getLocation() {
+        return _location;
+    }
+
+    public void setLocation(final Map<String, String> _location) {
+        this._location = _location;
+    }
+
     @DynamoDBAttribute(attributeName = "noise")
     public String getNoise() {
         return _noise;
@@ -142,37 +158,13 @@ public class EntryDO implements Serializable {
         this._transportation = _transportation;
     }
 
-    @DynamoDBAttribute(attributeName = "location")
-    public Map<String, String> getLocation() {
-        return _location;
-    }
+    // custom methods
 
-    public void setLocation(final Map<String,String> _location) {
-        this._location = _location;
-    }
-
-    public void setLatLng(String lt, String lg){
-        HashMap<String,String> map = new HashMap<String,String>();
-        map.put("latitude",lt);
-        map.put("longitude",lg);
+    public void setLatLng(String lat, String lng){
+        Map<String,String> map = new HashMap<>();
+        map.put("latitude",lat);
+        map.put("longitude",lng);
         setLocation(map);
-    }
-
-    @Override
-    public String toString() {
-        return "EntryDO{" +
-                "_userId='" + _userId + '\'' +
-                ", _entryId='" + _entryId + '\'' +
-                ", _active='" + _active + '\'' +
-                ", _activity='" + _activity + '\'' +
-                ", _creationDate='" + _creationDate + '\'' +
-                ", _emotions=" + _emotions +
-                ", _noise='" + _noise + '\'' +
-                ", _odor='" + _odor + '\'' +
-                ", _place='" + _place + '\'' +
-                ", _transportation='" + _transportation + '\'' +
-                ", _location=" + _location +
-                '}';
     }
 }
 

@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import com.example.omar.outreach.Adapters.AdapterForEmotions;
 import com.example.omar.outreach.App;
-import com.example.omar.outreach.Model.EntryDO;
+import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.R;
 
 import java.util.ArrayList;
 
-public class FormActivity_1 extends AppCompatActivity {
+public class PeriodicalFormActivity_1 extends AppCompatActivity {
 
     //models
     public EntryDO entryDO = new EntryDO();
@@ -128,8 +128,7 @@ public class FormActivity_1 extends AppCompatActivity {
 
     private void navigateToNextScreen() {
 
-        Intent intent = new Intent(this,FormActivity_2.class);
-        intent.putExtra("Entry",entryDO);
+        Intent intent = new Intent(this,PeriodicalFormActivity_2.class);
         startActivity(intent);
 
     }

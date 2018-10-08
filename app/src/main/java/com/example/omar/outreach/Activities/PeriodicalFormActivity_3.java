@@ -1,8 +1,8 @@
 package com.example.omar.outreach.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,13 +12,10 @@ import android.widget.Toast;
 
 import com.example.omar.outreach.Adapters.AdapterForLocations;
 import com.example.omar.outreach.App;
-import com.example.omar.outreach.Model.EntryDO;
 import com.example.omar.outreach.R;
 
-public class FormActivity_3 extends AppCompatActivity {
+public class PeriodicalFormActivity_3 extends AppCompatActivity {
 
-    //models
-    public EntryDO entryDO;
 
     // UI
     protected static AdapterForLocations locationsAdapter;
@@ -54,7 +51,7 @@ public class FormActivity_3 extends AppCompatActivity {
 
     private void navigateToNextScreen() {
 
-        Intent intent = new Intent(this,FormActivity_4.class);
+        Intent intent = new Intent(this,PeriodicalFormActivity_4.class);
         startActivity(intent);
 
     }

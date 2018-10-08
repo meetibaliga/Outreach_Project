@@ -1,12 +1,16 @@
 package com.example.omar.outreach.Helping.FormEntries;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.omar.outreach.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,12 @@ public class DropDownFormEntry extends FormEntry{
         dropDownLayout.setLayoutParams(getFormEntryParams());
         dropDownLayout.setOrientation(LinearLayout.VERTICAL);
 
+        // set padding and background color for view
+        dropDownLayout.setBackgroundResource(R.drawable.view_corner_radius);
+        GradientDrawable dr = (GradientDrawable)dropDownLayout.getBackground();
+        dr.setColor(getResources().getColor(R.color.colorLightGrey));
+
+
         // text
 
         TextView dropDownTv = new TextView(getContext());
@@ -50,12 +60,15 @@ public class DropDownFormEntry extends FormEntry{
         // add spinners to container
 
         for(int i = 0 ; i < this.choices.size() ; i++){
+
             Spinner spinner = new Spinner(getContext());
             spinner.setId(i);
             spinner.setLayoutParams(getNestedHorizontalFormEntryParams());
             ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item,this.choices.get(i));
             spinner.setAdapter(spinnerAdapter);
             spinnerContainer.addView(spinner);
+
+
             spinners.add(spinner);
         }
 

@@ -1,10 +1,10 @@
 package com.example.omar.outreach.Activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Managers.DBManager;
-import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.R;
 
 import java.sql.Timestamp;

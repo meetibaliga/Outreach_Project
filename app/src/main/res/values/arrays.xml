@@ -90,31 +90,50 @@
     <string-array
         name="ventilation_type">
         <item >Forced air heating</item>
+        <item >Baseboard heating</item>
+        <item >Forced air cooling</item>
+        <item >Other(Explain)</item>
     </string-array>
 
     <!--Filteration system-->
     <string-array name="filteration_sysytem">
         <item>Standard</item>
+        <item>Electrically enhanced</item>
+        <item>Other(Specify)</item>
+        <item>Filter Specification,if available</item>
     </string-array>
 
     <!--furnace system-->
     <string-array name="furnace_system">
-        <item>gas</item>
+        <item>Gas</item>
+        <item>Electric</item>
+        <item>Other(Specify)</item>
     </string-array>
 
     <!--ventilation practice summer-->
     <string-array name="ventilation_practice_summer">
         <item>Openning window</item>
+        <item>Running exhaust fans</item>
+        <item>Rely on mechanical ventilation</item>
+        <item>Other(Specify)</item>
+        <item>None</item>
     </string-array>
 
     <!--ventilation practice winter-->
     <string-array name="ventilation_practice_winter">
-        <item>Openning window</item>
+        <item>Opening window</item>
+        <item>Running exhaust fans</item>
+        <item>Rely on mechanical ventilation</item>
+        <item>Other(Specify)</item>
+        <item>None</item>
     </string-array>
 
     <!--windows open-->
     <string-array name="windows_open">
-        <item>with each use</item>
+        <item>Open day and night during summers and totally closed during winters</item>
+        <item>Open very often(more than 6 hours)</item>
+        <item>Not very often(less than 1 hour)</item>
+        <item>Depends from room to room (specifics)</item>
     </string-array>
 
     <!--ventilation type window-->
@@ -125,6 +144,9 @@
     <!--ventilation type window-->
     <string-array name="exhaust_fan_use">
         <item>with each use</item>
+        <item>Sometimes,not always</item>
+        <item>Never</item>
+        <item>Other(Specify)</item>
     </string-array>
 
     <!--satisfaction scale-->
