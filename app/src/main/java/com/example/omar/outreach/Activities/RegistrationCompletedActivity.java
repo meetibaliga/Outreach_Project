@@ -41,7 +41,7 @@ public class RegistrationCompletedActivity extends AppCompatActivity implements 
         // set creation date
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        App.userDo.setCreationDate(timestamp.toString());
+        App.user.setCreationDate(timestamp.toString());
 
         //save to db
         new DBManager(this).saveUserForm();
@@ -50,7 +50,7 @@ public class RegistrationCompletedActivity extends AppCompatActivity implements 
     }
 
     @Override
-    public void callbackDB(Object object) {
+    public void callbackDB(Object object,int callbackId) {
         // change UI
 
         Log.d("DB","At call back");

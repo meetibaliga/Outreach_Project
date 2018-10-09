@@ -16,7 +16,7 @@ public class EntryDO {
     private String _userId;
     private String _entryId;
     private String _active;
-    private String _activity;
+    private List<String> _activities;
     private Boolean _asthmaAttack;
     private Boolean _asthmaMedication;
     private Boolean _cough;
@@ -32,6 +32,11 @@ public class EntryDO {
     public EntryDO(){
         this._emotions = new ArrayList<String>();
         this._location = new HashMap<String,String>();
+        this._activities = new ArrayList<String>();
+        this._asthmaAttack = false;
+        this._asthmaMedication = false;
+        this._cough = false;
+        this._limitedActivities = false;
     }
 
     @DynamoDBHashKey(attributeName = "userId")
@@ -61,12 +66,12 @@ public class EntryDO {
         this._active = _active;
     }
     @DynamoDBAttribute(attributeName = "activity")
-    public String getActivity() {
-        return _activity;
+    public List<String> getActivities() {
+        return _activities;
     }
 
-    public void setActivity(final String _activity) {
-        this._activity = _activity;
+    public void setActivities(final List<String> _activity) {
+        this._activities = _activity;
     }
     @DynamoDBAttribute(attributeName = "asthma_attack")
     public Boolean getAsthmaAttack() {

@@ -1,55 +1,41 @@
 package com.example.omar.outreach.Activities;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.omar.outreach.Adapters.AdapterForActivities;
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.BaseActivites.PeriodicalBaseFormActivity;
 import com.example.omar.outreach.R;
 
-public class PeriodicalFormActivity_2 extends AppCompatActivity {
-
-    // UI
-    protected static AdapterForActivities activityAdapter;
-    protected static GridView gridView;
+public class PeriodicalFormActivity_2 extends PeriodicalBaseFormActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form_2);
-
-        // setup ui
-        setTitle("Enter Your Activity Status");
-
-        //data
-        String[] activities = getResources().getStringArray(R.array.activities);
-        gridView = (GridView) findViewById(R.id.gridView);
-        activityAdapter = new AdapterForActivities(this, activities);
-        gridView.setAdapter(activityAdapter);
-
-        //selectiing
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // getting the item clicked
-                CharSequence text = ((TextView) view.findViewById(R.id.textview_activity)).getText();
-                Toast.makeText(getApplicationContext(),text,Toast.LENGTH_LONG).show();
-                App.inputEntry.setActivity(text.toString());
-                navigateToNextScreen();
-            }
-        });
+    protected String getScreenTitle() {
+        return "What are you doing right now?";
     }
 
-    private void navigateToNextScreen() {
+    @Override
+    protected String[] getTextsArray() {
+        return getResources().getStringArray(R.array.activities);
+    }
 
-        Intent intent = new Intent(this,PeriodicalFormActivity_3.class);
-        startActivity(intent);
+    @Override
+    protected String[] getFacesArray() {
+        return getResources().getStringArray(R.array.activities_faces);
+    }
 
+    @Override
+    protected Intent getNextIntent() {
+        return new Intent(this,PeriodicalFormActivity_3.class);
+    }
+
+    @Override
+    protected void addItemToModel(CharSequence text) {
+        App.inputEntry.getActivities().add(text.toString());
+
+    }
+
+    @Override
+    protected void removeItemFromModel() {
+        App.inputEntry.getEmotions().remove(0);
     }
 }

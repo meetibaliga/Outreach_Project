@@ -7,7 +7,7 @@
         <item>Happy</item>
         <item>Sad</item>
         <item>Loved</item>
-        <item>Disgusting</item>
+        <item>Disgusted</item>
         <item>Excited</item>
         <item>Relaxed</item>
         <item>Angry</item>
@@ -15,6 +15,23 @@
         <item>Confused</item>
         <item>Stressed</item>
         <item>Bored</item>
+    </string-array>
+
+    <!--EMOTIONS Faces-->
+    <string-array
+        name="emotions_faces">
+        <item>😲</item>
+        <item>😁</item>
+        <item>😢</item>
+        <item>😍</item>
+        <item>🤢</item>
+        <item>🤩</item>
+        <item>😌</item>
+        <item>😡</item>
+        <item>😨</item>
+        <item>😕</item>
+        <item>😥</item>
+        <item>😑</item>
     </string-array>
 
     <!--ACTIVITIES ARRAY-->
@@ -29,11 +46,30 @@
         <item>Socializing</item>
         <item>TV/Movies</item>
         <item>Social Media</item>
-        <item>Musical </item>
+        <item>Musical</item>
         <item>Reading</item>
         <item>In-Between</item>
         <item>Religious</item>
         <item>Other</item>
+    </string-array>
+
+    <!--activities Faces-->
+    <string-array
+        name="activities_faces">
+        <item>👷‍</item>
+        <item>🥪</item>
+        <item>📚</item>
+        <item>🏃‍‍️</item>
+        <item>🥘</item>
+        <item>🛍</item>
+        <item>🎭</item>
+        <item>🎬</item>
+        <item>📱</item>
+        <item>🎶</item>
+        <item>📖</item>
+        <item>⏳</item>
+        <item>🤲</item>
+        <item>""</item>
     </string-array>
 
     <!--LOCATIONS ARRAY-->
@@ -50,7 +86,33 @@
         <item >Outdoor </item>
         <item >Party/Club</item>
         <item >Religious</item>
-        <item >Other </item>
+        <item >Other</item>
+    </string-array>
+
+    <!--locations Faces-->
+    <string-array
+        name="locations_faces">
+        <item>🏢</item>
+        <item>🏠</item>
+        <item>🏫</item>
+        <item>🛒</item>
+        <item>🏬</item>
+        <item>🍽</item>
+        <item>☕️</item>
+        <item>🏋️‍</item>
+        <item>🌞</item>
+        <item>🎊</item>
+        <item>🛐</item>
+        <item>""</item>
+    </string-array>
+
+    <!--locations Faces-->
+    <string-array
+        name="env_faces">
+        <item>💨</item> // air
+        <item>🔊</item> // noise
+        <item>🚦</item> // trans
+        <item>🏃‍♂️</item> // active
     </string-array>
 
     <!--Months ARRAY-->

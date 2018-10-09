@@ -94,10 +94,10 @@ public class PeriodicalFormActivity_4 extends AppCompatActivity {
     }
 
     private void nextButtonClicked() {
-        App.inputEntry.setOdor(""+air_quality.getValue());
-        App.inputEntry.setNoise(""+noise.getValue());
-        App.inputEntry.setTransportation(""+transportation.getValue());
-        App.inputEntry.setActive(""+active.getValue());
+        App.inputEntry.setOdor(""+air_quality.getValue().substring(0,1));
+        App.inputEntry.setNoise(""+noise.getValue().substring(0,1));
+        App.inputEntry.setTransportation(""+transportation.getValue().substring(0,1));
+        App.inputEntry.setActive(""+active.getValue().substring(0,1));
 
         navigateToNextScreen();
     }

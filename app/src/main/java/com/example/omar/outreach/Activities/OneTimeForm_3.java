@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.widget.LinearLayout;
 
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.BaseActivites.RegistrationBaseActivity;
 import com.example.omar.outreach.Helping.FormEntries.DropDownFormEntry;
 import com.example.omar.outreach.Helping.FormEntries.FormEntry;
 import com.example.omar.outreach.Helping.FormEntries.YesNoFormEntry;
@@ -40,16 +41,16 @@ public class OneTimeForm_3 extends RegistrationBaseActivity {
 
         // do these next
 
-        App.userDo.setVentilationType(ventilationType.getValue());
-        App.userDo.setFilterationSystem(filterationSystem.getValue());
-        App.userDo.setFurnaceSystem(furnace.getValue());
-        App.userDo.setVentilationPracticeSummer(practice_summer.getValue());
-        App.userDo.setVentilationPracticeWinter(practice_winter.getValue());
-        App.userDo.setWindowsOpen(window_open.getValue());
-        App.userDo.setVentilationWindow(ventilation_window.getValue());
-        App.userDo.setExhaustFans(exhaust_fan.getValue());
-        App.userDo.setKerosenUse(kerosen.getTrueOrFalse());
-        App.userDo.setRadonMitigation(radon.getTrueOrFalse());
+        App.user.setVentilationType(ventilationType.getValue());
+        App.user.setFilterationSystem(filterationSystem.getValue());
+        App.user.setFurnaceSystem(furnace.getValue());
+        App.user.setVentilationPracticeSummer(practice_summer.getValue());
+        App.user.setVentilationPracticeWinter(practice_winter.getValue());
+        App.user.setWindowsOpen(window_open.getValue());
+        App.user.setVentilationWindow(ventilation_window.getValue());
+        App.user.setExhaustFans(exhaust_fan.getValue());
+        App.user.setKerosenUse(kerosen.getTrueOrFalse());
+        App.user.setRadonMitigation(radon.getTrueOrFalse());
 
         // navigate to next screen
 

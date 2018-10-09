@@ -5,32 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.example.omar.outreach.UIComponents.ListCell;
 import com.example.omar.outreach.R;
+import com.example.omar.outreach.UIComponents.ListCell;
 
-public class AdapterForEmotions extends BaseAdapter {
+public class ListImageAdapter extends BaseAdapter {
 
     private final Context context;
-    private final String[] emotions;
+    private final String[] texts;
     private final String[] images;
 
-    public AdapterForEmotions(Context context , String[] emotions, String[] images){
+    public ListImageAdapter(Context context , String[] emotions, String[] images){
         this.context = context;
-        this.emotions = emotions;
+        this.texts = emotions;
         this.images = images;
     }
 
     @Override
     public int getCount() {
-        return emotions.length;
+        return texts.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return emotions[position];
+        return texts[position];
     }
 
     @Override
@@ -39,33 +37,30 @@ public class AdapterForEmotions extends BaseAdapter {
     }
 
     @Override
-
     // define the cell look
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final String emotion = emotions[position];
+        final String text = texts[position];
+        final String img = images[position];
 
         // resuse functionality
-
         if (convertView == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.item_emotion, null);
+            convertView = layoutInflater.inflate(R.layout.list_item_with_image, null);
         }
 
         //init elements
 
-        ImageView imgv = (ImageView) convertView.findViewById(R.id.imageview_icon);
-        TextView tv = (TextView) convertView.findViewById(R.id.textview_emotion);
+        TextView tv_img = (TextView) convertView.findViewById(R.id.textView_img);
+        TextView tv = (TextView) convertView.findViewById(R.id.textView_text);
 
         // set values to elements
 
-        int resId = context.getResources().getIdentifier(images[position],"drawable",context.getPackageName());
-        imgv.setImageResource(resId);
-        tv.setText(emotion);
+        tv_img.setText(img);
+        tv.setText(text);
 
         // setup background cell
-
         ListCell.copyAttributes(convertView);
 
         return convertView;

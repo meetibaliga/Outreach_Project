@@ -347,6 +347,12 @@ public class UserDO {
         this._homeArea = _yearBirth;
     }
 
+    // my methods
+
+    public boolean hasAsthma(){
+        return _asthmaDiagnosed;
+    }
+
     @Override
     public String toString() {
         return "UserDO{" +

@@ -3,6 +3,7 @@ package com.example.omar.outreach.Activities;
 import android.content.Intent;
 
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.BaseActivites.RegistrationBaseActivity;
 import com.example.omar.outreach.Helping.FormEntries.DropDownFormEntry;
 import com.example.omar.outreach.Helping.FormEntries.FormEntry;
 import com.example.omar.outreach.Helping.FormEntries.ListPopulatingHelpers;
@@ -30,11 +31,11 @@ public class OneTimeForm_2 extends RegistrationBaseActivity {
             return;
 
         // do the
-        App.userDo.setHomeType(typeOfHome.getValue());
-        App.userDo.setHomeBuiltYear(yearBuilt.getValue());
-        App.userDo.setHomeArea(homeArea.getValue());
-        App.userDo.setNumPets(pets.getValue());
-        App.userDo.setOccupantsLived(occupants.getValue());
+        App.user.setHomeType(typeOfHome.getValue());
+        App.user.setHomeBuiltYear(yearBuilt.getValue());
+        App.user.setHomeArea(homeArea.getValue());
+        App.user.setNumPets(pets.getValue());
+        App.user.setOccupantsLived(occupants.getValue());
 
         // navigate to next screen
         Intent intent = new Intent(this,OneTimeForm_3.class);

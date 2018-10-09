@@ -19,6 +19,12 @@ public class DBManager {
     private DynamoDBMapper dynamoDBMapper;
     private CallBackDB callback;
 
+    // callback IDs
+
+    public static int CALL_BACK_ID_GET_ENTRIES = 1;
+    public static int CALL_BACK_ID_GET_USER= 2;
+
+
     public DBManager(){
         this(null);
     }
@@ -28,7 +34,7 @@ public class DBManager {
         this.callback = callBack;
     }
 
-    public void setNumberOfEntries(){
+    public void getEntries(){
 
         new Thread(new Runnable() {
             @Override
@@ -40,7 +46,8 @@ public class DBManager {
                         .withHashKeyValues(entryDO)
                         .withConsistentRead(false);
                 PaginatedList<EntryDO> result = dynamoDBMapper.query(EntryDO.class, queryExpression);
-                App.NUM_OF_ENTRIES = result.size();
+
+                callback.callbackDB(result,CALL_BACK_ID_GET_ENTRIES);
 
             }
         }).start();
@@ -58,7 +65,7 @@ public class DBManager {
                         .withHashKeyValues(userDo)
                         .withConsistentRead(false);
                 PaginatedList<UserDO> result = dynamoDBMapper.query(UserDO.class, queryExpression);
-                callback.callbackDB(result);
+                callback.callbackDB(result,CALL_BACK_ID_GET_USER);
             }
         }).start();
     }
@@ -71,7 +78,7 @@ public class DBManager {
                 // save
                 dynamoDBMapper.save(App.inputEntry);
                 Log.d("MainActivity","Entry Saved with ID : "+App.inputEntry.getEntryId());
-                callback.callbackDB(null);
+                callback.callbackDB(null,0);
             }
         }).start();
 
@@ -85,9 +92,9 @@ public class DBManager {
             @Override
             public void run() {
                 // save
-                dynamoDBMapper.save(App.userDo);
+                dynamoDBMapper.save(App.user);
                 Log.d("DB","User Saved");
-                callback.callbackDB(null);
+                callback.callbackDB(null,0);
             }
         }).start();
 

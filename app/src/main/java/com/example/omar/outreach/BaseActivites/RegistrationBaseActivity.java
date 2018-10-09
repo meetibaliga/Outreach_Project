@@ -1,4 +1,4 @@
-package com.example.omar.outreach.Activities;
+package com.example.omar.outreach.BaseActivites;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

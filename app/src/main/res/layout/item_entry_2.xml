@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/timeEmojie"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="48dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="4dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/timeEmojie"
+        app:layout_constraintStart_toStartOf="@+id/timeEmojie"
+        app:layout_constraintTop_toBottomOf="@+id/timeEmojie" />
+
+    <TextView
+        android:id="@+id/emotionEmojie_1"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toBottomOf="@+id/activityPlaceText" />
+
+    <TextView
+        android:id="@+id/emotionEmojie_2"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="48dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toStartOf="@+id/divider2"
+        app:layout_constraintTop_toTopOf="@+id/emotionEmojie_1" />
+
+    <TextView
+        android:id="@+id/emotionText_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/emotionEmojie_1"
+        app:layout_constraintStart_toStartOf="@+id/emotionEmojie_1"
+        app:layout_constraintTop_toBottomOf="@+id/emotionEmojie_1" />
+
+    <TextView
+        android:id="@+id/emotionText_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="@+id/emotionEmojie_2"
+        app:layout_constraintStart_toStartOf="@+id/emotionEmojie_2"
+        app:layout_constraintTop_toBottomOf="@+id/emotionEmojie_2" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="1dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintStart_toEndOf="@+id/timeEmojie"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="1dp"
+        android:layout_height="96dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintEnd_toStartOf="@+id/activeEmojie"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/activityPlaceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@+id/divider2"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/airPercentageText"
+        android:layout_width="28dp"
+        android:layout_height="12dp"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="@+id/airEmojie"
+        app:layout_constraintEnd_toEndOf="@+id/activePercentageText"
+        app:layout_constraintStart_toStartOf="@+id/activePercentageText"
+        app:layout_constraintTop_toTopOf="@+id/airEmojie" />
+
+    <ImageView
+        android:id="@+id/noisePercentageText"
+        android:layout_width="28dp"
+        android:layout_height="12dp"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="@+id/noiseEmojie"
+        app:layout_constraintEnd_toEndOf="@+id/activePercentageText"
+        app:layout_constraintStart_toStartOf="@+id/activePercentageText"
+        app:layout_constraintTop_toTopOf="@+id/noiseEmojie" />
+
+    <ImageView
+        android:id="@+id/transPercentageText"
+        android:layout_width="28dp"
+        android:layout_height="12dp"
+        android:textAlignment="textStart"
+        app:layout_constraintBottom_toBottomOf="@+id/transEmojie"
+        app:layout_constraintEnd_toEndOf="@+id/activePercentageText"
+        app:layout_constraintStart_toStartOf="@+id/activePercentageText"
+        app:layout_constraintTop_toTopOf="@+id/transEmojie" />
+
+    <ImageView
+        android:id="@+id/activePercentageText"
+        android:layout_width="28dp"
+        android:layout_height="12dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/activeEmojie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/activeEmojie" />
+
+    <TextView
+        android:id="@+id/airEmojie"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/activeEmojie"
+        app:layout_constraintStart_toStartOf="@+id/activeEmojie"
+        app:layout_constraintTop_toBottomOf="@+id/noiseEmojie" />
+
+    <TextView
+        android:id="@+id/noiseEmojie"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/activeEmojie"
+        app:layout_constraintStart_toStartOf="@+id/activeEmojie"
+        app:layout_constraintTop_toBottomOf="@+id/transEmojie" />
+
+    <TextView
+        android:id="@+id/transEmojie"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/activeEmojie"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/activeEmojie"
+        app:layout_constraintTop_toBottomOf="@+id/activeEmojie" />
+
+    <TextView
+        android:id="@+id/activeEmojie"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/activePercentageText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/healthText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:textSize="10sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/divider"
+        app:layout_constraintTop_toBottomOf="@+id/emotionEmojie_1" />
+
+
+</android.support.constraint.ConstraintLayout>

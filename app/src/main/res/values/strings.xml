@@ -19,6 +19,12 @@
     <string name="asthma_attack_question">Have you had an asthma attack recently?</string>
     <string name="asthma_medication_question">Have you taken asthma medication recently</string>
 
+    <!--Health Short phrases -->
+    <string name="cough_phrase">WAS COUGHING</string>
+    <string name="limited_activities_phrase">LIMITED ACTIVITY</string>
+    <string name="asthma_attack_phrase">HAD ASTHMA ATTACK</string>
+    <string name="asthma_medication_phrase">TOOK MEDICATION</string>
+
     <!--one time form titles-->
     <string name="personal_title">Household and Personal Information</string>
     <string name="home_title">Home Information</string>

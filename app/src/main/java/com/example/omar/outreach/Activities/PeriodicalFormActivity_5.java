@@ -56,11 +56,15 @@ public class PeriodicalFormActivity_5 extends AppCompatActivity {
         limited_activities = new YesNoFormEntry(getResources().getString(R.string.limited_activities_question),this);
         formEntries.add(limited_activities);
 
-        asthma_attack = new YesNoFormEntry(getResources().getString(R.string.asthma_attack_question),this);
-        formEntries.add(asthma_attack);
+        if (App.user.hasAsthma()){
 
-        asthma_medication = new YesNoFormEntry(getResources().getString(R.string.asthma_medication_question),this);
-        formEntries.add(asthma_medication);
+            asthma_attack = new YesNoFormEntry(getResources().getString(R.string.asthma_attack_question),this);
+            formEntries.add(asthma_attack);
+
+            asthma_medication = new YesNoFormEntry(getResources().getString(R.string.asthma_medication_question),this);
+            formEntries.add(asthma_medication);
+
+        }
 
         // ADD entries
         addEntries(formEntries);
@@ -85,8 +89,17 @@ public class PeriodicalFormActivity_5 extends AppCompatActivity {
 
         App.inputEntry.setCough(cough.getTrueOrFalse());
         App.inputEntry.setLimitedActivities(limited_activities.getTrueOrFalse());
-        App.inputEntry.setAsthmaAttack(asthma_attack.getTrueOrFalse());
-        App.inputEntry.setAsthmaAttack(asthma_medication.getTrueOrFalse());
+
+        if (App.user.hasAsthma()){
+
+            App.inputEntry.setAsthmaAttack(asthma_attack.getTrueOrFalse());
+            App.inputEntry.setAsthmaMedication(asthma_medication.getTrueOrFalse());
+
+        }else{
+
+            App.inputEntry.setAsthmaAttack(false);
+            App.inputEntry.setAsthmaMedication(false);
+        }
 
         navigateToNextScreen();
     }

@@ -3,6 +3,7 @@ package com.example.omar.outreach.Activities;
 import android.content.Intent;
 
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.BaseActivites.RegistrationBaseActivity;
 import com.example.omar.outreach.Helping.FormEntries.DropDownFormEntry;
 import com.example.omar.outreach.Helping.FormEntries.FormEntry;
 import com.example.omar.outreach.Helping.FormEntries.ListPopulatingHelpers;
@@ -84,18 +85,18 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
 
         // if all filled do the following
 
-        App.userDo.setUserId(App.USER_ID);
-        App.userDo.setFirstName(firstName.getValue());
-        App.userDo.setLastName(lastName.getValue());
-        App.userDo.setRelationToHousehold(relationship.getValue());
-        App.userDo.setSex(sex.getValue());
-        App.userDo.setMonthBirth(dateOfBirth.getValues().get(0));
-        App.userDo.setYearBirth(dateOfBirth.getValues().get(1));
-        App.userDo.setMartialStatus(martialStatus.getValue());
-        App.userDo.setHighestDegree(highest.getValue());
-        App.userDo.setEmployed(employed.getValue());
-        App.userDo.setRace(race.getValue());
-        App.userDo.setAverageIncome(income.getValue());
+        App.user.setUserId(App.USER_ID);
+        App.user.setFirstName(firstName.getValue());
+        App.user.setLastName(lastName.getValue());
+        App.user.setRelationToHousehold(relationship.getValue());
+        App.user.setSex(sex.getValue());
+        App.user.setMonthBirth(dateOfBirth.getValues().get(0));
+        App.user.setYearBirth(dateOfBirth.getValues().get(1));
+        App.user.setMartialStatus(martialStatus.getValue());
+        App.user.setHighestDegree(highest.getValue());
+        App.user.setEmployed(employed.getValue());
+        App.user.setRace(race.getValue());
+        App.user.setAverageIncome(income.getValue());
 
         // navigate to next screen
 

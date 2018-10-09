@@ -1,17 +1,10 @@
 package com.example.omar.outreach.Activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.BaseActivites.RegistrationBaseActivity;
 import com.example.omar.outreach.Helping.FormEntries.DropDownFormEntry;
 import com.example.omar.outreach.Helping.FormEntries.FormEntry;
 import com.example.omar.outreach.Helping.FormEntries.YesNoFormEntry;
@@ -19,7 +12,6 @@ import com.example.omar.outreach.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class OneTimeForm_4 extends RegistrationBaseActivity {
 
@@ -41,16 +33,16 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
             return;
 
         // do these
-        App.userDo.setAirFresh(fresh_air.getTrueOrFalse());
-        App.userDo.setLifeSatisfaction(life_satisfied.getValue());
-        App.userDo.setHowHappy(all_things.getValue());
-        App.userDo.setStandardSatisfaction(standard.getValue());
-        App.userDo.setPollutionImpact(concerns.getValue());
-        App.userDo.setConnectedToCommunity(connected.getValue());
-        App.userDo.setAsthmaDiagnosed(asthma.getTrueOrFalse());
-        App.userDo.setHelpless(helpless.getValue());
+        App.user.setAirFresh(fresh_air.getTrueOrFalse());
+        App.user.setLifeSatisfaction(life_satisfied.getValue());
+        App.user.setHowHappy(all_things.getValue());
+        App.user.setStandardSatisfaction(standard.getValue());
+        App.user.setPollutionImpact(concerns.getValue());
+        App.user.setConnectedToCommunity(connected.getValue());
+        App.user.setAsthmaDiagnosed(asthma.getTrueOrFalse());
+        App.user.setHelpless(helpless.getValue());
 
-        Log.d("DB",App.userDo.toString());
+        Log.d("DB",App.user.toString());
 
         // navigate to next screen
 
