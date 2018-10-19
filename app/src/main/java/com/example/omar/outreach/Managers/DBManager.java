@@ -14,6 +14,8 @@ import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
 
+import java.util.ArrayList;
+
 public class DBManager {
 
     private DynamoDBMapper dynamoDBMapper;

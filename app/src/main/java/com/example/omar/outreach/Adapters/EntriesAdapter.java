@@ -18,15 +18,16 @@ import com.example.omar.outreach.UIComponents.ListCell;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class EntriesAdapter extends BaseAdapter {
 
     private final Context context;
-    private final PaginatedList<EntryDO> entries;
+    private final ArrayList<EntryDO> entries;
 
-    public EntriesAdapter(Context context, PaginatedList<EntryDO> entries) {
+    public EntriesAdapter(Context context, ArrayList<EntryDO> entries) {
         this.context = context;
         this.entries = entries;
     }

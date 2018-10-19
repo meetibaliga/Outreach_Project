@@ -1,36 +1,26 @@
 package com.example.omar.outreach.Activities;
 
 import android.Manifest;
-import android.annotation.TargetApi;
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.example.omar.outreach.Adapters.EntriesAdapter;
-import com.example.omar.outreach.Adapters.ListImageAdapter;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
@@ -42,8 +32,7 @@ import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.R;
 
-import java.lang.annotation.Target;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements CallBackMapsConnection, CallBackDB {
@@ -51,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1000;
     private ListView listView;
     private EntriesAdapter entriesAdapter;
-    private PaginatedList<EntryDO> paginatedList;
+    private ArrayList<EntryDO> entriesList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,21 +201,29 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     private void callBackEntries(Object object) {
 
         PaginatedList<EntryDO> results = (PaginatedList<EntryDO>) object;
-        paginatedList = results;
-        App.NUM_OF_ENTRIES = paginatedList.size();
-        Log.d("Main",paginatedList.toString());
+
+
+        if(entriesList != null){
+            entriesList.addAll(results);
+        }else{
+            entriesList = new ArrayList<EntryDO>();
+            entriesList.addAll(results);
+        }
+
+        App.NUM_OF_ENTRIES = entriesList.size();
+        Log.d("Main", entriesList.toString());
 
         // setup list view
-        setupListView(paginatedList,getApplicationContext());
+        setupListView(entriesList,getApplicationContext());
 
     }
 
-    private void setupListView(final PaginatedList<EntryDO> paginatedList, final Context context) {
+    private void setupListView(final ArrayList<EntryDO> paginatedList, final Context context) {
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
                 listView = findViewById(R.id.listView);
-                entriesAdapter = new EntriesAdapter(context, paginatedList);
+                entriesAdapter = new EntriesAdapter(context, entriesList);
                 listView.setAdapter(entriesAdapter);
             }
         });
