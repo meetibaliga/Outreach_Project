@@ -17,6 +17,23 @@
         <item>Bored</item>
     </string-array>
 
+    <!--EMOTIONS Images Names-->
+    <string-array
+        name="emotions_image_names">
+        <item>Surprised</item>
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Loved</item>
+        <item>Disgusted</item>
+        <item>Excited</item>
+        <item>Relaxed</item>
+        <item>Angry</item>
+        <item>Fearful</item>
+        <item>Confused</item>
+        <item>Stressed</item>
+        <item>Bored</item>
+    </string-array>
+
     <!--EMOTIONS Faces-->
     <string-array
         name="emotions_faces">
@@ -49,7 +66,26 @@
         <item>Musical</item>
         <item>Reading</item>
         <item>In-Between</item>
-        <item>Religious</item>
+        <item>Religion</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--activities Images Names-->
+    <string-array
+        name="activities_images_names">
+        <item>Working</item>
+        <item>Eating</item>
+        <item>Studying</item>
+        <item>Exercise</item>
+        <item>Cooking</item>
+        <item>Shopping</item>
+        <item>Socializing</item>
+        <item>Movies</item>
+        <item>Social_Media</item>
+        <item>Musical</item>
+        <item>Reading</item>
+        <item>In_Between</item>
+        <item>Religious_Activity</item>
         <item>Other</item>
     </string-array>
 
@@ -89,6 +125,23 @@
         <item >Other</item>
     </string-array>
 
+    <!--LOCATIONS Images Names-->
+    <string-array
+        name="locations_images_names">
+        <item >Work</item>
+        <item >Home</item>
+        <item >School</item>
+        <item >Grocery</item>
+        <item >Retail</item>
+        <item >Restaurant</item>
+        <item >Coffee_Shop</item>
+        <item >Gym</item>
+        <item >Outdoor </item>
+        <item >Party</item>
+        <item >Religious_Place</item>
+        <item >Other</item>
+    </string-array>
+
     <!--locations Faces-->
     <string-array
         name="locations_faces">
@@ -106,7 +159,7 @@
         <item>""</item>
     </string-array>
 
-    <!--locations Faces-->
+    <!--Env Faces-->
     <string-array
         name="env_faces">
         <item>💨</item> // air
@@ -115,21 +168,30 @@
         <item>🏃‍♂️</item> // active
     </string-array>
 
+    <!--Env Images Names-->
+    <string-array
+        name="env_Images_names">
+        <item>air</item> // air
+        <item>noise</item> // noise
+        <item>traffic</item> // trans
+        <item>active</item> // active
+    </string-array>
+
     <!--Months ARRAY-->
     <string-array
         name="months">
-        <item >January</item>
-        <item >February</item>
-        <item >March</item>
-        <item >April</item>
-        <item >May</item>
-        <item >June</item>
-        <item >July</item>
-        <item >August</item>
-        <item >September </item>
-        <item >October</item>
-        <item >November</item>
-        <item >December</item>
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September </item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
     </string-array>
 
     <!--Type of homes-->

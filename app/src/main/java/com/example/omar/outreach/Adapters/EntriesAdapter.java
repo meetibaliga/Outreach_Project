@@ -1,7 +1,6 @@
 package com.example.omar.outreach.Adapters;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.R;
@@ -54,31 +52,31 @@ public class EntriesAdapter extends BaseAdapter {
         // resuse functionality
         if (convertView == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.item_entry_2, null);
+            convertView = layoutInflater.inflate(R.layout.item_entry_3, null);
         }
 
         //init elements
-        TextView timeEmojie = convertView.findViewById(R.id.timeEmojie);
+        ImageView timeEmojie = convertView.findViewById(R.id.timeEmojie);
         TextView timeText = convertView.findViewById(R.id.timeText);
-        TextView emotionEmojie_1 = convertView.findViewById(R.id.emotionEmojie_1);
-        TextView emotionEmojie_2 = convertView.findViewById(R.id.emotionEmojie_2);
+        ImageView emotionEmojie_1 = convertView.findViewById(R.id.emotionEmojie_1);
+        ImageView emotionEmojie_2 = convertView.findViewById(R.id.emotionEmojie_2);
         TextView emotionText_1 = convertView.findViewById(R.id.emotionText_1);
         TextView emotionText_2 = convertView.findViewById(R.id.emotionText_2);
         TextView activityPlaceText = convertView.findViewById(R.id.activityPlaceText);
-        TextView airEmojie = convertView.findViewById(R.id.airEmojie);
+        ImageView airEmojie = convertView.findViewById(R.id.airEmojie);
         ImageView airPercentageText = convertView.findViewById(R.id.airPercentageText);
-        TextView noiseEmojie = convertView.findViewById(R.id.noiseEmojie);
+        ImageView noiseEmojie = convertView.findViewById(R.id.noiseEmojie);
         ImageView noisePercentageText = convertView.findViewById(R.id.noisePercentageText);
-        TextView transEmojie = convertView.findViewById(R.id.transEmojie);
+        ImageView transEmojie = convertView.findViewById(R.id.transEmojie);
         ImageView transPercentageText = convertView.findViewById(R.id.transPercentageText);
-        TextView activeEmojie = convertView.findViewById(R.id.activeEmojie);
+        ImageView activeEmojie = convertView.findViewById(R.id.activeEmojie);
         ImageView activePercentageText = convertView.findViewById(R.id.activePercentageText);
         TextView healthText = convertView.findViewById(R.id.healthText);
 
 
         // set values to elements
         EntryDO entry = entries.get(position);
-        timeEmojie.setText(getTimeEmojie(entry.getCreationDate()));
+        timeEmojie.setImageResource(getTimeEmojie(entry.getCreationDate()));
         timeText.setText(getTimeFormatted(entry.getCreationDate()));
         setEmotionEmojies(entry.getEmotions(),emotionEmojie_1,emotionEmojie_2);
         setEmotionTexts(entry.getEmotions(),emotionText_1,emotionText_2);
@@ -100,6 +98,10 @@ public class EntriesAdapter extends BaseAdapter {
 
     private String getHealthText(Boolean cough, Boolean limitedActivities, Boolean asthmaAttack, Boolean asthmaMedication) {
 
+        if(cough == null || limitedActivities == null || asthmaAttack == null || asthmaMedication == null ){
+            return "null";
+        }
+
         String healthText = "";
 
         if(cough) healthText += context.getResources().getString(R.string.cough_phrase);
@@ -113,6 +115,10 @@ public class EntriesAdapter extends BaseAdapter {
     }
 
     private int getPercentage(String value) {
+
+        if(value == null){
+            return R.drawable.not_found_icn;
+        }
 
         Double doubleValue = Double.parseDouble(value);
         Double percentage = doubleValue / 5 * 100;
@@ -137,16 +143,20 @@ public class EntriesAdapter extends BaseAdapter {
 
     }
 
-    private void setEnvEmojies(TextView airEmojie, TextView noiseEmojie, TextView transEmojie, TextView activeEmojie) {
+    private void setEnvEmojies(ImageView airEmojie, ImageView noiseEmojie, ImageView transEmojie, ImageView activeEmojie) {
 
-        airEmojie.setText(App.emojies.get("air"));
-        noiseEmojie.setText(App.emojies.get("noise"));
-        transEmojie.setText(App.emojies.get("trans"));
-        activeEmojie.setText(App.emojies.get("active"));
+        airEmojie.setImageResource(getImageResourceMappedWith("air"));
+        noiseEmojie.setImageResource(getImageResourceMappedWith("noise"));
+        transEmojie.setImageResource(getImageResourceMappedWith("traffic"));
+        activeEmojie.setImageResource(getImageResourceMappedWith("active"));
 
     }
 
     private String getActivityPlaceText(List<String> activities, String place) {
+
+        if(activities == null || activities.size() == 0 || place == null){
+            return "Null";
+        }
 
         String activityPlaceText = activities.get(0);
 
@@ -161,6 +171,11 @@ public class EntriesAdapter extends BaseAdapter {
 
     private void setEmotionTexts(List<String> emotions, TextView emotionText_1, TextView emotionText_2) {
 
+        if(emotions == null || emotions.size() == 0 ){
+            return;
+        }
+
+
         emotionText_1.setText(emotions.get(0));
 
         if (emotions.size() > 1){
@@ -172,20 +187,59 @@ public class EntriesAdapter extends BaseAdapter {
 
     }
 
-    private void setEmotionEmojies(List<String> emotions, TextView emotionEmojie_1, TextView emotionEmojie_2) {
+    private void setEmotionEmojies(List<String> emotions, ImageView emotionEmojie_1, ImageView emotionEmojie_2) {
 
-        emotionEmojie_1.setText(App.emojies.get(emotions.get(0)));
+        if(emotions == null || emotions.size() == 0 || emotionEmojie_1 == null || emotionEmojie_2 == null){
+            return;
+        }
+
+        // setting first emojie face
+        String emotion_1 = emotions.get(0);
+        int resID_1 = getImageResourceMappedWith(emotion_1);
+        emotionEmojie_1.setImageResource(resID_1);
+
+        // set other emojie face if found
 
         if (emotions.size() > 1){
-            emotionEmojie_2.setText(App.emojies.get(emotions.get(1)));
+            String emotion_2 = emotions.get(1);
+            int resID_2 = getImageResourceMappedWith(emotion_2);
+            emotionEmojie_2.setImageResource(resID_2);
         }else{
             emotionEmojie_2.setVisibility(View.INVISIBLE);
         }
+    }
 
+    private int getImageResourceMappedWith(String name){
+
+        if(!App.imagesNames.containsKey(name)){
+            return R.drawable.not_found_icn;
+        }
+
+        String mDrawableName = App.imagesNames.get(name);
+        mDrawableName += "_icn";
+        mDrawableName = mDrawableName.toLowerCase();
+
+        return getImageResourceNamed(mDrawableName);
+
+    }
+
+    private int getImageResourceNamed(String name){
+
+        if (name == null || name == ""){
+            return -1;
+        }
+
+        int resID = context.getResources().getIdentifier(name,"drawable", context.getPackageName());
+
+        return resID;
 
     }
 
     private String getTimeFormatted(String creationDate) {
+
+        if(creationDate == null){
+            return "null";
+        }
 
         String sourceFormat = "yyyy-MM-dd HH:mm:ss.SSS";
 
@@ -215,10 +269,14 @@ public class EntriesAdapter extends BaseAdapter {
         return time;
     }
 
-    private String getTimeEmojie(String creationDate) {
+    private int getTimeEmojie(String creationDate) {
 
-        String nightEmojie = "🌙";
-        String morningEmojie = "☀️";
+        if(creationDate == null){
+            return R.drawable.time_evening_icn;
+        }
+
+        int nightEmojie = R.drawable.time_evening_icn;
+        int morningEmojie = R.drawable.time_morning_icn;
 
         String sourceFormat = "yyyy-MM-dd HH:mm:ss.SSS";
 

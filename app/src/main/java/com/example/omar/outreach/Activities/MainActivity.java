@@ -32,6 +32,7 @@ import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.R;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -52,17 +53,49 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             oneTimeCode();
         }
 
-        // set the number of entries for the entry id
-
         new DBManager(this).getEntries();
-        Toast.makeText(this,App.USER_ID,Toast.LENGTH_SHORT).show();
+
 
         // fake data
+        //putFakeData();
 
+    }
+
+    private void putFakeData() {
+
+        entriesList = new ArrayList<>();
+
+        EntryDO entry = new EntryDO();
+        ArrayList<String> emotions = new ArrayList<>();
+        emotions.add(getResources().getStringArray(R.array.emotions)[0]);
+        emotions.add(getResources().getStringArray(R.array.emotions)[3]);
+        entry.setEmotions(emotions);
+        entriesList.add(entry);
+
+        entry.setOdor("0");
+        entry.setNoise("1");
+        entry.setTransportation("4");
+        entry.setActive("2");
+
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        entry.setCreationDate(timestamp.toString());
+
+        ArrayList<String> activities = new ArrayList<>();
+        activities.add(getResources().getStringArray(R.array.activities)[0]);
+        activities.add(getResources().getStringArray(R.array.activities)[1]);
+        entry.setActivities(activities);
+
+        entry.setPlace(getResources().getStringArray(R.array.locations)[0]);
+
+        App.NUM_OF_ENTRIES = entriesList.size();
+        listView = findViewById(R.id.listView);
+        entriesAdapter = new EntriesAdapter(getApplicationContext(), entriesList);
+        listView.setAdapter(entriesAdapter);
 
     }
 
     private void oneTimeCode() {
+
         // run code only one time
         App.mainActivityViewd = true;
 
@@ -210,15 +243,15 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             entriesList.addAll(results);
         }
 
+        //num of entries
         App.NUM_OF_ENTRIES = entriesList.size();
-        Log.d("Main", entriesList.toString());
 
         // setup list view
         setupListView(entriesList,getApplicationContext());
 
     }
 
-    private void setupListView(final ArrayList<EntryDO> paginatedList, final Context context) {
+    private void setupListView(final ArrayList<EntryDO> entriesList, final Context context) {
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {

@@ -17,7 +17,7 @@ import com.example.omar.outreach.R;
 
 import java.sql.Timestamp;
 
-public class RegistrationCompletedActivity extends AppCompatActivity implements CallBackDB {
+public class OneTimeFormCompletedActivity extends AppCompatActivity implements CallBackDB {
 
     private ProgressBar progressBar;
     private TextView textView;

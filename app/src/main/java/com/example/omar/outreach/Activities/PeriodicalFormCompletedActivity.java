@@ -22,7 +22,7 @@ import com.example.omar.outreach.R;
 
 import java.sql.Timestamp;
 
-public class FormCompletedActivity extends AppCompatActivity implements CallBackDB, CallBackLocation{
+public class PeriodicalFormCompletedActivity extends AppCompatActivity implements CallBackDB, CallBackLocation{
 
     private ProgressBar progressBar;
     private TextView textView;

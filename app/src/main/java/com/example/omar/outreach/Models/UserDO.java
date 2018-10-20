@@ -350,6 +350,11 @@ public class UserDO {
     // my methods
 
     public boolean hasAsthma(){
+
+        if(_asthmaDiagnosed == null){
+            return false;
+        }
+
         return _asthmaDiagnosed;
     }
 

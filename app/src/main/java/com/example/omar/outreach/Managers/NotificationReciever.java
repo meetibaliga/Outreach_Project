@@ -53,7 +53,7 @@ public class NotificationReciever extends BroadcastReceiver {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, notifyID, targetIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         // Set the three required items all notifications must have
-        builder.setSmallIcon(R.drawable.heart);
+        builder.setSmallIcon(R.drawable.heart_icn);
         builder.setContentTitle("Emotions app");
         builder.setContentText("please enter your current status ❤️");
 

@@ -1,11 +1,15 @@
 package com.example.omar.outreach.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.omar.outreach.App;
 import com.example.omar.outreach.R;
 import com.example.omar.outreach.UIComponents.ListCell;
 
@@ -52,17 +56,45 @@ public class ListImageAdapter extends BaseAdapter {
 
         //init elements
 
-        TextView tv_img = (TextView) convertView.findViewById(R.id.textView_img);
+        ImageView tv_img = (ImageView) convertView.findViewById(R.id.textView_img);
         TextView tv = (TextView) convertView.findViewById(R.id.textView_text);
 
         // set values to elements
 
-        tv_img.setText(img);
+        Log.d("Img",text);
+
+        tv_img.setImageResource(getImageResourceMappedWith(text));
         tv.setText(text);
 
         // setup background cell
         ListCell.copyAttributes(convertView);
 
         return convertView;
+    }
+
+    private int getImageResourceMappedWith(String name){
+
+        if(!App.imagesNames.containsKey(name)){
+            return R.drawable.not_found_icn;
+        }
+
+        String mDrawableName = App.imagesNames.get(name).trim().toLowerCase();
+        mDrawableName += "_icn";
+
+        Log.d("Img",mDrawableName);
+
+        return getImageResourceNamed(mDrawableName);
+
+    }
+    private int getImageResourceNamed(String name){
+
+        if (name == null || name == ""){
+            return -1;
+        }
+
+        int resID = context.getResources().getIdentifier(name,"drawable", context.getPackageName());
+
+        return resID;
+
     }
 }

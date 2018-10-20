@@ -56,7 +56,7 @@
             android:name=".Activities.PeriodicalFormActivity_4"
             android:parentActivityName=".Activities.PeriodicalFormActivity_3"></activity>
         <activity android:name=".Activities.PeriodicalFormActivity_5"></activity>
-        <activity android:name=".Activities.FormCompletedActivity"></activity>
+        <activity android:name=".Activities.PeriodicalFormCompletedActivity"></activity>
         <activity android:name=".Activities.LocationsActivity" />
         <activity android:name=".Activities.PermissionsActivity" />
         <activity android:name=".Activities.OneTimeForm_1">
@@ -68,7 +68,7 @@
         <activity android:name=".Activities.OneTimeForm_2" />
         <activity android:name=".Activities.OneTimeForm_3" />
         <activity android:name=".Activities.OneTimeForm_4" />
-        <activity android:name=".Activities.RegistrationCompletedActivity" />
+        <activity android:name=".Activities.OneTimeFormCompletedActivity" />
 
         <!-- Notification Reciver -->
         <receiver android:name=".Managers.NotificationReciever" />

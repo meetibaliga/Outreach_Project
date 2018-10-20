@@ -105,7 +105,7 @@ public class PeriodicalFormActivity_5 extends AppCompatActivity {
     }
 
     private void navigateToNextScreen() {
-        Intent intent = new Intent(this,FormCompletedActivity.class);
+        Intent intent = new Intent(this,PeriodicalFormCompletedActivity.class);
         startActivity(intent);
     }
 

@@ -46,7 +46,7 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
 
         // navigate to next screen
 
-        Intent intent = new Intent(this,RegistrationCompletedActivity.class);
+        Intent intent = new Intent(this,OneTimeFormCompletedActivity.class);
         startActivity(intent);
 
     }
