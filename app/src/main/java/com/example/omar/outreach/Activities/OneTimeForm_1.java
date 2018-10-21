@@ -100,8 +100,16 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
 
         // navigate to next screen
 
-        Intent intent = new Intent(this,OneTimeForm_2.class);
+        Intent intent;
+
+        if(relationship.getValue().equalsIgnoreCase("self")){
+             intent = new Intent(this,OneTimeForm_2.class);
+        }else{
+            intent = new Intent(this,OneTimeForm_4.class);
+        }
+
         startActivity(intent);
+
 
     }
 

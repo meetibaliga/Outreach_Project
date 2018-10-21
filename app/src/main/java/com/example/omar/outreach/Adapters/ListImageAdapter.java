@@ -46,7 +46,6 @@ public class ListImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         final String text = texts[position];
-        final String img = images[position];
 
         // resuse functionality
         if (convertView == null) {

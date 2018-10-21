@@ -29,9 +29,7 @@ public class PeriodicalFormActivity_3 extends PeriodicalBaseFormActivity {
     }
 
     @Override
-    protected void addItemToModel(CharSequence text) {
-        App.inputEntry.setPlace(text.toString());
-    }
+    protected void addItemToModel(String text) {App.inputEntry.setPlace(text); }
 
     @Override
     protected void removeItemFromModel() {

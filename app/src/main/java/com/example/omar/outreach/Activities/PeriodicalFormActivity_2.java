@@ -1,10 +1,20 @@
 package com.example.omar.outreach.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.text.InputType;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.BaseActivites.PeriodicalBaseFormActivity;
 import com.example.omar.outreach.R;
+
+import org.w3c.dom.Text;
 
 public class PeriodicalFormActivity_2 extends PeriodicalBaseFormActivity {
 
@@ -29,8 +39,8 @@ public class PeriodicalFormActivity_2 extends PeriodicalBaseFormActivity {
     }
 
     @Override
-    protected void addItemToModel(CharSequence text) {
-        App.inputEntry.getActivities().add(text.toString());
+    protected void addItemToModel(String text) {
+        App.inputEntry.getActivities().add(text);
 
     }
 
@@ -38,4 +48,5 @@ public class PeriodicalFormActivity_2 extends PeriodicalBaseFormActivity {
     protected void removeItemFromModel() {
         App.inputEntry.getEmotions().remove(0);
     }
+
 }

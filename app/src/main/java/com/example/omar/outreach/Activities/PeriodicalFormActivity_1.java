@@ -29,8 +29,8 @@ public class PeriodicalFormActivity_1 extends PeriodicalBaseFormActivity {
     }
 
     @Override
-    protected void addItemToModel(CharSequence text) {
-        App.inputEntry.getEmotions().add(text.toString());
+    protected void addItemToModel(String text) {
+        App.inputEntry.getEmotions().add(text);
     }
 
     @Override
