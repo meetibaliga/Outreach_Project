@@ -14,9 +14,7 @@ import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
 
-import java.util.ArrayList;
-
-public class DBManager {
+public class DynamoDBManager {
 
     private DynamoDBMapper dynamoDBMapper;
     private CallBackDB callback;
@@ -27,11 +25,11 @@ public class DBManager {
     public static int CALL_BACK_ID_GET_USER= 2;
 
 
-    public DBManager(){
+    public DynamoDBManager(){
         this(null);
     }
 
-    public DBManager(CallBackDB callBack){
+    public DynamoDBManager(CallBackDB callBack){
         initializeDB();
         this.callback = callBack;
     }

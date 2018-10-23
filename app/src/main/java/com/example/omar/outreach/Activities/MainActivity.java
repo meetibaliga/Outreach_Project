@@ -1,11 +1,15 @@
 package com.example.omar.outreach.Activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -24,12 +28,13 @@ import com.example.omar.outreach.Adapters.EntriesAdapter;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
-import com.example.omar.outreach.Managers.DBManager;
+import com.example.omar.outreach.Managers.DynamoDBManager;
 import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.MapsConnectionManager;
 import com.example.omar.outreach.Managers.NotificationReciever;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
+import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
 
 import java.sql.Timestamp;
@@ -42,6 +47,8 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     private ListView listView;
     private EntriesAdapter entriesAdapter;
     private ArrayList<EntryDO> entriesList;
+    private EntriesDataSource entriesDataSource;
+    private final Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +60,22 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             oneTimeCode();
         }
 
-        new DBManager(this).getEntries();
+        // add local items
 
+        entriesDataSource = new EntriesDataSource(this);
+
+        if(entriesList == null){
+            entriesList = new ArrayList<>();
+        }
+
+        entriesList.addAll(entriesDataSource.getAllEntries());
+
+        // setup list view
+        setupListView(entriesList,getApplicationContext());
+
+
+        // add online items
+        //new DynamoDBManager(this).getEntries();
 
         // fake data
         //putFakeData();
@@ -117,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
 
         //check if the user has filled the first time form
-        new DBManager(this).getUserFirstForm();
+        new DynamoDBManager(this).getUserFirstForm();
 
         //set Alarm for notifications
 
@@ -126,6 +147,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         // 2
         setNotificationAlarm(9,0,App.NOTIFY_ID_2);
+
+        // set broadcast reciver for the pluged in to power
+        registerPlugedInReciver();
 
     }
 
@@ -221,9 +245,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     @Override
     public void callbackDB(Object object, int callbackid) {
 
-        if (callbackid == DBManager.CALL_BACK_ID_GET_ENTRIES){
+        if (callbackid == DynamoDBManager.CALL_BACK_ID_GET_ENTRIES){
             callBackEntries(object);
-        }else if (callbackid == DBManager.CALL_BACK_ID_GET_USER){
+        }else if (callbackid == DynamoDBManager.CALL_BACK_ID_GET_USER){
             callbackidUser(object);
         }else{
             // do nothing
@@ -234,7 +258,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     private void callBackEntries(Object object) {
 
         PaginatedList<EntryDO> results = (PaginatedList<EntryDO>) object;
-
 
         if(entriesList != null){
             entriesList.addAll(results);
@@ -299,6 +322,35 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         // Set alarm
         AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarm.setRepeating(AlarmManager.RTC_WAKEUP,callendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+
+    }
+
+
+    ///////////////////// PLUGED IN RECIVER ////////////////////////
+
+
+    private void registerPlugedInReciver() {
+
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+                if (plugged == BatteryManager.BATTERY_PLUGGED_AC) {
+                    // on AC power
+                    App.log(activity,"AC");
+                } else if (plugged == BatteryManager.BATTERY_PLUGGED_USB) {
+                    // on USB power
+                    App.log(activity,"USB");
+                } else if (plugged == 0) {
+                    // on battery power
+                    App.log(activity,"BATTERY");
+                } else {
+                    // intent didnt include extra info
+                }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        registerReceiver(receiver, filter);
 
     }
 }

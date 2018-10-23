@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
-import com.example.omar.outreach.Managers.DBManager;
+import com.example.omar.outreach.Managers.DynamoDBManager;
 import com.example.omar.outreach.R;
 
 import java.sql.Timestamp;
@@ -44,7 +44,7 @@ public class OneTimeFormCompletedActivity extends AppCompatActivity implements C
         App.user.setCreationDate(timestamp.toString());
 
         //save to db
-        new DBManager(this).saveUserForm();
+        new DynamoDBManager(this).saveUserForm();
 
 
     }

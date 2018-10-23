@@ -16,8 +16,9 @@ import android.widget.TextView;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackLocation;
-import com.example.omar.outreach.Managers.DBManager;
+import com.example.omar.outreach.Managers.DynamoDBManager;
 import com.example.omar.outreach.Managers.LocationManager;
+import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
 
 import java.sql.Timestamp;
@@ -27,11 +28,13 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
     private ProgressBar progressBar;
     private TextView textView;
     private Location location;
+    private EntriesDataSource entriesDataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_completed);
+        entriesDataSource = new EntriesDataSource(this);
     }
 
     @Override
@@ -50,7 +53,6 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
         App.inputEntry.setCreationDate(timestamp.toString());
 
         // set location
-
         if(LocationManager.isLocationEnabled(this)){
             new LocationManager(this).getCurrentLocation();
         }else{
@@ -98,10 +100,14 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
         if(object instanceof Location){
             location = (Location) object;
             App.inputEntry.setLatLng(location.getLatitude()+"",location.getLongitude()+"");
+
             //save to db
-            new DBManager(this).saveEntry();
+            //new DynamoDBManager(this).saveEntry();
+            entriesDataSource.insertItem(App.inputEntry);
+
         }else{
-            new DBManager(this).saveEntry();
+            //new DynamoDBManager(this).saveEntry();
+            entriesDataSource.insertItem(App.inputEntry);
         }
     }
 
