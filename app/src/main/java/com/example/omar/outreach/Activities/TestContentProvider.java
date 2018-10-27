@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.omar.outreach.Adapters.EntriesAdapter;
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Provider.DatabaseHelper;
 import com.example.omar.outreach.Provider.EntriesConverter;
@@ -50,14 +51,8 @@ public class TestContentProvider extends AppCompatActivity {
         setContentView(R.layout.activity_test_content_provider);
 
         // init data source
-        entriesDataSource = new EntriesDataSource(this);
 
-        entriesDataSource.deleteItem("04ca4b1c-cb47-4dd6-a63d-53ea9b9f4d8a");
-        List<EntryDO> entries = entriesDataSource.getDirtyEntries();
-
-        for (EntryDO entry: entries) {
-            Log.d("TestActivity",entry.toString());
-        }
+        EntriesDataSource ds = new EntriesDataSource(this);
 
     }
 

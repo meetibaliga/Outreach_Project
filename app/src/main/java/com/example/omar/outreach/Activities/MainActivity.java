@@ -17,38 +17,50 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.example.omar.outreach.Adapters.EntriesAdapter;
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.Helping.FormEntries.PassingString;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
 import com.example.omar.outreach.Managers.DynamoDBManager;
+import com.example.omar.outreach.Managers.EntriesManager;
 import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.MapsConnectionManager;
-import com.example.omar.outreach.Managers.NotificationReciever;
+import com.example.omar.outreach.Managers.RewardManager;
+import com.example.omar.outreach.Managers.SharedPreferencesManager;
+import com.example.omar.outreach.Models.Entry;
+import com.example.omar.outreach.Recivers.NotificationReciever;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
+import com.example.omar.outreach.Recivers.PowerReciver;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CallBackMapsConnection, CallBackDB {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1000;
     private ListView listView;
     private EntriesAdapter entriesAdapter;
-    private ArrayList<EntryDO> entriesList;
-    private EntriesDataSource entriesDataSource;
-    private final Activity activity = this;
+    private Button addEntryButton;
+    private TextView rewardTV;
+    private EntriesManager entMgr;
+    private EntriesDataSource ds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,38 +72,70 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             oneTimeCode();
         }
 
-        // add local items
+        //init ui
+        addEntryButton = findViewById(R.id.button2);
+        rewardTV = findViewById(R.id.rewardTV);
 
-        entriesDataSource = new EntriesDataSource(this);
+        // setup
+        setupListView(getApplicationContext());
+        disableButtonIfNotAllowed();
+        setupRewardTV();
 
-        if(entriesList == null){
-            entriesList = new ArrayList<>();
+    }
+
+    private void setupRewardTV() {
+
+        ds = new EntriesDataSource(this);
+        Double totalReward = RewardManager.calculateReward(ds.getNumOfEntries());
+        rewardTV.setText("$"+totalReward);
+
+    }
+
+    private void disableButtonIfNotAllowed() {
+        // disable button if not allowed
+        entMgr = EntriesManager.getInstance(this);
+        // check entry button
+        PassingString reason = new PassingString("");
+        if(!entMgr.canAddEntry(reason)){
+            addEntryButton.setText(reason.getPassingString());
+            addEntryButton.setEnabled(false);
+        }else{
+            addEntryButton.setEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.settings_item) {
+
+            Intent intent = new Intent(this,PreferencesActivity.class);
+            startActivity(intent);
+
         }
 
-        entriesList.addAll(entriesDataSource.getAllEntries());
-
-        // setup list view
-        setupListView(entriesList,getApplicationContext());
-
-
-        // add online items
-        //new DynamoDBManager(this).getEntries();
-
-        // fake data
-        //putFakeData();
-
+        return super.onOptionsItemSelected(item);
     }
 
     private void putFakeData() {
 
-        entriesList = new ArrayList<>();
+        App.entriesList = new ArrayList<>();
 
-        EntryDO entry = new EntryDO();
+        Entry entry = new Entry();
         ArrayList<String> emotions = new ArrayList<>();
         emotions.add(getResources().getStringArray(R.array.emotions)[0]);
         emotions.add(getResources().getStringArray(R.array.emotions)[3]);
         entry.setEmotions(emotions);
-        entriesList.add(entry);
+        App.entriesList.add(entry);
 
         entry.setOdor("0");
         entry.setNoise("1");
@@ -108,9 +152,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         entry.setPlace(getResources().getStringArray(R.array.locations)[0]);
 
-        App.NUM_OF_ENTRIES = entriesList.size();
+        App.NUM_OF_ENTRIES = App.entriesList.size();
         listView = findViewById(R.id.listView);
-        entriesAdapter = new EntriesAdapter(getApplicationContext(), entriesList);
+        entriesAdapter = new EntriesAdapter(getApplicationContext(), App.entriesList);
         listView.setAdapter(entriesAdapter);
 
     }
@@ -121,10 +165,18 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         App.mainActivityViewd = true;
 
         // set the user id and num of entries of this user
-        App.USER_ID = IdentityManager.getDefaultIdentityManager().getCachedUserID();
+        if (App.USER_ID == null){
+
+            IdentityManager mgr = IdentityManager.getDefaultIdentityManager();
+
+            if(mgr != null){
+                App.USER_ID = mgr.getCachedUserID();
+            }
+
+        }
 
         // if the user has no user id go to the authentication screen
-        if(App.USER_ID == ""){
+        if(App.USER_ID == "" || App.USER_ID == null){
             IdentityManager.getDefaultIdentityManager().signOut();
         }
 
@@ -140,16 +192,12 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         //check if the user has filled the first time form
         new DynamoDBManager(this).getUserFirstForm();
 
-        //set Alarm for notifications
-
-        // 1
-        setNotificationAlarm(Calendar.getInstance().getTime().getHours(),Calendar.getInstance().getTime().getMinutes(),App.NOTIFY_ID);
-
-        // 2
-        setNotificationAlarm(9,0,App.NOTIFY_ID_2);
+        // notifications
+        setupNotifications();
 
         // set broadcast reciver for the pluged in to power
         registerPlugedInReciver();
+
 
     }
 
@@ -163,11 +211,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("Main","hi");
-        return true;
-    }
 
     public void signoutClicked(View view){
         IdentityManager.getDefaultIdentityManager().signOut();
@@ -257,24 +300,33 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     private void callBackEntries(Object object) {
 
-        PaginatedList<EntryDO> results = (PaginatedList<EntryDO>) object;
+        List<Entry> entries = Entry.getEntries((PaginatedList<EntryDO>) object);
 
-        if(entriesList != null){
-            entriesList.addAll(results);
+        if(App.entriesList != null){
+            App.entriesList.addAll(entries);
         }else{
-            entriesList = new ArrayList<EntryDO>();
-            entriesList.addAll(results);
+            App.entriesList = new ArrayList<Entry>();
+            App.entriesList.addAll(entries);
         }
 
         //num of entries
-        App.NUM_OF_ENTRIES = entriesList.size();
+        App.NUM_OF_ENTRIES = App.entriesList.size();
 
         // setup list view
-        setupListView(entriesList,getApplicationContext());
+        setupListView(getApplicationContext());
 
     }
 
-    private void setupListView(final ArrayList<EntryDO> entriesList, final Context context) {
+    private void setupListView(final Context context) {
+
+        ds = new EntriesDataSource(context);
+
+        if(App.entriesList == null){
+            App.entriesList = new ArrayList<>();
+        }
+
+        // setup list view
+        final List<Entry> entriesList = ds.getAllEntriesOrderedByDate(true);
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
@@ -285,13 +337,24 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         });
 
 
+        // show/hide first label
+
+        View view = findViewById(R.id.emptyScreenView);
+
+        if(entriesList.size() == 0){
+            view.setVisibility(View.VISIBLE);
+        }else{
+            view.setVisibility(View.INVISIBLE);
+        }
+
+
     }
 
     private void callbackidUser(Object object) {
 
         PaginatedList<UserDO> results = (PaginatedList<UserDO>) object;
 
-        if(results.size() == 0){
+        if(results.size() == 0 || results == null){
             Intent intent = new Intent(this,OneTimeForm_1.class);
             startActivity(intent);
         }else{
@@ -301,9 +364,30 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     }
 
+    ////////////////////// RECIVERS ///////////////////////////////
 
-    ///////////////// NOTIFICATIONS //////////////////////
+    private void setupNotifications() {
 
+        //set Alarm for notifications
+        SharedPreferencesManager prefMgr = SharedPreferencesManager.getInstance(this);
+
+        int morningTime = 9;
+        if(prefMgr.getMorningNotificationTime() != null){
+            morningTime = Integer.parseInt(prefMgr.getMorningNotificationTime());
+        }
+
+        int eveningTime = 18;
+        if(prefMgr.getEveningNotificationTime() != null){
+            eveningTime = Integer.parseInt(prefMgr.getMorningNotificationTime());
+        }
+
+        // 1
+        setNotificationAlarm(morningTime,0,App.NOTIFY_ID);
+
+        // 2
+        setNotificationAlarm(eveningTime,0,App.NOTIFY_ID_2);
+
+    }
 
     private void setNotificationAlarm(int hour, int min, int notifyId) {
 
@@ -325,32 +409,14 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     }
 
-
-    ///////////////////// PLUGED IN RECIVER ////////////////////////
-
-
     private void registerPlugedInReciver() {
 
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            public void onReceive(Context context, Intent intent) {
-                int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
-                if (plugged == BatteryManager.BATTERY_PLUGGED_AC) {
-                    // on AC power
-                    App.log(activity,"AC");
-                } else if (plugged == BatteryManager.BATTERY_PLUGGED_USB) {
-                    // on USB power
-                    App.log(activity,"USB");
-                } else if (plugged == 0) {
-                    // on battery power
-                    App.log(activity,"BATTERY");
-                } else {
-                    // intent didnt include extra info
-                }
-            }
-        };
-
+        BroadcastReceiver receiver = new PowerReciver(this);
         IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         registerReceiver(receiver, filter);
 
     }
+
+
+
 }

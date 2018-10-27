@@ -3,7 +3,7 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import com.example.omar.outreach.Models.EntryDO;
+import com.example.omar.outreach.Models.Entry;
 
 public class EntryContentContract {
 
@@ -44,7 +44,6 @@ public class EntryContentContract {
         public static final String PLACE = "place";
         public static final String TRANSPORTATION = "transportation";
         public static final String ISDELETED = "isDeleted";
-        public static final String LASTUPDATED = "lastUpdated";
         public static final String ISDIRTY = "isDirty";
         public static final String EMOTIONS = "emotions";
         public static final String ACTIVITIES = "activities";
@@ -97,15 +96,15 @@ public class EntryContentContract {
          * @param entryDO the entrry
          * @return the Uri of the note
          */
-        public static Uri uriBuilder(EntryDO entryDO) {
-            return Uri.withAppendedPath(CONTENT_URI, entryDO.getEntryId());
+        public static Uri uriBuilder(Entry entry) {
+            return Uri.withAppendedPath(CONTENT_URI, entry.getEntryId());
         }
 
         /**
          * A projection of all columns in the table
          */
         public static final String[] PROJECTION_ALL = {
-                ID, ENTRYID, ACTIVE, ASTHMAATTACK, ASTHMAMEDICATION, COUGH, CREATIONDATE,LIMITEDACTIVITIES,NOISE,ODOR,PLACE,TRANSPORTATION,ISDELETED,LASTUPDATED,ISDIRTY,EMOTIONS,ACTIVITIES,LOCATION
+                ID, ENTRYID, ACTIVE, ASTHMAATTACK, ASTHMAMEDICATION, COUGH, CREATIONDATE,LIMITEDACTIVITIES,NOISE,ODOR,PLACE,TRANSPORTATION,ISDELETED,ISDIRTY,EMOTIONS,ACTIVITIES,LOCATION
         };
 
         /**
@@ -129,8 +128,7 @@ public class EntryContentContract {
                         + LOCATION + " TEXT NOT NULL DEFAULT '', "
                         + TRANSPORTATION + " TEXT NOT NULL DEFAULT '0', "
                         + ISDELETED + " BOOLEAN DEFAULT 0, "
-                        + LASTUPDATED + " BIGINT NOT NULL DEFAULT 0, "
-                        + ISDIRTY + " BOOLEAN DEFAULT 0) ";
+                        + ISDIRTY + " BOOLEAN DEFAULT 1) ";
 
         /**
          * The default sort order (in SQLite notation)

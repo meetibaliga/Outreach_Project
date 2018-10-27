@@ -1,6 +1,7 @@
 package com.example.omar.outreach.Adapters;
 
 import android.content.Context;
+import android.content.res.XmlResourceParser;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.omar.outreach.App;
-import com.example.omar.outreach.Models.EntryDO;
+import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.R;
 import com.example.omar.outreach.UIComponents.ListCell;
 
@@ -20,16 +21,53 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class EntriesAdapter extends BaseAdapter{
 
     private final Context context;
-    private final ArrayList<EntryDO> entries;
+    private final List<Object> entries;
+    LayoutInflater layoutInflater;
 
-    public EntriesAdapter(Context context, ArrayList<EntryDO> entries) {
+
+    public EntriesAdapter(Context context, List<Entry> entries) {
+
         this.context = context;
-        this.entries = entries;
+        this.entries = new ArrayList<>();
+        this.entries.addAll(entries);
+
+        // add the headers to the list
+        addHeaderToList(entries);
+    }
+
+    private void addHeaderToList(List<Entry> entries) {
+
+        String lastDate = "";
+        ListIterator itr = this.entries.listIterator();
+
+        while (itr.hasNext()){
+
+            Object item = itr.next();
+
+            while (item instanceof String){
+                item = itr.next();
+            }
+
+            Entry entry = (Entry) item;
+            String entryDate = App.getDateInFormat(App.simpleDateFormat,entry.getCreationDate());
+
+            if(!entryDate.trim().equals(lastDate)){
+
+                itr.previous();
+                itr.add(entryDate);
+                lastDate = entryDate;
+                itr.next();
+            }
+        }
+
+        Log.d("Header",this.entries.toString());
     }
 
     @Override
@@ -44,57 +82,96 @@ public class EntriesAdapter extends BaseAdapter{
 
     @Override
     public long getItemId(int position) {
-        return Integer.parseInt(entries.get(position).getEntryId());
+        return 0;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
+        Object item = entries.get(position);
+        layoutInflater = LayoutInflater.from(context);
 
-        // resuse functionality
-        if (convertView == null) {
-            final LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.item_entry_3, null);
+        // header
+
+        if (item instanceof String) {
+
+            int id = R.layout.item_entry_header;
+            convertView = layoutInflater.inflate(id, null);
+
+            String stringItem = (String) item;
+            TextView tv = convertView.findViewById(R.id.textView);
+            tv.setText(stringItem);
+
+            return convertView;
+
+        } else if ( item instanceof Entry ) {
+
+            // Entry
+            int id = R.layout.item_entry_3;
+            convertView = layoutInflater.inflate(id, null);
+
+            //init elements
+            ImageView timeEmojie = convertView.findViewById(R.id.timeEmojie);
+            TextView timeText = convertView.findViewById(R.id.timeText);
+            ImageView emotionEmojie_1 = convertView.findViewById(R.id.emotionEmojie_1);
+            ImageView emotionEmojie_2 = convertView.findViewById(R.id.emotionEmojie_2);
+            TextView emotionText_1 = convertView.findViewById(R.id.emotionText_1);
+            TextView emotionText_2 = convertView.findViewById(R.id.emotionText_2);
+            TextView activityPlaceText = convertView.findViewById(R.id.activityPlaceText);
+            ImageView airEmojie = convertView.findViewById(R.id.airEmojie);
+            ImageView airPercentageText = convertView.findViewById(R.id.airPercentageText);
+            ImageView noiseEmojie = convertView.findViewById(R.id.noiseEmojie);
+            ImageView noisePercentageText = convertView.findViewById(R.id.noisePercentageText);
+            ImageView transEmojie = convertView.findViewById(R.id.transEmojie);
+            ImageView transPercentageText = convertView.findViewById(R.id.transPercentageText);
+            ImageView activeEmojie = convertView.findViewById(R.id.activeEmojie);
+            ImageView activePercentageText = convertView.findViewById(R.id.activePercentageText);
+            TextView healthText = convertView.findViewById(R.id.healthText);
+
+
+            // set values to elements
+            Entry entry = (Entry)item;
+            timeEmojie.setImageResource(getTimeEmojie(entry.getCreationDate()));
+            timeText.setText(getTimeFormatted(entry.getCreationDate()));
+            setEmotionEmojies(entry.getEmotions(), emotionEmojie_1, emotionEmojie_2);
+            setEmotionTexts(entry.getEmotions(), emotionText_1, emotionText_2);
+            activityPlaceText.setText(getActivityPlaceText(entry.getActivities(), entry.getPlace()));
+            setEnvEmojies(airEmojie, noiseEmojie, transEmojie, activeEmojie);
+            airPercentageText.setImageResource(getPercentage(entry.getOdor()));
+            noisePercentageText.setImageResource(getPercentage(entry.getNoise()));
+            transPercentageText.setImageResource(getPercentage(entry.getTransportation()));
+            activePercentageText.setImageResource(getPercentage(entry.getActive()));
+            healthText.setText(getHealthText(entry.getCough(), entry.getLimitedActivities(), entry.getAsthmaAttack(), entry.getAsthmaMedication()));
+
+
+            // setup background cell
+            ListCell.copyAttributes(convertView);
+
+            return convertView;
         }
 
-        //init elements
-        ImageView timeEmojie = convertView.findViewById(R.id.timeEmojie);
-        TextView timeText = convertView.findViewById(R.id.timeText);
-        ImageView emotionEmojie_1 = convertView.findViewById(R.id.emotionEmojie_1);
-        ImageView emotionEmojie_2 = convertView.findViewById(R.id.emotionEmojie_2);
-        TextView emotionText_1 = convertView.findViewById(R.id.emotionText_1);
-        TextView emotionText_2 = convertView.findViewById(R.id.emotionText_2);
-        TextView activityPlaceText = convertView.findViewById(R.id.activityPlaceText);
-        ImageView airEmojie = convertView.findViewById(R.id.airEmojie);
-        ImageView airPercentageText = convertView.findViewById(R.id.airPercentageText);
-        ImageView noiseEmojie = convertView.findViewById(R.id.noiseEmojie);
-        ImageView noisePercentageText = convertView.findViewById(R.id.noisePercentageText);
-        ImageView transEmojie = convertView.findViewById(R.id.transEmojie);
-        ImageView transPercentageText = convertView.findViewById(R.id.transPercentageText);
-        ImageView activeEmojie = convertView.findViewById(R.id.activeEmojie);
-        ImageView activePercentageText = convertView.findViewById(R.id.activePercentageText);
-        TextView healthText = convertView.findViewById(R.id.healthText);
-
-
-        // set values to elements
-        EntryDO entry = entries.get(position);
-        timeEmojie.setImageResource(getTimeEmojie(entry.getCreationDate()));
-        timeText.setText(getTimeFormatted(entry.getCreationDate()));
-        setEmotionEmojies(entry.getEmotions(),emotionEmojie_1,emotionEmojie_2);
-        setEmotionTexts(entry.getEmotions(),emotionText_1,emotionText_2);
-        activityPlaceText.setText(getActivityPlaceText(entry.getActivities(),entry.getPlace()));
-        setEnvEmojies(airEmojie,noiseEmojie,transEmojie,activeEmojie);
-        airPercentageText.setImageResource(getPercentage(entry.getOdor()));
-        noisePercentageText.setImageResource(getPercentage(entry.getNoise()));
-        transPercentageText.setImageResource(getPercentage(entry.getTransportation()));
-        activePercentageText.setImageResource(getPercentage(entry.getActive()));
-        healthText.setText(getHealthText(entry.getCough(),entry.getLimitedActivities(),entry.getAsthmaAttack(),entry.getAsthmaMedication()));
-
-
-        // setup background cell
-        ListCell.copyAttributes(convertView);
-
         return convertView;
+
+    }
+
+    private boolean layoutIsFromResource(View convertView, int id) {
+
+        if(convertView == null){
+            return false;
+        }
+
+        XmlResourceParser xml = convertView.getResources().getLayout(id);
+
+        if(xml == null){
+            Log.d("Header","Null XML");
+            Log.d("Header","id:"+id);
+        }else{
+            Log.d("Header","XML:"+xml.toString());
+            Log.d("Header","id:"+id);
+
+        }
+
+        return xml != null;
 
     }
 

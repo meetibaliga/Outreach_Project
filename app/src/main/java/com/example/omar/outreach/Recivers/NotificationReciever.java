@@ -1,4 +1,4 @@
-package com.example.omar.outreach.Managers;
+package com.example.omar.outreach.Recivers;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -8,10 +8,11 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.omar.outreach.Activities.MainActivity;
 import com.example.omar.outreach.Activities.PeriodicalFormActivity_1;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.R;
@@ -19,14 +20,12 @@ import com.example.omar.outreach.R;
 public class NotificationReciever extends BroadcastReceiver {
 
     private static final String NOTIFY_CHANNEL_ID = "1002";
-    private static final String NOTIFY_CHANNEL_NAME = "periodicaForm";
+    private static final String NOTIFY_CHANNEL_NAME = "periodicalForm";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
         Log.d("Notif","Got it");
         createNotification(context,intent);
-
     }
 
     @TargetApi(26)
@@ -34,19 +33,23 @@ public class NotificationReciever extends BroadcastReceiver {
 
         // extras
         int notifyID = intent.getIntExtra("notifyID", 0);
+        NotificationManager mgr=
+                (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
 
         // create notification channel
-        NotificationChannel channel = new NotificationChannel(NOTIFY_CHANNEL_ID, NOTIFY_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService (Context.NOTIFICATION_SERVICE);
-        notificationManager.createNotificationChannel(channel);
+
+        if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                mgr.getNotificationChannel(NOTIFY_CHANNEL_ID) == null ) {
+            mgr.createNotificationChannel(new NotificationChannel(NOTIFY_CHANNEL_ID,
+                    "Whatever", NotificationManager.IMPORTANCE_DEFAULT));
+        }
 
         // create the NotificationCompat Builder
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, NOTIFY_CHANNEL_ID);
 
         // Create the intent that will start the ResultActivity when the user
         // taps the notification or chooses an action button
-        Intent targetIntent = new Intent(context, PeriodicalFormActivity_1.class);
+        Intent targetIntent = new Intent(context, MainActivity.class);
 
         // Store the notification ID so we can cancel it later in the ResultActivity
         intent.putExtra("notifyID", notifyID);
@@ -74,7 +77,6 @@ public class NotificationReciever extends BroadcastReceiver {
 
         // Build the finished notification and then display it to the user
         Notification notification = builder.build();
-        NotificationManager mgr = (NotificationManager) context.getSystemService(context.NOTIFICATION_SERVICE);
         mgr.notify(notifyID, notification);
     }
 }

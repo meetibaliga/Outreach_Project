@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Preferences -->
+
+    <string name="Enable_Notifications_Key">Enable_Notifications_Key</string>
+    <string name="morning_notification_key">MORNING_NOTIF_KEY</string>
+    <string name="eveninig_notification_key">EVENING_NOTIF_KEY</string>
+    <string name="first_name_key">FIRST_NAME_KEY</string>
+    <string name="last_name_key">LAST_NAME_KEY</string>
+    <string name="email_key">EMAIL_KEY</string>
+    <string name="mobile_key">MOBILE_KEY</string>
+    <string name="address_1_key">ADDR_1_KEY</string>
+    <string name="address_2_key">ADDR_2_KEY</string>
+    <string name="zip_key">ZIP_KEY</string>
+    <string name="city_key">city_KEY</string>
+
+    <!-- Entries -->
+
+    <string name="num_of_daily_entries_KEY">NUM_DAILY_ENTRIES_KEY</string>
+    <string name="last_entry_date_KEY">LAST_ENTRY_DATE</string>
+
+
+</resources>

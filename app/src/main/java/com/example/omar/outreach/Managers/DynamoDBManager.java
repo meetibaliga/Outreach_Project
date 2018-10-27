@@ -11,6 +11,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
+import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
 
@@ -23,6 +24,8 @@ public class DynamoDBManager {
 
     public static int CALL_BACK_ID_GET_ENTRIES = 1;
     public static int CALL_BACK_ID_GET_USER= 2;
+    public static int CALL_BACK_ID_ENTRY_SAVED = 3;
+
 
 
     public DynamoDBManager(){
@@ -71,14 +74,18 @@ public class DynamoDBManager {
     }
 
     public void saveEntry() {
+        saveEntry(App.inputEntry);
+    }
+
+    public void saveEntry(final Entry entry){
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 // save
-                dynamoDBMapper.save(App.inputEntry);
-                Log.d("MainActivity","Entry Saved with ID : "+App.inputEntry.getEntryId());
-                callback.callbackDB(null,0);
+                dynamoDBMapper.save(new EntryDO(entry));
+                Log.d("MainActivity","Entry Saved with ID : "+entry.getEntryId());
+                callback.callbackDB(entry,CALL_BACK_ID_ENTRY_SAVED);
             }
         }).start();
 

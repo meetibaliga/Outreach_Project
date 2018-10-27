@@ -1,52 +1,120 @@
 package com.example.omar.outreach;
 
 import android.app.Application;
-import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
-import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
-import com.example.omar.outreach.Models.EntryDO;
+import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.UserDO;
+import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.google.android.gms.common.util.ArrayUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 public class App extends Application {
 
-    public static EntryDO inputEntry = new EntryDO();
+    // models
+    public static Entry inputEntry; // initialized every time a new entry is beign added
     public static UserDO user = new UserDO();
     public static String USER_ID;
     public static int NUM_OF_ENTRIES;
-    public static boolean mainActivityViewd = false;
+
+    // lists
+    public static ArrayList<Entry> entriesList;
+    public static HashMap<String,String> imagesNames;
+
+    // constants
     public static int NOTIFY_ID = 1001;
     public static int NOTIFY_ID_2 = 1002;
-    public static HashMap<String,String> imagesNames;
+    public static String sourceDateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
+    public static String simpleDateFormat = "EEEE, dd MMM";
+
+    // flags
+    public static boolean isSynced = true;
+    public static boolean mainActivityViewd = false;
+
+    //enums
+
+    public enum types{INT,STRING,BOOL}
+
 
     @Override
     public void onCreate() {
-
         super.onCreate();
         imagesNames = populateEmojiesMapWithDrawables();
+        isSynced = checkIfAppIsSynced();
     }
+
+
+
+    //////////////////// PUBLIC HELPING METHODS /////////////////////////
+
+    public static int getTodayDayOfMonth(){
+        return Calendar.DAY_OF_MONTH;
+    }
+
+    public static int getNowHourOfDay() { return Calendar.HOUR_OF_DAY; }
+
 
     public static String getCurrentDateString(){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         return timestamp.toString();
     }
 
+    public static String getDateFromDateString(String dateString){
+
+        String day = dateString.trim().substring(0, dateString.indexOf(" "));
+        return day;
+    }
+
+    public static String getDateInFormat(String format,String dateString){
+
+        try {
+            Date date = new SimpleDateFormat(sourceDateFormat).parse(dateString);
+            String newDateString = new SimpleDateFormat(format).format(date);
+            return newDateString;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+
+    }
+
     public static boolean intToBool(int integer){
         return integer == 1;
+    }
+
+    public static int boolToInt(boolean bool) {
+        if(bool){
+            return 1;
+        }else{
+            return 0;
+        }
     }
 
     public static String arrayListToJSON(List<String> list, String name){
@@ -133,10 +201,53 @@ public class App extends Application {
     }
 
 
-    public static void log(Context context, String log) {
+    public static void log(final Context context, final String log) {
 
-        Log.d(context.getClass().getSimpleName(),log);
-        Toast.makeText(context,log,Toast.LENGTH_SHORT);
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            public void run() {
+                Log.d(context.getClass().getSimpleName(),log);
+                Toast.makeText(context,log,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+
+    }
+
+    public static boolean hasActiveInternetConnection(Context context) {
+
+        if (isNetworkAvailable(context)) {
+            try {
+                HttpURLConnection urlc = (HttpURLConnection) (new URL("http://www.google.com").openConnection());
+                urlc.setRequestProperty("User-Agent", "Test");
+                urlc.setRequestProperty("Connection", "close");
+                urlc.setConnectTimeout(1500);
+                urlc.connect();
+                return (urlc.getResponseCode() == 200);
+            } catch (IOException e) {
+                log(context, "Error checking internet connection");
+            }
+        } else {
+            log(context, "No network available!");
+        }
+        return false;
+    }
+
+    public static String intToDayTime(int intTime){
+
+        Log.d("PrefAct",intTime+"");
+
+        if( intTime < 1 || intTime > 24 ){
+            return "invalid";
+        }else if(intTime < 12){
+            return (intTime+":"+"00"+"AM");
+        }else if (intTime == 12){
+            return intTime+":"+"00"+"PM";
+        }else if (intTime > 12 && intTime < 24){
+            return intTime-12+":"+"00"+"PM";
+        }else{
+            return intTime-12+":"+"00"+"AM";
+        }
 
     }
 
@@ -189,31 +300,17 @@ public class App extends Application {
 
     }
 
-    private void populateEmojiesMap() {
+    private boolean checkIfAppIsSynced() {
 
-        String[] emotions = getResources().getStringArray(R.array.emotions);
-        String[] activities = getResources().getStringArray(R.array.activities);
-        String[] locations = getResources().getStringArray(R.array.locations);
+        EntriesDataSource ds = new EntriesDataSource(this);
+        return !ds.hasDirtyData();
 
-        String[] emotions_faces =  getResources().getStringArray(R.array.emotions_faces);
-        String[] activities_faces =  getResources().getStringArray(R.array.activities_faces);
-        String[] locations_faces =  getResources().getStringArray(R.array.locations_faces);
+    }
 
-        String[] allStrings = ArrayUtils.concat(emotions,activities,locations);
-        String[] allFaces = ArrayUtils.concat(emotions_faces,activities_faces,locations_faces);
-
-        imagesNames = new HashMap<>();
-        for(int i = 0 ; i < allStrings.length ; i++){
-            imagesNames.put(allStrings[i],allFaces[i]);
-        }
-
-        String[] envEmojies = getResources().getStringArray(R.array.env_faces);
-
-        // env part
-        imagesNames.put("air",envEmojies[0]);
-        imagesNames.put("noise",envEmojies[1]);
-        imagesNames.put("trans",envEmojies[2]);
-        imagesNames.put("active",envEmojies[3]);
-
+    private static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null;
     }
 }

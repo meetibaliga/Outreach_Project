@@ -3,6 +3,7 @@ package com.example.omar.outreach.Provider;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.EntryDO;
 
 /**
@@ -10,12 +11,11 @@ import com.example.omar.outreach.Models.EntryDO;
  */
 public class EntriesConverter {
 
-    public static EntryDO fromCursor(Cursor c) {
+    public static Entry fromCursor(Cursor c) {
 
-        EntryDO entry = new EntryDO();
+        Entry entry = new Entry();
 
         entry.setId(getInt(c, EntryContentContract.EntriesTable.ID, -1));
-        entry.setLastupdated(getLong(c, EntryContentContract.EntriesTable.LASTUPDATED, 0));
         entry.setEntryId(getString(c, EntryContentContract.EntriesTable.ENTRYID, ""));
         entry.setActive(getString(c, EntryContentContract.EntriesTable.ACTIVE,"0"));
         entry.setCreationDate(getString(c, EntryContentContract.EntriesTable.CREATIONDATE,"0"));
@@ -33,7 +33,7 @@ public class EntriesConverter {
         return entry;
     }
 
-    public static ContentValues toContentValues(EntryDO entry) {
+    public static ContentValues toContentValues(Entry entry) {
 
         ContentValues values = new ContentValues();
 
@@ -42,7 +42,6 @@ public class EntriesConverter {
         }
 
         values.put(EntryContentContract.EntriesTable.ID,entry.getId());
-        values.put(EntryContentContract.EntriesTable.LASTUPDATED, entry.getLastUpdated());
         values.put(EntryContentContract.EntriesTable.ENTRYID, entry.getEntryId());
         values.put(EntryContentContract.EntriesTable.ACTIVE, entry.getActive());
         values.put(EntryContentContract.EntriesTable.CREATIONDATE,entry.getCreationDate());

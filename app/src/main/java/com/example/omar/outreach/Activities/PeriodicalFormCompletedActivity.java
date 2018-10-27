@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.omar.outreach.App;
@@ -18,39 +16,36 @@ import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackLocation;
 import com.example.omar.outreach.Managers.DynamoDBManager;
 import com.example.omar.outreach.Managers.LocationManager;
+import com.example.omar.outreach.Managers.RewardManager;
+import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
 
-import java.sql.Timestamp;
+public class PeriodicalFormCompletedActivity extends AppCompatActivity implements CallBackLocation{
 
-public class PeriodicalFormCompletedActivity extends AppCompatActivity implements CallBackDB, CallBackLocation{
-
-    private ProgressBar progressBar;
-    private TextView textView;
     private Location location;
     private EntriesDataSource entriesDataSource;
+
+    //consts
+    private int WAIT_TIME_MILLIS = 2500;
+
+    //ui
+    TextView totalTv;
+    TextView youEarnedTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_completed);
+
         entriesDataSource = new EntriesDataSource(this);
-    }
 
-    @Override
-    protected void onResume() {
-
-        super.onResume();
-
-        // start progressbar
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        textView = (TextView) findViewById(R.id.textView_complete);
+        //init ui
+        totalTv = findViewById(R.id.rewardTextView);
+        youEarnedTv = findViewById(R.id.youEarnedTextView);
 
         // set creation date
-
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        App.inputEntry.setCreationDate(timestamp.toString());
+        App.inputEntry.setCreationDate(App.getCurrentDateString());
 
         // set location
         if(LocationManager.isLocationEnabled(this)){
@@ -58,6 +53,16 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
         }else{
             showDialog();
         }
+    }
+
+    private void setupRewardViews() {
+
+        Double totalReward = RewardManager.calculateReward(entriesDataSource.getNumOfEntries());
+        Double entryReward = RewardManager.REWARD_PER_ENTRY;
+
+        youEarnedTv.setText("👍 You earned +¢"+entryReward);
+        totalTv.setText("$"+totalReward);
+
     }
 
     private void showDialog() {
@@ -100,37 +105,37 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
         if(object instanceof Location){
             location = (Location) object;
             App.inputEntry.setLatLng(location.getLatitude()+"",location.getLongitude()+"");
-
-            //save to db
-            //new DynamoDBManager(this).saveEntry();
-            entriesDataSource.insertItem(App.inputEntry);
-
+            backFromLocaion();
         }else{
-            //new DynamoDBManager(this).saveEntry();
-            entriesDataSource.insertItem(App.inputEntry);
+            backFromLocaion();
         }
     }
 
-    @Override
-    public void callbackDB(Object object,int callbackId) {
+    private void backFromLocaion(){
+
+        entriesDataSource.insertItem(App.inputEntry);
 
         // change UI
-
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
-                progressBar.setVisibility(View.GONE);
-                textView.setVisibility(View.VISIBLE);
+                setupRewardViews();
             }
         });
 
-        // go back after 2 secs from the main thread
+        navigateToNextScreen();
 
+
+    }
+
+    private void navigateToNextScreen() {
+
+        // go back after 2 secs from the main thread
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
                 navigateToMain();
             }
-        }, 1500);
+        }, WAIT_TIME_MILLIS);
 
     }
 }

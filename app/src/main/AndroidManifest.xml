@@ -32,7 +32,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.MainActivity">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -73,7 +72,8 @@
         <activity android:name=".Activities.OneTimeFormCompletedActivity" />
 
         <!-- Notification Reciver -->
-        <receiver android:name=".Managers.NotificationReciever" />
+        <receiver android:name=".Recivers.NotificationReciever" />
+        <receiver android:name=".Recivers.PowerReciver" />
 
         <!-- Provider -->
         <provider
@@ -81,12 +81,21 @@
             android:authorities="com.example.omar.outreach.Provider"
             android:label="EntriesProvider" />
 
-        <!--<activity android:name=".Activities.TestContentProvider">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
+        <activity android:name=".Activities.TestContentProvider">
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
+        </activity>
+
+        <!-- Preferences Page -->
+        <activity android:name=".Activities.PreferencesActivity"
+            android:parentActivityName=".Activities.MainActivity">
+             <!--<intent-filter>-->
+             <!--<action android:name="android.intent.action.MAIN" />-->
+             <!--<category android:name="android.intent.category.LAUNCHER" />-->
+             <!--</intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

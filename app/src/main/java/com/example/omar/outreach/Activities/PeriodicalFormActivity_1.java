@@ -4,6 +4,8 @@ import android.content.Intent;
 
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.BaseActivites.PeriodicalBaseFormActivity;
+import com.example.omar.outreach.Models.Entry;
+import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.R;
 
 public class PeriodicalFormActivity_1 extends PeriodicalBaseFormActivity {
@@ -36,5 +38,13 @@ public class PeriodicalFormActivity_1 extends PeriodicalBaseFormActivity {
     @Override
     protected void removeItemFromModel() {
         App.inputEntry.getEmotions().remove(0);
+    }
+
+    @Override
+    protected void specificCode() {
+
+        // setup user id and entry id
+        App.inputEntry = new Entry();
+
     }
 }

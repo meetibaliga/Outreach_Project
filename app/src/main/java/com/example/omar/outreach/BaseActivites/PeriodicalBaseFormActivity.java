@@ -48,11 +48,19 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
     protected abstract Intent getNextIntent();
     protected abstract void addItemToModel(String text);
     protected abstract void removeItemFromModel();
+    protected void specificCode(){}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_1);
+
+        // step specific code
+
+        specificCode();
+
+        // max allowed selection
+
         maxAllowedSelection = getMaxAllowedSelection();
 
         // setup ui
@@ -62,11 +70,6 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         titleTV.setText(getScreenTitle());
         nextBtn = findViewById(R.id.button);
         nextBtn.setVisibility(View.INVISIBLE);
-
-        // setup user id and entry id
-
-        App.inputEntry.setUserId(App.USER_ID);
-        App.inputEntry.setEntryId(""+(App.NUM_OF_ENTRIES+1));
 
         //data
 

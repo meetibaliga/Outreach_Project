@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Notifications"
+        android:id="@+id/notification_group">
+
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="@string/Enable_Notifications_Key"
+            android:summary="Turn notification On/Off"
+            android:title="Enable Notifications" />
+        <ListPreference
+            android:defaultValue="9"
+            android:entries="@array/morning_times_entries"
+            android:entryValues="@array/morning_times_values"
+            android:key="@string/morning_notification_key"
+            android:summary="9:00AM"
+            android:title="Morning Notification Time" />
+        <ListPreference
+            android:defaultValue="18"
+            android:entries="@array/evening_times_entries"
+            android:entryValues="@array/evening_times_values"
+            android:key="@string/eveninig_notification_key"
+            android:summary="6:00PM"
+            android:title="Evening Notificaiton Time" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Account Information">
+
+        <EditTextPreference
+            android:id="@+id/first_name_pref"
+            android:defaultValue="Please Enter your first Name"
+            android:key="@string/first_name_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="First Name" />
+        <EditTextPreference
+            android:defaultValue="Please enter your last name"
+            android:key="@string/last_name_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Last Name" />
+        <EditTextPreference
+            android:defaultValue="Please enter your email"
+            android:key="@string/email_key"
+            android:summary="@string/enter_email"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Email" />
+        <EditTextPreference
+            android:defaultValue="Please enter your password"
+            android:key="@string/mobile_key"
+            android:summary="@string/enter_mobile"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Mobile Number" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Address">
+
+        <EditTextPreference
+            android:defaultValue="Please enter your address line 1"
+            android:key="@string/address_1_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Address Line 1" />
+        <EditTextPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="Please enter your address line 1"
+            android:key="@string/address_2_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Address Line 2" />
+        <EditTextPreference
+            android:defaultValue="Please enter your city"
+            android:key="@string/city_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="City" />
+        <EditTextPreference
+            android:defaultValue="Please enter your zip code"
+            android:key="@string/zip_key"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Zip Code" />
+    </PreferenceCategory>
+</PreferenceScreen>

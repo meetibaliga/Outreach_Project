@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Helping.FormEntries.FormEntry;
 import com.example.omar.outreach.Helping.FormEntries.ScaleFormEntry;
-import com.example.omar.outreach.Models.EntryDO;
+import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.R;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.List;
 public class PeriodicalFormActivity_4 extends AppCompatActivity {
 
     //model
-    EntryDO entryDO;
+    Entry entry;
 
     private static LinearLayout formLayout;
     private ArrayList<FormEntry> formEntries;

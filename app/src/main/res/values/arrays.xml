@@ -287,4 +287,44 @@
         <item>Don't agree</item>
     </string-array>
 
+    <!-- Morning Times -->
+    <string-array name="morning_times_entries">
+        <item name="6">6:00AM</item>
+        <item name="7">7:00AM</item>
+        <item name="8">8:00AM</item>
+        <item name="9">9:00AM</item>
+        <item name="10">10:00AM</item>
+        <item name="11">11:00AM</item>
+    </string-array>
+
+    <!-- Morning Times -->
+    <string-array name="morning_times_values">
+        <item name="6">6</item>
+        <item name="7">7</item>
+        <item name="8">8</item>
+        <item name="9">9</item>
+        <item name="10">10</item>
+        <item name="11">11</item>
+    </string-array>
+
+    <!-- Evening Times -->
+    <string-array name="evening_times_entries">
+        <item name="6">6:00PM</item>
+        <item name="7">7:00PM</item>
+        <item name="8">8:00PM</item>
+        <item name="9">9:00PM</item>
+        <item name="10">10:00PM</item>
+        <item name="11">11:00PM</item>
+    </string-array>
+
+    <!-- Evening Times -->
+    <string-array name="evening_times_values">
+        <item name="6">18</item>
+        <item name="7">19</item>
+        <item name="8">20</item>
+        <item name="9">21</item>
+        <item name="10">22</item>
+        <item name="11">23</item>
+    </string-array>
+
 </resources>
