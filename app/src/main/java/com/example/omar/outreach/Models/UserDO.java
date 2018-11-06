@@ -5,9 +5,11 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-@DynamoDBTable(tableName = "outreach-mobilehub-787670546-User")
+//@DynamoDBTable(tableName = "outreach-mobilehub-787670546-User")
+@DynamoDBTable(tableName = "Outreach-User")
 
-public class UserDO {
+public class UserDO extends Model{
+
     private String _userId;
     private String _firstName;
     private Boolean _airFresh;
@@ -45,6 +47,10 @@ public class UserDO {
     private String _windowsOpen;
     private String _yearBirth;
     private String _homeArea;
+    private String _address1;
+    private String _address2;
+    private String _city;
+    private String _zip;
 
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
@@ -55,7 +61,8 @@ public class UserDO {
     public void setUserId(final String _userId) {
         this._userId = _userId;
     }
-    @DynamoDBRangeKey(attributeName = "firstName")
+
+    //@DynamoDBRangeKey(attributeName = "firstName")
     @DynamoDBAttribute(attributeName = "firstName")
     public String getFirstName() {
         return _firstName;
@@ -342,10 +349,46 @@ public class UserDO {
     public String getHomeArea() {
         return _homeArea;
     }
-
     public void setHomeArea(final String _homeArea) {
         this._homeArea = _yearBirth;
     }
+
+    @DynamoDBAttribute(attributeName = "address1")
+    public String get_address1() {
+        return _address1;
+    }
+
+    public void set_address1(String _address1) {
+        this._address1 = _address1;
+    }
+
+    @DynamoDBAttribute(attributeName = "address2")
+    public String get_address2() {
+        return _address2;
+    }
+
+    public void set_address2(String _address2) {
+        this._address2 = _address2;
+    }
+
+    @DynamoDBAttribute(attributeName = "city")
+    public String get_city() {
+        return _city;
+    }
+
+    public void set_city(String _city) {
+        this._city = _city;
+    }
+
+    @DynamoDBAttribute(attributeName = "zip")
+    public String get_zip() {
+        return _zip;
+    }
+
+    public void set_zip(String _zip) {
+        this._zip = _zip;
+    }
+
 
     // my methods
 

@@ -12,12 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.omar.outreach.App;
-import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackLocation;
-import com.example.omar.outreach.Managers.DynamoDBManager;
 import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.RewardManager;
-import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
 
@@ -49,7 +46,7 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
 
         // set location
         if(LocationManager.isLocationEnabled(this)){
-            new LocationManager(this).getCurrentLocation();
+            new LocationManager(this,this).getCurrentLocation();
         }else{
             showDialog();
         }
@@ -57,7 +54,7 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
 
     private void setupRewardViews() {
 
-        Double totalReward = RewardManager.calculateReward(entriesDataSource.getNumOfEntries());
+        Double totalReward = RewardManager.calculateReward(entriesDataSource.getNumOfItems());
         Double entryReward = RewardManager.REWARD_PER_ENTRY;
 
         youEarnedTv.setText("👍 You earned +¢"+entryReward);

@@ -1,56 +1,42 @@
 package com.example.omar.outreach.Models;
 
-import java.util.ArrayList;
-import java.util.Objects;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
+import com.example.omar.outreach.Interfaces.UUIDUser;
 
-class User {
+@DynamoDBTable(tableName = "Users")
 
-    private String firstName;
-    private ArrayList<Entery> enteries;
+public class User implements UUIDUser {
 
-    public User(String firstName, ArrayList<Entery> enteries) {
-        this.firstName = firstName;
-        this.enteries = enteries;
+    private String _userId;
+    private String _firstName;
+
+    @DynamoDBHashKey(attributeName = "id")
+    @DynamoDBAttribute(attributeName = "id")
+    public String getUserId() {
+        return _userId;
+    }
+    public void setUserId(final String _userId) {
+        this._userId = _userId;
     }
 
+    @DynamoDBAttribute(attributeName = "firstName")
     public String getFirstName() {
-        return firstName;
+        return _firstName;
+    }
+    public void setFirstName(final String _firstName) {
+        this._firstName = _firstName;
     }
 
-    public ArrayList<Entery> getEnteries() {
-        return enteries;
-    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setEnteries(ArrayList<Entery> enteries) {
-        this.enteries = enteries;
-    }
-
-    public void addEntery(Entery entery){
-        enteries.add(entery);
+    @Override
+    public Initials getUUIDInitials() {
+        return new Initials(getClass().getSimpleName());
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "firstName='" + firstName + '\'' +
-                ",enteries=" + enteries +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(firstName, user.firstName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, enteries);
+    public String getCreationDate() {
+        return null;
     }
 }

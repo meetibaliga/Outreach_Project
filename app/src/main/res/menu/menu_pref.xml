@@ -3,13 +3,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    tools:context=".Activities.PreferencesActivity">
 
     <item
-        android:id="@+id/settings_item"
+        android:id="@+id/signout_item"
         app:showAsAction="ifRoom"
         android:orderInCategory="301"
-        android:title="Settings">
+        android:title="Signout">
     </item>
 
 </menu>

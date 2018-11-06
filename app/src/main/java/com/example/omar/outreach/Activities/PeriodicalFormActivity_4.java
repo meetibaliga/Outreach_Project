@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Helping.FormEntries.FormEntry;
@@ -94,6 +95,10 @@ public class PeriodicalFormActivity_4 extends AppCompatActivity {
     }
 
     private void nextButtonClicked() {
+
+        if (!App.checkForm(this.formEntries,this))
+            return;
+
         App.inputEntry.setOdor(""+air_quality.getValue().substring(0,1));
         App.inputEntry.setNoise(""+noise.getValue().substring(0,1));
         App.inputEntry.setTransportation(""+transportation.getValue().substring(0,1));

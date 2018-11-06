@@ -27,7 +27,7 @@ public class OneTimeForm_2 extends RegistrationBaseActivity {
     protected void nextButtonClicked() {
 
         // check if form is complete
-        if (!checkForm())
+        if (!App.checkForm(this.formEntries,this))
             return;
 
         // do the

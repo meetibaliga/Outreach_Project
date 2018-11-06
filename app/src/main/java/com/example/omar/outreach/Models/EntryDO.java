@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-@DynamoDBTable(tableName = "outreach-mobilehub-787670546-Entry")
+//@DynamoDBTable(tableName = "outreach-mobilehub-787670546-Entry")
+@DynamoDBTable(tableName = "Outreach-Entry")
 
 public class EntryDO {
 
@@ -89,7 +90,6 @@ public class EntryDO {
     }
 
 
-
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
     public String getUserId() {
@@ -99,6 +99,7 @@ public class EntryDO {
     public void setUserId(final String _userId) {
         this._userId = _userId;
     }
+
     @DynamoDBRangeKey(attributeName = "entryId")
     @DynamoDBAttribute(attributeName = "entryId")
     public String getEntryId() {

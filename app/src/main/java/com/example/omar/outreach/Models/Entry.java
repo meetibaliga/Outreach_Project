@@ -4,7 +4,10 @@ import android.content.ContentValues;
 import android.util.Log;
 
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.Interfaces.DataItem;
+import com.example.omar.outreach.Interfaces.UUIDUser;
 import com.example.omar.outreach.Managers.SharedPreferencesManager;
+import com.example.omar.outreach.Managers.UUIDManager;
 import com.example.omar.outreach.Provider.EntryContentContract;
 
 import java.util.ArrayList;
@@ -14,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public class Entry {
+public class Entry extends Model implements DataItem {
 
     private String _userId;
     private String _entryId;
@@ -51,8 +54,7 @@ public class Entry {
         this._creationDate = App.getCurrentDateString();
         this._isDeleted = false;
         this._isDirty = true;
-        String randomID = UUID.randomUUID().toString();
-        this._entryId = randomID+_creationDate;
+        this._entryId = getUUID();
 
     }
 
@@ -290,6 +292,11 @@ public class Entry {
         return values;
     }
 
+    @Override
+    public String getItemId() {
+        return _entryId;
+    }
+
     // get random entry
 
     public static Entry getRandromEntry(){
@@ -331,6 +338,11 @@ public class Entry {
                 ", _id=" + _id +
                 ", _isDirty=" + _isDirty +
                 '}';
+    }
+
+    @Override
+    public Initials getUUIDInitials() {
+        return new Initials("Entry");
     }
 }
 

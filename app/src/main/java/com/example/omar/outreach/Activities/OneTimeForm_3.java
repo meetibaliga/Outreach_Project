@@ -16,10 +16,6 @@ import java.util.Arrays;
 
 public class OneTimeForm_3 extends RegistrationBaseActivity {
 
-    private static LinearLayout formLayout;
-    private static Activity activity;
-    private ArrayList<FormEntry> formEntries;
-
     // ui
 
     private FormEntry ventilationType;
@@ -36,7 +32,7 @@ public class OneTimeForm_3 extends RegistrationBaseActivity {
     public void nextButtonClicked(){
 
         // check form
-        if (!checkForm())
+        if (!App.checkForm(formEntries,this))
             return;
 
         // do these next

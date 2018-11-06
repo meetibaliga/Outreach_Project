@@ -17,12 +17,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(EntryContentContract.EntriesTable.CREATE_SQLITE_TABLE);
+        db.execSQL(EntryContentContract.LocationsTable.CREATE_SQLITE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(EntryContentContract.EntriesTable.DROP_SQLITE_TABLE);
         db.execSQL(EntryContentContract.EntriesTable.CREATE_SQLITE_TABLE);
-        Log.d("DatabaseHelper", String.format("Database requires upgrade from %d to %d", oldVersion, newVersion));
+        db.execSQL(EntryContentContract.LocationsTable.DROP_SQLITE_TABLE);
+        db.execSQL(EntryContentContract.LocationsTable.CREATE_SQLITE_TABLE);
     }
 }

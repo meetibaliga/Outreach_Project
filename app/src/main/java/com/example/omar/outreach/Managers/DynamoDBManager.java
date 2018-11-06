@@ -13,7 +13,12 @@ import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.EntryDO;
+import com.example.omar.outreach.Models.LocationDO;
+import com.example.omar.outreach.Models.User;
 import com.example.omar.outreach.Models.UserDO;
+import com.example.omar.outreach.Models.UserLocation;
+
+import java.util.List;
 
 public class DynamoDBManager {
 
@@ -25,12 +30,8 @@ public class DynamoDBManager {
     public static int CALL_BACK_ID_GET_ENTRIES = 1;
     public static int CALL_BACK_ID_GET_USER= 2;
     public static int CALL_BACK_ID_ENTRY_SAVED = 3;
-
-
-
-    public DynamoDBManager(){
-        this(null);
-    }
+    public static int CALL_BACK_ID_LOCATION_SAVED = 4;
+    public static int CALL_BACK_ID_USER_SAVED = 5;
 
     public DynamoDBManager(CallBackDB callBack){
         initializeDB();
@@ -84,12 +85,31 @@ public class DynamoDBManager {
             public void run() {
                 // save
                 dynamoDBMapper.save(new EntryDO(entry));
-                Log.d("MainActivity","Entry Saved with ID : "+entry.getEntryId());
+                Log.d("MainActivity","Entry Saved with ID : " + entry.getEntryId());
                 callback.callbackDB(entry,CALL_BACK_ID_ENTRY_SAVED);
             }
         }).start();
 
     }
+
+    public void saveEntries(final List<Entry> entries){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for(Entry entry : entries ){
+                    // save
+                    dynamoDBMapper.save(new EntryDO(entry));
+                    Log.d("MainActivity","Entry Saved with ID : " + entry.getEntryId());
+                    callback.callbackDB(entry,CALL_BACK_ID_ENTRY_SAVED);
+                }
+
+            }
+        }).start();
+
+    }
+
 
     public void saveUserForm(){
 
@@ -102,6 +122,60 @@ public class DynamoDBManager {
                 dynamoDBMapper.save(App.user);
                 Log.d("DB","User Saved");
                 callback.callbackDB(null,0);
+            }
+        }).start();
+
+    }
+
+    public void saveLocation(final UserLocation location){
+
+        final LocationDO locationDO = new LocationDO(location);
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // save
+                dynamoDBMapper.save(locationDO);
+                Log.d("MainActivity","Location Saved with ID : " + location.get_locationId());
+                callback.callbackDB(location,CALL_BACK_ID_LOCATION_SAVED);
+            }
+        }).start();
+
+    }
+
+    public void saveLocations(final List<UserLocation> locations){
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for(UserLocation location:locations){
+
+                    LocationDO locationDO = new LocationDO(location);
+
+                    // save
+                    dynamoDBMapper.save(locationDO);
+                    Log.d("MainActivity","Location Saved with ID : " + location.get_locationId());
+                    callback.callbackDB(location,CALL_BACK_ID_LOCATION_SAVED);
+
+                }
+
+            }
+        }).start();
+
+    }
+
+    public void saveUserEncrypted(final UserDO user){
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // save
+                dynamoDBMapper.save(user);
+                Log.d("MainActivity","User Saved with ID : " + user.getUserId());
+                callback.callbackDB(user,CALL_BACK_ID_USER_SAVED);
             }
         }).start();
 

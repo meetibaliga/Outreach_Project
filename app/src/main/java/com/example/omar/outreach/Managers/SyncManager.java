@@ -4,13 +4,14 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.view.View;
 
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Models.Entry;
-import com.example.omar.outreach.Models.EntryDO;
+import com.example.omar.outreach.Models.LocationDO;
+import com.example.omar.outreach.Models.UserLocation;
 import com.example.omar.outreach.Provider.EntriesDataSource;
+import com.example.omar.outreach.Provider.LocationsDataSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,30 +19,42 @@ import java.util.List;
 public class SyncManager implements CallBackDB{
 
     private DynamoDBManager db;
-    EntriesDataSource dataSource;
+    EntriesDataSource entriesDataSource;
+    LocationsDataSource locationsDataSource;
     private Context context;
-    private int numOfDirty = 0;
+    private int numOfDirtyItems = 0;
 
     public SyncManager(Context context){
         this.context = context;
         db = new DynamoDBManager(this);
-        dataSource = new EntriesDataSource(context);
+        entriesDataSource = new EntriesDataSource(context);
+        locationsDataSource = new LocationsDataSource(context);
     }
 
     public void syncAll(){
 
         new Thread(new Runnable() {
+
             @Override
             public void run() {
+
                 // if there is no internet return
+
                 if(!App.hasActiveInternetConnection(context)){
                     App.log(context,"No internet connection");
                     return;
                 }
+
                 App.log(context,"Syncing..");
+
                 syncEntries();
                 syncUserInfo();
-                syncLocations();
+                //syncLocations();
+
+                if(numOfDirtyItems == 0){
+                    App.log(context,"App Synced .. ");
+
+                }
 
             }
         }).start();
@@ -51,15 +64,8 @@ public class SyncManager implements CallBackDB{
     public void syncEntries(){
 
         List<Entry> dirtyEntries = getDirtyEntriesList();
-        numOfDirty = dirtyEntries.size();
-
-        if( numOfDirty == 0 ) {
-            App.isSynced = true;
-        }
-
-        for( Entry entry : dirtyEntries ){
-            db.saveEntry(entry);
-        }
+        numOfDirtyItems += dirtyEntries.size();
+        db.saveEntries(dirtyEntries);
 
     }
 
@@ -68,6 +74,13 @@ public class SyncManager implements CallBackDB{
     }
 
     public void syncLocations(){
+
+        List<UserLocation> dirtyLocations = getDirtyLocations();
+
+        Log.d("Sync",dirtyLocations.toString());
+
+        numOfDirtyItems += dirtyLocations.size();
+        db.saveLocations(dirtyLocations);
 
     }
 
@@ -78,21 +91,30 @@ public class SyncManager implements CallBackDB{
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
 
-                App.log(context,"In call back .. ");
+                App.log(context,"In call back db .. ");
 
                 if(callbackId == DynamoDBManager.CALL_BACK_ID_ENTRY_SAVED){
+
                     App.log(context,"Item Saved .. ");
                     Entry entry = (Entry)object;
                     entry.setDirty(false); // synced
-                    dataSource.updateItem(entry);
-                    numOfDirty--;
+                    entriesDataSource.updateItem(entry);
+                    numOfDirtyItems--;
 
-                    if(numOfDirty == 0){
-                        App.isSynced = true;
-                        App.log(context,"App Synced .. ");
 
-                    }
+                }else if (callbackId == DynamoDBManager.CALL_BACK_ID_LOCATION_SAVED){
 
+                    App.log(context,"Item Saved .. ");
+                    UserLocation location = (UserLocation) object;
+                    location.set_isDirty(false); // synced
+                    locationsDataSource.updateItem(location);
+                    numOfDirtyItems--;
+
+                }
+
+                if(numOfDirtyItems == 0){
+                    App.isSynced = true;
+                    App.log(context,"App Synced .. ");
                 }
 
             }
@@ -104,12 +126,10 @@ public class SyncManager implements CallBackDB{
 
     private List<Entry> getDirtyEntriesList() {
 
-        List<Entry> allEntries = dataSource.getAllEntries();
+        List<Entry> allEntries = entriesDataSource.getAllItems();
         List<Entry> dirtyEntries = new ArrayList<>();
 
-        for( Entry entry: allEntries){
-
-            App.log(context,entry.isDirt()+"");
+        for( Entry entry: allEntries ){
 
             if(entry.isDirt()){
                 dirtyEntries.add(entry);
@@ -118,6 +138,13 @@ public class SyncManager implements CallBackDB{
         }
 
         return dirtyEntries;
+
+    }
+
+    private List<UserLocation> getDirtyLocations(){
+
+        List<UserLocation> dirtyLocations = locationsDataSource.getDirtyItems();
+        return dirtyLocations;
 
     }
 }

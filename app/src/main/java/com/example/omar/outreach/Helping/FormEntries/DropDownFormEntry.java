@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -41,9 +42,7 @@ public class DropDownFormEntry extends FormEntry{
         GradientDrawable dr = (GradientDrawable)dropDownLayout.getBackground();
         dr.setColor(getResources().getColor(R.color.colorLightGrey));
 
-
         // text
-
         TextView dropDownTv = new TextView(getContext());
         dropDownTv.setLayoutParams(getNestedFormEntryParams());
         dropDownTv.setText(getTitle());
@@ -51,7 +50,6 @@ public class DropDownFormEntry extends FormEntry{
         dropDownLayout.addView(dropDownTv);
 
         // spinners container
-
         LinearLayout spinnerContainer = new LinearLayout(getContext());
         spinnerContainer.setLayoutParams(getNestedFormEntryParams());
         spinnerContainer.setOrientation(LinearLayout.HORIZONTAL);
@@ -61,17 +59,16 @@ public class DropDownFormEntry extends FormEntry{
 
         for(int i = 0 ; i < this.choices.size() ; i++){
 
-            Spinner spinner = new Spinner(getContext());
+            Spinner spinner = new Spinner(getContext(),Spinner.MODE_DROPDOWN);
             spinner.setId(i);
             spinner.setLayoutParams(getNestedHorizontalFormEntryParams());
-            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_item,this.choices.get(i));
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_spinner_dropdown_item,this.choices.get(i));
             spinner.setAdapter(spinnerAdapter);
             spinnerContainer.addView(spinner);
 
 
             spinners.add(spinner);
         }
-
 
         return dropDownLayout;
     }

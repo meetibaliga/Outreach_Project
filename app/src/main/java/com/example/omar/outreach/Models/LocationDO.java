@@ -5,7 +5,8 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
-@DynamoDBTable(tableName = "outreach-mobilehub-787670546-Location")
+//@DynamoDBTable(tableName = "outreach-mobilehub-787670546-Location")
+@DynamoDBTable(tableName = "Outreach-Location")
 
 public class LocationDO {
     private String _userId;
@@ -13,6 +14,14 @@ public class LocationDO {
     private String _creationDate;
     private String _latitude;
     private String _longitude;
+
+    public LocationDO(UserLocation location){
+        this._userId = location.get_userId();
+        this._locationId = location.get_locationId();
+        this._creationDate = location.get_creationDate();
+        this._latitude = location.get_latitude();
+        this._longitude = location.get_longitude();
+    }
 
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
@@ -23,6 +32,7 @@ public class LocationDO {
     public void setUserId(final String _userId) {
         this._userId = _userId;
     }
+
     @DynamoDBRangeKey(attributeName = "locationId")
     @DynamoDBAttribute(attributeName = "locationId")
     public String getLocationId() {

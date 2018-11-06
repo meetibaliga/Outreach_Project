@@ -87,6 +87,9 @@ public class PeriodicalFormActivity_5 extends AppCompatActivity {
 
     private void nextButtonClicked() {
 
+        if (!App.checkForm(this.formEntries,this))
+            return;
+
         App.inputEntry.setCough(cough.getTrueOrFalse());
         App.inputEntry.setLimitedActivities(limited_activities.getTrueOrFalse());
 

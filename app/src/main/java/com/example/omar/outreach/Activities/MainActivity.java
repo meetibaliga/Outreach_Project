@@ -1,7 +1,6 @@
 package com.example.omar.outreach.Activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -9,10 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +24,6 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
@@ -40,6 +39,8 @@ import com.example.omar.outreach.Managers.MapsConnectionManager;
 import com.example.omar.outreach.Managers.RewardManager;
 import com.example.omar.outreach.Managers.SharedPreferencesManager;
 import com.example.omar.outreach.Models.Entry;
+import com.example.omar.outreach.Models.User;
+import com.example.omar.outreach.Recivers.LocationReciver;
 import com.example.omar.outreach.Recivers.NotificationReciever;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
@@ -83,10 +84,22 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     }
 
+    private void addUser() {
+
+        App.log(this,"Saving user .. ");
+
+        UserDO user = new UserDO();
+        user.setUserId(App.USER_ID);
+        user.setFirstName("Omar");
+
+        DynamoDBManager db = new DynamoDBManager(this);
+        db.saveUserEncrypted(user);
+    }
+
     private void setupRewardTV() {
 
         ds = new EntriesDataSource(this);
-        Double totalReward = RewardManager.calculateReward(ds.getNumOfEntries());
+        Double totalReward = RewardManager.calculateReward(ds.getNumOfItems());
         rewardTV.setText("$"+totalReward);
 
     }
@@ -164,6 +177,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         // run code only one time
         App.mainActivityViewd = true;
 
+        // set main activity referece
+        App.mainActivity = this;
+
         // set the user id and num of entries of this user
         if (App.USER_ID == null){
 
@@ -197,6 +213,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         // set broadcast reciver for the pluged in to power
         registerPlugedInReciver();
+
+        //setup location reciver
+        setupLocationReciver();
 
 
     }
@@ -326,7 +345,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         }
 
         // setup list view
-        final List<Entry> entriesList = ds.getAllEntriesOrderedByDate(true);
+        final List<Entry> entriesList = ds.getAllItemsOrderedByDate(true);
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {
@@ -405,7 +424,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         // Set alarm
         AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP,callendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP,callendar.getTime().getTime(),AlarmManager.INTERVAL_DAY,pendingIntent);
 
     }
 
@@ -417,6 +436,18 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     }
 
+    private void setupLocationReciver() {
 
+        Log.d("Tracking","Helooooooo");
+
+        Intent intent = new Intent(getApplicationContext(),LocationReciver.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),App.NOTIFY_ID_3,intent,PendingIntent.FLAG_CANCEL_CURRENT);
+
+        AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP,Calendar.getInstance().getTimeInMillis(),1000*5,pendingIntent);
+
+
+    }
 
 }

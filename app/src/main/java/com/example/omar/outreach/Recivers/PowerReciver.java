@@ -15,9 +15,7 @@ public class PowerReciver extends BroadcastReceiver {
 
     private Context context;
 
-    public PowerReciver(){
-
-    }
+    public PowerReciver(){} // to shut up the compiler
 
     public PowerReciver(Context context){
         this.context = context;

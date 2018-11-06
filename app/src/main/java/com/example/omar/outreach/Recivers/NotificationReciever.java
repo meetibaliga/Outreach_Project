@@ -10,11 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
-
 import com.example.omar.outreach.Activities.MainActivity;
-import com.example.omar.outreach.Activities.PeriodicalFormActivity_1;
-import com.example.omar.outreach.App;
 import com.example.omar.outreach.R;
 
 public class NotificationReciever extends BroadcastReceiver {
@@ -24,7 +20,6 @@ public class NotificationReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d("Notif","Got it");
         createNotification(context,intent);
     }
 

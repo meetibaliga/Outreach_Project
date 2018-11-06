@@ -29,7 +29,7 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
     public void nextButtonClicked(){
 
         //check form
-        if (!checkForm())
+        if (!App.checkForm(this.formEntries,this))
             return;
 
         // do these

@@ -3,6 +3,7 @@ package com.example.omar.outreach.Helping.FormEntries;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -14,6 +15,8 @@ import com.example.omar.outreach.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import info.hoang8f.android.segmented.SegmentedGroup;
+
 public class RadioFormEntry extends FormEntry{
 
     private List<String> choises;
@@ -22,11 +25,6 @@ public class RadioFormEntry extends FormEntry{
 
     public RadioFormEntry(String title, List<String> choises, Context context){
         super(title,context);
-        this.choises = choises;
-    }
-
-    public RadioFormEntry(List<String> choises, Context context){
-        super(context);
         this.choises = choises;
     }
 
@@ -57,24 +55,31 @@ public class RadioFormEntry extends FormEntry{
         radioLayout.addView(tv);
 
         // Radios
-        radioGroup = new RadioGroup(getContext());
+        radioGroup = getRadioGroupType();
         radioGroup.setLayoutParams(getNestedFormEntryParams());
         radioGroup.setOrientation(LinearLayout.HORIZONTAL);
 
         for (int i = 0 ; i < choises.size() ; i++){
-            RadioButton radioButton = new RadioButton(getContext());
+            RadioButton radioButton = getRadioButtonType();
+            setRadioButtonParams(radioButton);
             radioButton.setId(i);
             radioButton.setText(choises.get(i));
-            radioButton.setLayoutParams(getNestedHorizontalFormEntryParams());
+            setRadioButtonSize(radioButton);
             radioGroup.addView(radioButton);
             radioButtons.add(radioButton);
         }
+
+        // update background for segmented control
+        updateBackground(radioGroup);
 
         // add radio group to layout
         radioLayout.addView(radioGroup);
 
         return radioLayout;
 
+    }
+
+    public void setRadioButtonSize(RadioButton radio) {
     }
 
     @Override
@@ -101,5 +106,20 @@ public class RadioFormEntry extends FormEntry{
         this.choises = choises;
     }
 
+    // override for the subclass
 
+    public RadioGroup getRadioGroupType() {
+        return new RadioGroup(getContext());
+    }
+
+    public RadioButton getRadioButtonType() {
+        return new RadioButton(getContext());
+    }
+
+    public void setRadioButtonParams(RadioButton radioButton){
+        radioButton.setLayoutParams(getNestedHorizontalFormEntryParams());
+    }
+
+    public void updateBackground(RadioGroup group) {
+    }
 }

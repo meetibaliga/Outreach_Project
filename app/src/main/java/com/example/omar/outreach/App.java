@@ -1,5 +1,6 @@
 package com.example.omar.outreach;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -10,9 +11,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.omar.outreach.Helping.FormEntries.FormEntry;
 import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.Provider.EntriesDataSource;
+import com.example.omar.outreach.Provider.LocationsDataSource;
 import com.google.android.gms.common.util.ArrayUtils;
 
 import org.json.JSONArray;
@@ -50,16 +53,19 @@ public class App extends Application {
     // constants
     public static int NOTIFY_ID = 1001;
     public static int NOTIFY_ID_2 = 1002;
+    public static int NOTIFY_ID_3 = 0;
     public static String sourceDateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
     public static String simpleDateFormat = "EEEE, dd MMM";
 
     // flags
-    public static boolean isSynced = true;
+    public static boolean isSynced = false;
     public static boolean mainActivityViewd = false;
 
     //enums
-
     public enum types{INT,STRING,BOOL}
+
+    //activites
+    public static Activity mainActivity;
 
 
     @Override
@@ -251,6 +257,17 @@ public class App extends Application {
 
     }
 
+    public static boolean checkForm(List<FormEntry> formEntries,Context context){
+        // check form
+        for(FormEntry f: formEntries){
+            if(f.isEmpty()){
+                Toast.makeText(context,context.getString(R.string.fillForm),Toast.LENGTH_LONG);
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 
 
@@ -303,7 +320,9 @@ public class App extends Application {
     private boolean checkIfAppIsSynced() {
 
         EntriesDataSource ds = new EntriesDataSource(this);
-        return !ds.hasDirtyData();
+        LocationsDataSource ld = new LocationsDataSource(this);
+
+        return !ds.hasDirtyData() && !ld.hasDirtyData();
 
     }
 

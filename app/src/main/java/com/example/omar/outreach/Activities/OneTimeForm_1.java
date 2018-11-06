@@ -21,6 +21,10 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
     // ui
     private FormEntry firstName;
     private FormEntry lastName;
+    private FormEntry address_1;
+    private FormEntry address_2;
+    private FormEntry city;
+    private FormEntry zip_code;
     private FormEntry relationship;
     private FormEntry sex;
     private FormEntry dateOfBirth;
@@ -42,6 +46,26 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
         // last name
         lastName = new ShortTextFormEntry(getResources().getString(R.string.lastName_question),this);
         entries.add(lastName);
+
+        //address 1
+        address_1 = new ShortTextFormEntry(getResources().getString(R.string.address1_question),this);
+        entries.add(address_1);
+
+        //address 2
+        address_2 = new ShortTextFormEntry(getResources().getString(R.string.address2_question),this);
+        entries.add(address_2);
+
+        //address 2
+        city = new ShortTextFormEntry(getResources().getString(R.string.city_question),this);
+        entries.add(city);
+
+        //address 2
+        zip_code = new ShortTextFormEntry(getResources().getString(R.string.zip_code),this);
+        entries.add(zip_code);
+
+        // income
+        income = new ShortTextFormEntry(getResources().getString(R.string.income_question),this);
+        entries.add(income);
 
         // Relationship
         relationship = new DropDownFormEntry(getResources().getString(R.string.relationship_question),this, ListPopulatingHelpers.getListOf("Self","Son","Spouse","Father"));
@@ -71,16 +95,12 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
         race = new DropDownFormEntry(getResources().getString(R.string.race_question),this,ListPopulatingHelpers.getListOf("American, Indian or Alaska Native","Hispanic", "Prefer not to disclose"));
         entries.add(race);
 
-        // income
-        income = new ShortTextFormEntry(getResources().getString(R.string.income_question),this);
-        entries.add(income);
-
         return entries;
     }
 
     protected void nextButtonClicked() {
 
-        if (!checkForm())
+        if (!App.checkForm(this.formEntries,this))
             return;
 
         // if all filled do the following
@@ -88,6 +108,10 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
         App.user.setUserId(App.USER_ID);
         App.user.setFirstName(firstName.getValue());
         App.user.setLastName(lastName.getValue());
+        App.user.set_address1(address_1.getValue());
+        App.user.set_address2(address_2.getValue());
+        App.user.set_city(city.getValue());
+        App.user.set_zip(zip_code.getValue());
         App.user.setRelationToHousehold(relationship.getValue());
         App.user.setSex(sex.getValue());
         App.user.setMonthBirth(dateOfBirth.getValues().get(0));

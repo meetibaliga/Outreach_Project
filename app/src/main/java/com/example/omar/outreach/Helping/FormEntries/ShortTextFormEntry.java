@@ -2,11 +2,19 @@ package com.example.omar.outreach.Helping.FormEntries;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.example.omar.outreach.App;
 import com.example.omar.outreach.R;
 
 import java.util.ArrayList;
@@ -14,7 +22,7 @@ import java.util.List;
 
 public class ShortTextFormEntry extends FormEntry{
 
-    EditText et;
+    android.support.design.widget.TextInputLayout et;
 
     public ShortTextFormEntry(Context context) {
 
@@ -37,10 +45,18 @@ public class ShortTextFormEntry extends FormEntry{
         dr.setColor(getResources().getColor(R.color.colorLightGrey));
 
         // text view
-        et = new EditText(getContext());
-        et.setLayoutParams(getNestedFormEntryParams());
-        et.setHint(getTitle());
+        et = new android.support.design.widget.TextInputLayout(getContext());
+        et.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT));
 
+        // edit text
+        final android.support.design.widget.TextInputEditText editText = new android.support.design.widget.TextInputEditText(getContext());
+        editText.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        editText.setHint(getTitle());
+        editText.setImeOptions(EditorInfo.IME_ACTION_GO);
+        editText.setInputType(EditorInfo.TYPE_CLASS_TEXT);
+
+        //add views
+        et.addView(editText);
         layout.addView(et);
 
         return layout;
@@ -49,11 +65,11 @@ public class ShortTextFormEntry extends FormEntry{
     @Override
     public List<String> getValues() {
 
-        if(et.getText().equals("")){
+        if(et.getEditText().getText().equals("")){
             return null;
         }else{
             ArrayList<String>list = new ArrayList<>();
-            list.add(et.getText().toString());
+            list.add(et.getEditText().getText().toString());
             return list;
         }
     }

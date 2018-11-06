@@ -20,10 +20,17 @@ public class LocationManager {
     private Activity context;
     private CallBackLocation callBack;
 
+    public LocationManager(Activity context,CallBackLocation callBack) {
+
+        this.context = context;
+        this.callBack = callBack;
+
+    }
+
     public LocationManager(Activity context) {
 
         this.context = context;
-        this.callBack = (CallBackLocation) context;
+        this.callBack = (CallBackLocation) callBack;
 
     }
 
@@ -41,7 +48,8 @@ public class LocationManager {
                     }
 
                 }).addOnFailureListener(context, new OnFailureListener() {
-            @Override
+
+                    @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("LocationLog","error");
                 callBack.callbackCurrentLocation(e);
@@ -54,17 +62,14 @@ public class LocationManager {
 
         android.location.LocationManager locationManager =
                 (android.location.LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+
         boolean gps_enabled = false;
 
         try {
             gps_enabled = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
         } catch(Exception ex) {}
 
-        if(!gps_enabled ) {
-            return false;
-        }else{
-            return true;
-        }
+        return gps_enabled;
 
     }
 

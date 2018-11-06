@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.example.omar.outreach.Models.Entry;
+import com.example.omar.outreach.Models.UserLocation;
 
 public class EntryContentContract {
 
@@ -19,7 +20,7 @@ public class EntryContentContract {
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY);
 
 
-    // inner class for Entry
+    ////////////////////////////// inner class for Entry ///////////////////////////////
 
     public static final class EntriesTable implements BaseColumns {
 
@@ -48,12 +49,6 @@ public class EntryContentContract {
         public static final String EMOTIONS = "emotions";
         public static final String ACTIVITIES = "activities";
         public static final String LOCATION = "location";
-
-
-
-//    private List<String> _activities;
-//    private List<String> _emotions;
-//    private Map<String, String> _location;
 
         /**
          * The URI base-path for the table
@@ -84,16 +79,16 @@ public class EntryContentContract {
 
         /**
          * Method to build a Uri based on the NoteId
-         * @param noteId the Id of the note
+         * @param entryId the Id of the note
          * @return the Uri of the note
          */
-        public static Uri uriBuilder(String noteId) {
-            return Uri.withAppendedPath(CONTENT_URI, noteId);
+        public static Uri uriBuilder(String entryId) {
+            return Uri.withAppendedPath(CONTENT_URI, entryId);
         }
 
         /**
          * Method to build a Uri based on a note
-         * @param entryDO the entrry
+         * @param entry the entrry
          * @return the Uri of the note
          */
         public static Uri uriBuilder(Entry entry) {
@@ -129,6 +124,100 @@ public class EntryContentContract {
                         + TRANSPORTATION + " TEXT NOT NULL DEFAULT '0', "
                         + ISDELETED + " BOOLEAN DEFAULT 0, "
                         + ISDIRTY + " BOOLEAN DEFAULT 1) ";
+
+        /**
+         * The default sort order (in SQLite notation)
+         */
+
+        public static final String DROP_SQLITE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME + ";";
+
+        public static final String SORT_ORDER_DEFAULT = ID + " ASC";
+    }
+
+    ////////////////////////////// inner class for Location ///////////////////////////////
+
+    public static final class LocationsTable implements BaseColumns {
+
+        /**
+         * The table name within SQLite
+         */
+        public static final String TABLE_NAME = "locations";
+
+        /**
+         * The fields that make up the SQLite table
+         */
+        public static final String ID = "id";
+        public static final String LOCATIONID = "locationId";
+        public static final String CREATIONDATE = "creationDate";
+        public static final String ISDELETED = "isDeleted";
+        public static final String ISDIRTY = "isDirty";
+        public static final String LATITUDE = "latitude";
+        public static final String LONGITUDE = "longitude";
+
+        /**
+         * The URI base-path for the table
+         */
+        public static final String DIR_BASEPATH = "locations";
+
+        /**
+         * The URI base-path for a single item.  Note the wild-card * to represent
+         * any string (so we can specify a noteId within the content URI)
+         */
+        public static final String ITEM_BASEPATH = "locations/*";
+
+        /**
+         * The content URI for this table
+         */
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(EntryContentContract.CONTENT_URI, TABLE_NAME);
+
+        /**
+         * The MIME type for the response for all items within a table
+         */
+        static final String BASE_TYPE = "/vnd.com.example.omar.outreach.models.";
+        public static final String CONTENT_DIR_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + BASE_TYPE + TABLE_NAME;
+
+        /**
+         * The MIME type for a single item within the table
+         */
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + BASE_TYPE + TABLE_NAME;
+
+        /**
+         * Method to build a Uri based on the NoteId
+         * @param locationId the Id of the note
+         * @return the Uri of the note
+         */
+        public static Uri uriBuilder(String locationId) {
+            return Uri.withAppendedPath(CONTENT_URI, locationId);
+        }
+
+        /**
+         * Method to build a Uri based on a note
+         * @param location the entrry
+         * @return the Uri of the note
+         */
+        public static Uri uriBuilder(UserLocation location) {
+            return Uri.withAppendedPath(CONTENT_URI, location.get_locationId());
+        }
+
+        /**
+         * A projection of all columns in the table
+         */
+        public static final String[] PROJECTION_ALL = {
+                ID,LOCATIONID,CREATIONDATE,ISDELETED,ISDIRTY,LATITUDE,LONGITUDE
+        };
+
+        /**
+         * The SQLite CREATE TABLE statement
+         */
+        public static final String CREATE_SQLITE_TABLE =
+                "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
+                        + ID + " INTEGER PRIMARY KEY, "
+                        + LOCATIONID + " TEXT UNIQUE NOT NULL, "
+                        + CREATIONDATE + " TEXT NOT NULL DEFAULT '', "
+                        + ISDELETED + " BOOLEAN DEFAULT 0, "
+                        + LATITUDE + " TEXT NOT NULL DEFAULT '', "
+                        + LONGITUDE + " TEXT NOT NULL DEFAULT '', "
+                        + ISDIRTY + " BOOLEAN DEFAULT 1);";
 
         /**
          * The default sort order (in SQLite notation)
