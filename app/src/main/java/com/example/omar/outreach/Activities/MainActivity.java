@@ -1,67 +1,67 @@
 package com.example.omar.outreach.Activities;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.example.omar.outreach.Adapters.EntriesAdapter;
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.Fragments.CommunityFragment;
+import com.example.omar.outreach.Fragments.MeFragment;
 import com.example.omar.outreach.Helping.FormEntries.PassingString;
+import com.example.omar.outreach.Interfaces.BottomNavObserver;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
 import com.example.omar.outreach.Managers.DynamoDBManager;
 import com.example.omar.outreach.Managers.EntriesManager;
 import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.MapsConnectionManager;
-import com.example.omar.outreach.Managers.RewardManager;
 import com.example.omar.outreach.Managers.SharedPreferencesManager;
 import com.example.omar.outreach.Models.Entry;
-import com.example.omar.outreach.Models.User;
-import com.example.omar.outreach.Recivers.LocationReciver;
-import com.example.omar.outreach.Recivers.NotificationReciever;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
+import com.example.omar.outreach.Recivers.LocationReciver;
+import com.example.omar.outreach.Recivers.NotificationReciever;
 import com.example.omar.outreach.Recivers.PowerReciver;
+import com.example.omar.outreach.UIComponents.BottomNav;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CallBackMapsConnection, CallBackDB {
+public class MainActivity extends AppCompatActivity implements CallBackMapsConnection, CallBackDB,MeFragment.OnFragmentInteractionListener, CommunityFragment.OnFragmentInteractionListener {
 
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1000;
     private ListView listView;
     private EntriesAdapter entriesAdapter;
-    private Button addEntryButton;
-    private TextView rewardTV;
-    private EntriesManager entMgr;
     private EntriesDataSource ds;
+    private FloatingActionButton addEntryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,48 +73,61 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             oneTimeCode();
         }
 
-        //init ui
-        addEntryButton = findViewById(R.id.button2);
-        rewardTV = findViewById(R.id.rewardTV);
 
-        // setup
-        setupListView(getApplicationContext());
+        //action button
+        setupActionButton();
         disableButtonIfNotAllowed();
-        setupRewardTV();
+        showHomeFragment();
 
     }
 
-    private void addUser() {
+    private void setupActionButton() {
 
-        App.log(this,"Saving user .. ");
+        addEntryButton = findViewById(R.id.floatingActionButton);
+        addEntryButton.show();
 
-        UserDO user = new UserDO();
-        user.setUserId(App.USER_ID);
-        user.setFirstName("Omar");
-
-        DynamoDBManager db = new DynamoDBManager(this);
-        db.saveUserEncrypted(user);
+        final Activity activity = this;
+        addEntryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
+                startActivity(intent);
+            }
+        });
     }
 
-    private void setupRewardTV() {
+    private void hideFloatingButton(){
 
-        ds = new EntriesDataSource(this);
-        Double totalReward = RewardManager.calculateReward(ds.getNumOfItems());
-        rewardTV.setText("$"+totalReward);
+        if (addEntryButton != null) {
+            addEntryButton.hide();
+            Log.d("Fragment","Im trying to hide the dog !!");
+        }
+    }
 
+    private void showFloatingButton(){
+        if (addEntryButton != null) {
+            addEntryButton.hide();
+            Log.d("Fragment","Im trying to hide the dog !!");
+        }
     }
 
     private void disableButtonIfNotAllowed() {
         // disable button if not allowed
-        entMgr = EntriesManager.getInstance(this);
+        EntriesManager entriesManager = EntriesManager.getInstance(this);
         // check entry button
         PassingString reason = new PassingString("");
-        if(!entMgr.canAddEntry(reason)){
-            addEntryButton.setText(reason.getPassingString());
+        if(!entriesManager.canAddEntry(reason)){
+            //addEntryButton.setText(reason.getPassingString());
             addEntryButton.setEnabled(false);
         }else{
             addEntryButton.setEnabled(true);
         }
+    }
+
+    private void showHomeFragment() {
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.containerFragment, MeFragment.newInstance()).commit();
+
     }
 
     @Override
@@ -221,21 +234,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     }
 
 
-    ////////////////// EVENTS /////////////////////////
-
-
-    public void btnClicked(View view) {
-        Intent intent = new Intent(this, PeriodicalFormActivity_1.class);
-        startActivity(intent);
-
-    }
-
-
-    public void signoutClicked(View view){
-        IdentityManager.getDefaultIdentityManager().signOut();
-    }
-
-
     //////////////////////////// MAPS /////////////////////////////////
 
     @Override
@@ -332,40 +330,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         App.NUM_OF_ENTRIES = App.entriesList.size();
 
         // setup list view
-        setupListView(getApplicationContext());
-
-    }
-
-    private void setupListView(final Context context) {
-
-        ds = new EntriesDataSource(context);
-
-        if(App.entriesList == null){
-            App.entriesList = new ArrayList<>();
-        }
-
-        // setup list view
-        final List<Entry> entriesList = ds.getAllItemsOrderedByDate(true);
-
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            public void run() {
-                listView = findViewById(R.id.listView);
-                entriesAdapter = new EntriesAdapter(context, entriesList);
-                listView.setAdapter(entriesAdapter);
-            }
-        });
-
-
-        // show/hide first label
-
-        View view = findViewById(R.id.emptyScreenView);
-
-        if(entriesList.size() == 0){
-            view.setVisibility(View.VISIBLE);
-        }else{
-            view.setVisibility(View.INVISIBLE);
-        }
-
+        //setupListView(getApplicationContext());
 
     }
 
@@ -384,6 +349,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     }
 
     ////////////////////// RECIVERS ///////////////////////////////
+
 
     private void setupNotifications() {
 
@@ -450,4 +416,8 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+        Log.d("MainActivity","Hi from main");
+    }
 }

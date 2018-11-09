@@ -32,6 +32,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.MainActivity">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -40,7 +41,6 @@
         <activity
             android:name=".Activities.PeriodicalFormActivity_1"
             android:parentActivityName=".Activities.MainActivity">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
@@ -60,10 +60,10 @@
         <activity android:name=".Activities.LocationsActivity" />
         <activity android:name=".Activities.PermissionsActivity" />
         <activity android:name=".Activities.OneTimeForm_1">
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".Activities.OneTimeForm_2" />
         <activity android:name=".Activities.OneTimeForm_3" />
@@ -82,19 +82,22 @@
             android:label="EntriesProvider" />
 
         <activity android:name=".Activities.TestContentProvider">
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <!-- Preferences Page -->
-        <activity android:name=".Activities.PreferencesActivity"
+        <activity
+            android:name=".Activities.PreferencesActivity"
             android:parentActivityName=".Activities.MainActivity">
-             <!--<intent-filter>-->
-             <!--<action android:name="android.intent.action.MAIN" />-->
-             <!--<category android:name="android.intent.category.LAUNCHER" />-->
-             <!--</intent-filter>-->
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
     </application>
 

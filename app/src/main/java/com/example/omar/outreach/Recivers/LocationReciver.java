@@ -51,8 +51,6 @@ public class LocationReciver extends BroadcastReceiver implements CallBackLocati
             Log.d("Tracking","Stored a new location: "+ userLocation.get_latitude()+" "+userLocation.get_longitude());
         }else{
             Log.d("Tracking","Cannot get Location .. ");
-            Log.d("Tracking",object.toString());
-
         }
     }
 }
