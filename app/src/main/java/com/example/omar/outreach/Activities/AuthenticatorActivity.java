@@ -27,7 +27,7 @@ public class AuthenticatorActivity extends AppCompatActivity {
 
         config = new AuthUIConfiguration.Builder()
                         .userPools(true)  // true? show the Email and Password UI
-                        .logoResId(R.drawable.word) // Change the logo
+                        .logoResId(R.drawable.puremotion_logo_full) // Change the logo
                         .fontFamily("roboto-light") // Apply sans-serif-light as the global font
                         .backgroundColor(Color.WHITE)
                         .isBackgroundColorFullScreen(true)
