@@ -29,6 +29,11 @@ public class OneTimeFormCompletedActivity extends AppCompatActivity implements C
     }
 
     @Override
+    public void onBackPressed() {
+        //nothing
+    }
+
+    @Override
     protected void onResume() {
 
         super.onResume();

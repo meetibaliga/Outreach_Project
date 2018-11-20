@@ -49,6 +49,27 @@ public class SharedPreferencesManager {
         editor.putString(_context.getResources().getString(R.string.eveninig_notification_key),time+"").apply();
     }
 
+    public void setUserId(String id){
+        editor.putString(_context.getString(R.string.USER_ID_KEY),id).apply();
+    }
+
+    public void setUserPassword(String pass){
+        editor.putString(_context.getString(R.string.USER_PASS_KEY),pass).apply();
+    }
+
+    public String getUserPassword(){
+        return preferences.getString(_context.getResources().getString(R.string.USER_PASS_KEY),null);
+    }
+
+    public String getUserId(){
+        return preferences.getString(_context.getResources().getString(R.string.USER_ID_KEY),null);
+    }
+
+    public void clearCachedUserCredentials(){
+        editor.remove(_context.getResources().getString(R.string.USER_ID_KEY)).apply();
+        editor.remove(_context.getResources().getString(R.string.USER_PASS_KEY)).apply();
+    }
+
     public String getMorningNotificationTime(){
         return preferences.getString(_context.getResources().getString(R.string.morning_notification_key),null);
     }
@@ -56,7 +77,6 @@ public class SharedPreferencesManager {
     public String getEveningNotificationTime(){
         return preferences.getString(_context.getResources().getString(R.string.eveninig_notification_key),null);
     }
-
 
     public void setDailyEntries(int dailyEntries){
         editor.putInt(getKey(R.string.num_of_daily_entries_KEY),dailyEntries).apply();
@@ -111,6 +131,9 @@ public class SharedPreferencesManager {
     private String getKey(int rId) {
         return _context.getResources().getString(rId);
     }
+
+
+
 
 
 

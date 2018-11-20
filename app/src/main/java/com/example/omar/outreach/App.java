@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.omar.outreach.Helping.FormEntries.FormEntry;
+import com.example.omar.outreach.Managers.AuthManager;
 import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.Provider.EntriesDataSource;
@@ -45,6 +46,7 @@ public class App extends Application {
     public static UserDO user = new UserDO();
     public static String USER_ID;
     public static int NUM_OF_ENTRIES;
+    public static AuthManager authManager;
 
     // lists
     public static ArrayList<Entry> entriesList;
@@ -73,6 +75,7 @@ public class App extends Application {
         super.onCreate();
         imagesNames = populateEmojiesMapWithDrawables();
         isSynced = checkIfAppIsSynced();
+        authManager = AuthManager.getInstance(getApplicationContext());
     }
 
 

@@ -35,6 +35,11 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
     private FormEntry income;
 
     @Override
+    public void onBackPressed() {
+        //nothing
+    }
+
+    @Override
     protected ArrayList<FormEntry> getFormElements() {
 
         ArrayList<FormEntry> entries = new ArrayList<>();

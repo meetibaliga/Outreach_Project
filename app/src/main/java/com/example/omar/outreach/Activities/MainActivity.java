@@ -57,6 +57,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CallBackMapsConnection, CallBackDB,MeFragment.OnFragmentInteractionListener, CommunityFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1000;
     private ListView listView;
     private EntriesAdapter entriesAdapter;
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     }
 
+
     private void setupDrawer() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -98,12 +101,13 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     @Override
     public void onBackPressed() {
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            //nothing
         }
     }
 
@@ -218,20 +222,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         // set main activity referece
         App.mainActivity = this;
 
-        // set the user id and num of entries of this user
-        if (App.USER_ID == null){
-
-            IdentityManager mgr = IdentityManager.getDefaultIdentityManager();
-
-            if(mgr != null){
-                App.USER_ID = mgr.getCachedUserID();
-            }
-
-        }
-
         // if the user has no user id go to the authentication screen
         if(App.USER_ID == "" || App.USER_ID == null){
-            IdentityManager.getDefaultIdentityManager().signOut();
+            App.authManager.signout();
         }
 
         // check location

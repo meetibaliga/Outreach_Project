@@ -52,6 +52,11 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        //nothing
+    }
+
     private void setupRewardViews() {
 
         Double totalReward = RewardManager.calculateReward(entriesDataSource.getNumOfItems());

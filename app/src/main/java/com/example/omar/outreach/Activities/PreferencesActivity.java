@@ -35,10 +35,17 @@ public class PreferencesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.signout_item) {
 
-            IdentityManager.getDefaultIdentityManager().signOut();
+            boolean signedOut = App.authManager.signout();
+
+            if (signedOut) {
+                // go to auth screen
+                Intent intent = new Intent(this, AuthActivity.class);
+                startActivity(intent);
+            }
 
         }
 

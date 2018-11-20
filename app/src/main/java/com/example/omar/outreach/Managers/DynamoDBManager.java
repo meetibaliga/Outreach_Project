@@ -186,18 +186,10 @@ public class DynamoDBManager {
 
     private void initializeDB() {
 
-        // AWSMobileClient enables AWS user credentials to access your table
-
-        AWSCredentialsProvider credentialsProvider = AWSMobileClient.getInstance().getCredentialsProvider();
-        AWSConfiguration configuration = AWSMobileClient.getInstance().getConfiguration();
-
-        // Add code to instantiate a AmazonDynamoDBClient
-
-        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(credentialsProvider);
+        AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(App.authManager.getCredentialsProvider());
 
         this.dynamoDBMapper = DynamoDBMapper.builder()
                 .dynamoDBClient(dynamoDBClient)
-                .awsConfiguration(configuration)
                 .build();
     }
 }
