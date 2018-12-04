@@ -21,6 +21,8 @@ import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.Provider.LocationsDataSource;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.util.ArrayUtils;
 
 import org.json.JSONArray;
@@ -76,6 +78,10 @@ public class App extends Application {
     //activites
     public static Activity mainActivity;
 
+    //google analytics
+    private static GoogleAnalytics sAnalytics;
+    private static Tracker sTracker;
+
 
     @Override
     public void onCreate() {
@@ -84,6 +90,24 @@ public class App extends Application {
         isSynced = checkIfAppIsSynced();
         authManager = AuthManager.getInstance(getApplicationContext());
         entriesManager = EntriesManager.getInstance(getApplicationContext());
+
+        // google anaytics
+        sAnalytics = GoogleAnalytics.getInstance(this);
+
+    }
+
+    /**
+     * Gets the default {@link Tracker} for this {@link Application}.
+     * @return tracker
+     */
+
+    synchronized public static Tracker getDefaultTracker() {
+        // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
+        if (sTracker == null) {
+            sTracker = sAnalytics.newTracker(R.xml.global_tracker);
+        }
+
+        return sTracker;
     }
 
 
@@ -233,6 +257,10 @@ public class App extends Application {
 
 
     public static void log(final Context context, final String log) {
+
+        if (context == null || log == null){
+            return;
+        }
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {

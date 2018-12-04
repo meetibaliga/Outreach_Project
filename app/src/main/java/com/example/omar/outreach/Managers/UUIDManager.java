@@ -13,7 +13,7 @@ public class UUIDManager {
     }
 
     public String generateUUID(){
-        return user.getUUIDInitials().toString() + "_" + UUID.randomUUID() + "_" + user.getCreationDate() ;
+        return user.getUUIDInitials().toString() + "_" + UUID.randomUUID() + "_" + user.getCreationDate();
     }
 
 }

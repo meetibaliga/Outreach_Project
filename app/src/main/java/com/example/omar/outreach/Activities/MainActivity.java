@@ -52,6 +52,8 @@ import com.example.omar.outreach.R;
 import com.example.omar.outreach.Recivers.LocationReciver;
 import com.example.omar.outreach.Recivers.NotificationReciever;
 import com.example.omar.outreach.Recivers.PowerReciver;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -93,6 +95,13 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         super.onResume();
         disableButtonIfNotAllowed();
 
+        // check location
+        if(!LocationManager.isLocationEnabled(this)){
+            goToPermissionsScreen();
+        }
+
+        App.getDefaultTracker().setScreenName(this.getClass().getSimpleName());
+        App.getDefaultTracker().send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void setupDrawer() {
@@ -248,11 +257,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             App.authManager.signout();
         }
 
-        // check location
-        if(!LocationManager.isLocationEnabled(this)){
-            goToPermissionsScreen();
-        }
-
         // Create connection with maps
         AsyncTask.execute(new Runnable() {
             @Override
@@ -266,6 +270,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         });
 
         //check if the user has filled the first time form
+
         if(!new SharedPreferencesManager(this).getUserFormCompleted()){
 
             AsyncTask.execute(new Runnable() {

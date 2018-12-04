@@ -61,6 +61,10 @@ public class DynamoDBManager {
 
     public void getUserFirstForm(){
 
+        if(App.USER_ID == null || App.USER_ID.isEmpty()){
+            return;
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {

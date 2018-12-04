@@ -66,11 +66,13 @@ public class OneTimeForm_2 extends RegistrationBaseActivity {
         // shortText
 
         homeArea = new ShortTextFormEntry(getResources().getString(R.string.squareFeet_question),this);
+        ((ShortTextFormEntry) homeArea).setTypeToNumber();
         entries.add(homeArea);
 
         //pets
 
         pets = new ShortTextFormEntry(getResources().getString(R.string.pets_question),this);
+        ((ShortTextFormEntry) pets).setTypeToNumber();
         entries.add(pets);
 
         // occupants

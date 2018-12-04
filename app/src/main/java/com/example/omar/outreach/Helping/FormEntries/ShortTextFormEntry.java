@@ -2,7 +2,9 @@ package com.example.omar.outreach.Helping.FormEntries;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.KeyListener;
 import android.view.KeyEvent;
@@ -25,24 +27,15 @@ public class ShortTextFormEntry extends FormEntry{
     android.support.design.widget.TextInputLayout et;
 
     public ShortTextFormEntry(Context context) {
-
-        super(context);
+        this(null,context);
     }
 
     public ShortTextFormEntry(String title, Context context) {
         super(title, context);
+        setupViews();
     }
 
-    @Override
-    public View getView() {
-
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setLayoutParams(getFormEntryParams());
-
-        // set padding and background color for view
-        layout.setBackgroundResource(R.drawable.view_corner_radius);
-        GradientDrawable dr = (GradientDrawable)layout.getBackground();
-        dr.setColor(getResources().getColor(R.color.colorLightGrey));
+    private void setupViews(){
 
         // text view
         et = new android.support.design.widget.TextInputLayout(getContext());
@@ -57,6 +50,32 @@ public class ShortTextFormEntry extends FormEntry{
 
         //add views
         et.addView(editText);
+
+    }
+
+    public void setInputType(int type){
+
+        EditText editText = et.getEditText();
+        if (editText == null){return;}
+        editText.setInputType(type);
+
+    }
+
+    public void setTypeToNumber(){
+       setInputType(InputType.TYPE_CLASS_NUMBER);
+    }
+
+    @Override
+    public View getView() {
+
+        LinearLayout layout = new LinearLayout(getContext());
+        layout.setLayoutParams(getFormEntryParams());
+
+        // set padding and background color for view
+        layout.setBackgroundResource(R.drawable.view_corner_radius);
+        GradientDrawable dr = (GradientDrawable)layout.getBackground();
+        dr.setColor(getResources().getColor(R.color.colorLightGrey));
+
         layout.addView(et);
 
         return layout;

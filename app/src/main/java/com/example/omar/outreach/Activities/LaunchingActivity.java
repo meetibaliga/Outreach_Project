@@ -15,6 +15,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetail
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackAuth;
 import com.example.omar.outreach.Managers.AuthManager;
+import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.SharedPreferencesManager;
 
 public class LaunchingActivity extends AppCompatActivity implements CallBackAuth {
@@ -48,7 +49,7 @@ public class LaunchingActivity extends AppCompatActivity implements CallBackAuth
                         AuthManager.getInstance(LaunchingActivity.this).attemptLoginUsingCachedCredentials(LaunchingActivity.this);
                     }else{
                         App.USER_ID = SharedPreferencesManager.getInstance(LaunchingActivity.this).getUserId();
-                        goTo(MainActivity.class);
+                        goToMainScreen();
                     }
                 }
             });
@@ -71,7 +72,7 @@ public class LaunchingActivity extends AppCompatActivity implements CallBackAuth
             CognitoUser user = (CognitoUser)object;
             App.USER_ID = user.getUserId();
             Log.d(TAG,"Going to main");
-            goTo(MainActivity.class);
+            goToMainScreen();
 
         }else{
 
@@ -86,5 +87,16 @@ public class LaunchingActivity extends AppCompatActivity implements CallBackAuth
 
         nextActivity = new Intent(this,activity);
         startActivity(nextActivity);
+    }
+
+    private void goToMainScreen(){
+
+        // check location
+        if(LocationManager.isLocationEnabled(this)){
+            goTo(MainActivity.class);
+        }else{
+            goTo(PermissionsActivity.class);
+        }
+
     }
 }

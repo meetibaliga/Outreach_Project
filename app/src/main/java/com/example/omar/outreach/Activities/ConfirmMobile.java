@@ -213,7 +213,7 @@ public class ConfirmMobile extends AppCompatActivity {
 
     private void goToMainScreen() {
 
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this,PermissionsActivity.class);
         startActivity(intent);
 
     }

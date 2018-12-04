@@ -54,8 +54,6 @@ public class LocationReciver extends BroadcastReceiver {
 
     public LocationReciver(){
 
-
-
     } // to shut up the error
 
     @Override

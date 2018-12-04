@@ -13,6 +13,8 @@ import com.example.omar.outreach.Managers.SyncManager;
 
 public class PowerReciver extends BroadcastReceiver {
 
+    private static final String TAG = PowerReciver.class.getSimpleName();
+
     private Context context;
 
     public PowerReciver(){} // to shut up the compiler
@@ -24,27 +26,17 @@ public class PowerReciver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Log.d("PowerReciver","on recive");
-        Toast.makeText(context,"Recive",Toast.LENGTH_SHORT);
 
-        int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
-
-        if (plugged == BatteryManager.BATTERY_PLUGGED_AC || plugged == BatteryManager.BATTERY_PLUGGED_USB) {
-
-            // if the app is synced dont do anything
-            if(App.isSynced){
-                App.log(context,"No need to sync .. All Done :)");
-                return;
-            }
-
-            // on AC power
-            App.log(this.context,"AC");
-            SyncManager syncManager = new SyncManager(context);
-            syncManager.syncAll();
-
-        } else {
-            // intent did include extra info
+        // if the app is synced dont do anything
+        if(App.isSynced){
+            Log.d(TAG,"No need return");
+            return;
         }
+
+        // on AC power
+        Log.d(TAG,"AC");
+        SyncManager syncManager = new SyncManager(context);
+        syncManager.syncAll();
 
     }
 }

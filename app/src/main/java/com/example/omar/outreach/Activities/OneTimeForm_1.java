@@ -66,10 +66,12 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
 
         //address 2
         zip_code = new ShortTextFormEntry(getResources().getString(R.string.zip_code),this);
+        ((ShortTextFormEntry) zip_code).setTypeToNumber();
         entries.add(zip_code);
 
         // income
         income = new ShortTextFormEntry(getResources().getString(R.string.income_question),this);
+        ((ShortTextFormEntry) income).setTypeToNumber();
         entries.add(income);
 
         // Relationship

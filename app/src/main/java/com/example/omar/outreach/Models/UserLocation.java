@@ -31,9 +31,9 @@ public class UserLocation extends Model implements DataItem {
     }
 
     public UserLocation(String _userId, String _creationDate, Boolean _isDeleted, Boolean _isDirty, String _latitude, String _longitude) {
+        this._creationDate = _creationDate;
         this._userId = _userId;
         this._locationId = getUUID();
-        this._creationDate = _creationDate;
         this._isDeleted = _isDeleted;
         this._isDirty = _isDirty;
         this._latitude = _latitude;

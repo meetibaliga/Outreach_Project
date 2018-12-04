@@ -27,6 +27,7 @@ import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.AuthState;
 import com.example.omar.outreach.Interfaces.CallBackAuth;
 import com.example.omar.outreach.Managers.AuthManager;
+import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.R;
 
 /**
@@ -416,8 +417,15 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
 
     public void goToMainScreen(){
 
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+        // check location
+
+        if(LocationManager.isLocationEnabled(this)){
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }else{
+            Intent intent = new Intent(this,PermissionsActivity.class);
+            startActivity(intent);
+        }
 
     }
 

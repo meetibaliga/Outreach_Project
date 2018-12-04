@@ -59,4 +59,6 @@ dependencies {
 
     // segmented control
     implementation 'info.hoang8f:android-segmented:1.0.6'
-}
+
+    //google analytics
+    implementation 'com.google.android.gms:play-services-analytics:15.0.+'}

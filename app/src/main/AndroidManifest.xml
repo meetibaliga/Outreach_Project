@@ -107,12 +107,12 @@
 
         <!-- Notification Reciver -->
         <receiver android:name=".Recivers.NotificationReciever" />
+
         <receiver android:name=".Recivers.PowerReciver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED"/>
-                <action android:name="android.intent.action.BATTERY_CHANGED"/>
             </intent-filter>
         </receiver>
         <receiver android:name=".Recivers.LocationReciver" />
