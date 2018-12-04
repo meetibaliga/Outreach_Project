@@ -8,11 +8,15 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -27,7 +31,6 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.amazonaws.mobile.auth.core.IdentityManager;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.example.omar.outreach.Adapters.EntriesAdapter;
 import com.example.omar.outreach.App;
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     private EntriesDataSource ds;
     private FloatingActionButton addEntryButton;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,21 +78,29 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             oneTimeCode();
         }
 
+
         //action button
         setupDrawer();
         setupActionButton();
         disableButtonIfNotAllowed();
         showHomeFragment();
 
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        disableButtonIfNotAllowed();
+
+    }
 
     private void setupDrawer() {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout_main);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -102,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     @Override
     public void onBackPressed() {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
 
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -116,40 +128,51 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         addEntryButton = findViewById(R.id.floatingActionButton);
         addEntryButton.show();
         final Activity activity = this;
+
         addEntryButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
-                startActivity(intent);
+
+                PassingString reason = new PassingString("");
+
+                if(!App.entriesManager.canAddEntry(reason)){
+                    if(reason == null){
+                        reason = new PassingString("You cannot add an entry at this time. Try later");
+                    }
+
+                    View mainView = findViewById(R.id.mainView);
+
+                    if(mainView == null){
+                        return;
+                    }
+
+                    // show snackbar
+                    Snackbar.make(mainView,reason.getPassingString(),Snackbar.LENGTH_LONG).show();
+
+                }else{
+                    Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
+                    startActivity(intent);
+                }
+
             }
         });
     }
 
-    private void hideFloatingButton(){
-
-        if (addEntryButton != null) {
-            addEntryButton.hide();
-            Log.d("Fragment","Im trying to hide the dog !!");
-        }
-    }
-
-    private void showFloatingButton(){
-        if (addEntryButton != null) {
-            addEntryButton.hide();
-            Log.d("Fragment","Im trying to hide the dog !!");
-        }
-    }
-
     private void disableButtonIfNotAllowed() {
+
         // disable button if not allowed
         EntriesManager entriesManager = EntriesManager.getInstance(this);
+
         // check entry button
         PassingString reason = new PassingString("");
+
         if(!entriesManager.canAddEntry(reason)){
-            //addEntryButton.setText(reason.getPassingString());
-            addEntryButton.setEnabled(false);
+            addEntryButton.setImageDrawable(getDrawable(R.drawable.ic_access_time_white_24dp));
+            addEntryButton.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
         }else{
-            addEntryButton.setEnabled(true);
+            addEntryButton.setImageDrawable(getDrawable(R.drawable.ic_add_white_24dp));
+            addEntryButton.setBackgroundColor(getColor(R.color.colorAccent));
         }
     }
 
@@ -170,49 +193,47 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.settings_item) {
+        Intent nextIntent;
 
-            Intent intent = new Intent(this,PreferencesActivity.class);
-            startActivity(intent);
-
+        switch (id){
+            case R.id.settings_item:
+                nextIntent = new Intent(this,PreferencesActivity.class);
+                break;
+            default:
+                   nextIntent = new Intent(this,this.getClass());
         }
 
+        startActivity(nextIntent);
         return super.onOptionsItemSelected(item);
     }
 
-    private void putFakeData() {
 
-        App.entriesList = new ArrayList<>();
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
 
-        Entry entry = new Entry();
-        ArrayList<String> emotions = new ArrayList<>();
-        emotions.add(getResources().getStringArray(R.array.emotions)[0]);
-        emotions.add(getResources().getStringArray(R.array.emotions)[3]);
-        entry.setEmotions(emotions);
-        App.entriesList.add(entry);
+        int id = item.getItemId();
+        Intent nextIntent;
 
-        entry.setOdor("0");
-        entry.setNoise("1");
-        entry.setTransportation("4");
-        entry.setActive("2");
+        switch (id){
+            case R.id.HomeScreen:
+                nextIntent = null;
+                break;
+            case R.id.CommunityScreen:
+                nextIntent = new Intent(this,CommunityActivity.class);
+                break;
+            default:
+                nextIntent = null;
+        }
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        entry.setCreationDate(timestamp.toString());
+        if(nextIntent != null)
+            startActivity(nextIntent);
 
-        ArrayList<String> activities = new ArrayList<>();
-        activities.add(getResources().getStringArray(R.array.activities)[0]);
-        activities.add(getResources().getStringArray(R.array.activities)[1]);
-        entry.setActivities(activities);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        drawer.closeDrawer(GravityCompat.START);
 
-        entry.setPlace(getResources().getStringArray(R.array.locations)[0]);
-
-        App.NUM_OF_ENTRIES = App.entriesList.size();
-        listView = findViewById(R.id.listView);
-        entriesAdapter = new EntriesAdapter(getApplicationContext(), App.entriesList);
-        listView.setAdapter(entriesAdapter);
-
+        return true;
     }
+
 
     private void oneTimeCode() {
 
@@ -233,17 +254,35 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         }
 
         // Create connection with maps
-        new MapsConnectionManager(this);
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
 
+                if(App.hasActiveInternetConnection(MainActivity.this)){
+                    new MapsConnectionManager(MainActivity.this);
+                }
+
+            }
+        });
 
         //check if the user has filled the first time form
-        new DynamoDBManager(this).getUserFirstForm();
+        if(!new SharedPreferencesManager(this).getUserFormCompleted()){
+
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+
+                    if(App.hasActiveInternetConnection(MainActivity.this)){
+                        new DynamoDBManager(MainActivity.this).getUserFirstForm();
+                    }
+
+                }
+            });
+
+        }
 
         // notifications
         setupNotifications();
-
-        // set broadcast reciver for the pluged in to power
-        registerPlugedInReciver();
 
         //setup location reciver
         setupLocationReciver();
@@ -357,11 +396,15 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         PaginatedList<UserDO> results = (PaginatedList<UserDO>) object;
 
         if(results.size() == 0 || results == null){
+
             Intent intent = new Intent(this,OneTimeForm_1.class);
             startActivity(intent);
+
         }else{
+
             App.user = results.get(0);
             Log.d("Main",App.user.toString());
+
         }
 
     }
@@ -377,11 +420,15 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         int morningTime = 9;
         if(prefMgr.getMorningNotificationTime() != null){
             morningTime = Integer.parseInt(prefMgr.getMorningNotificationTime());
+        }else{
+            prefMgr.setMorningNotificationTime(morningTime);
         }
 
         int eveningTime = 18;
         if(prefMgr.getEveningNotificationTime() != null){
             eveningTime = Integer.parseInt(prefMgr.getMorningNotificationTime());
+        }else {
+            prefMgr.setEveningNotificationTime(eveningTime);
         }
 
         // 1
@@ -394,72 +441,37 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     private void setNotificationAlarm(int hour, int min, int notifyId) {
 
-        Log.d("Notif","in set notif");
 
         //time to repeat
+
         Calendar callendar = Calendar.getInstance();
         callendar.set(Calendar.HOUR_OF_DAY,hour);
         callendar.set(Calendar.MINUTE,min);
 
         // notification reciver intent
+
         Intent intent = new Intent(getApplicationContext(),NotificationReciever.class);
         intent.putExtra("notifyID", notifyId);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),notifyId,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Set alarm
+
         AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarm.setRepeating(AlarmManager.RTC_WAKEUP,callendar.getTime().getTime(),AlarmManager.INTERVAL_DAY,pendingIntent);
 
     }
 
-    private void registerPlugedInReciver() {
-
-        BroadcastReceiver receiver = new PowerReciver(this);
-        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-        registerReceiver(receiver, filter);
-
-    }
-
     private void setupLocationReciver() {
 
-        Log.d("Tracking","Helooooooo");
-
-        Intent intent = new Intent(getApplicationContext(),LocationReciver.class);
-
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),App.NOTIFY_ID_3,intent,PendingIntent.FLAG_CANCEL_CURRENT);
-
-        AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP,Calendar.getInstance().getTimeInMillis(),1000*5,pendingIntent);
-
+        LocationManager locationManager = new LocationManager(this,null);
+        locationManager.initiateReciver();
 
     }
+
 
     @Override
     public void onFragmentInteraction(Uri uri) {
         Log.d("MainActivity","Hi from main");
     }
 
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        // Handle navigation view item clicks here.
-        int id = menuItem.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
 }

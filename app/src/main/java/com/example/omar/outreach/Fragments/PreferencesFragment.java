@@ -58,14 +58,14 @@ public class PreferencesFragment extends PreferenceFragmentCompat implements Sha
         // morning
         setSummaryText(R.string.morning_notification_key);
         setSummaryText(R.string.eveninig_notification_key);
-        setSummaryText(R.string.first_name_key);
-        setSummaryText(R.string.last_name_key);
-        setSummaryText(R.string.city_key);
-        setSummaryText(R.string.address_1_key);
-        setSummaryText(R.string.address_2_key);
-        setSummaryText(R.string.zip_key);
-        setSummaryText(R.string.email_key);
-        setSummaryText(R.string.mobile_key);
+//        setSummaryText(R.string.first_name_key);
+//        setSummaryText(R.string.last_name_key);
+//        setSummaryText(R.string.city_key);
+//        setSummaryText(R.string.address_1_key);
+//        setSummaryText(R.string.address_2_key);
+//        setSummaryText(R.string.zip_key);
+//        setSummaryText(R.string.email_key);
+//        setSummaryText(R.string.mobile_key);
     }
 
     private void setSummaryText(int key, @Nullable App.types type) {

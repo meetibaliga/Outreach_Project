@@ -41,7 +41,6 @@ import java.util.List;
  */
 public class MeFragment extends Fragment implements BottomNavObserver {
 
-    private EntriesManager entMgr;
     private EntriesDataSource ds;
     private OnFragmentInteractionListener mListener;
     private EntriesAdapter entriesAdapter;

@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <item
-        android:id="@+id/nav_home"
+        android:id="@+id/HomeScreen"
         android:title="Home" />
     <item
-        android:id="@+id/nav_community"
+        android:id="@+id/CommunityScreen"
         android:title="Community" />
 </menu>

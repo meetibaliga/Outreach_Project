@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ForgotPasswordContinuation;
@@ -61,18 +62,14 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-//        Intent intent = new Intent(this,ConfirmMobile.class);
-//        startActivity(intent);
 
         // Set up the login form.
         setupUI();
         authManager = AuthManager.getInstance(this);
 
-        // check for cached user
-        authManager.checkCachedLogin(this);
-
         //default state
-        authState = new AuthState.Login();
+        authState = new AuthState.Signup();
+        modifyAuthUIAfterSwitch();
 
     }
 
@@ -83,21 +80,24 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
         mMobileView = (AutoCompleteTextView) findViewById(R.id.mobile);
         mPasswordView = (EditText) findViewById(R.id.password);
         mErrorText = findViewById(R.id.errorText);
+        mLoginFormView = findViewById(R.id.login_form);
+        mProgressView = findViewById(R.id.login_progress);
+
+        setPasswordAction();
+    }
+
+    private void setPasswordAction(){
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
                 if (id == EditorInfo.IME_ACTION_DONE || id == EditorInfo.IME_NULL) {
-                    attemptLogin();
+                    authState.attemptAuth(AuthActivity.this);
                     return true;
                 }
                 return false;
             }
         });
-
-        mLoginFormView = findViewById(R.id.login_form);
-        mProgressView = findViewById(R.id.login_progress);
-
     }
 
     private void attemptAuth(){
@@ -261,20 +261,38 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
 
         if (object instanceof Exception){
 
-            AmazonServiceException awsException = (AmazonServiceException) object;
-            String errorMessage = awsException.getErrorMessage();
-            String errorCode = awsException.getErrorCode();
+            String errorMessage = "";
+            String errorCode = "";
+
+            if(object instanceof AmazonServiceException){
+
+                AmazonServiceException awsException = (AmazonServiceException) object;
+                errorMessage = awsException.getErrorMessage();
+                errorCode = awsException.getErrorCode();
+
+            }else if (object instanceof AmazonClientException){
+
+                AmazonClientException awsException = (AmazonClientException) object;
+                errorMessage = awsException.getMessage();
+
+                if (!App.hasActiveInternetConnection(this)) {
+                    errorMessage = "Make sure you are connected to the internet";
+                }
+
+            }
 
             if (errorCode.equalsIgnoreCase("userNotConfirmedException")){
 
                 goToMobileAuthentication();
 
             }else {
+
                 showProgress(false);
                 mLoginFormView.setVisibility(View.VISIBLE);
                 mPasswordView.requestFocus();
                 mErrorText.setVisibility(View.VISIBLE);
                 mErrorText.setText(errorMessage);
+
             }
             return;
         }
@@ -295,8 +313,23 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
 
         if (object instanceof Exception){
 
-            AmazonServiceException awsException = (AmazonServiceException) object;
-            String errorMessage = awsException.getErrorMessage();
+            String errorMessage = "";
+
+            if(object instanceof AmazonServiceException){
+
+                AmazonServiceException awsException = (AmazonServiceException) object;
+                errorMessage = awsException.getErrorMessage();
+
+            }else if (object instanceof AmazonClientException){
+
+                AmazonClientException awsException = (AmazonClientException) object;
+                errorMessage = awsException.getMessage();
+
+                if (!App.hasActiveInternetConnection(this)) {
+                    errorMessage = "Make sure you are connected to the internet";
+                }
+
+            }
 
             showProgress(false);
             mLoginFormView.setVisibility(View.VISIBLE);
@@ -402,6 +435,11 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
 
         Button authButton = findViewById(R.id.email_sign_in_button);
         authButton.setText(authState.getAuthButtonText());
+
+        View forgetPass = findViewById(R.id.forgotPasswordLabel);
+        forgetPass.setVisibility(authState.getForgetPassVisibily());
+
+        setPasswordAction();
 
     }
 

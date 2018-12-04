@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.Interfaces.CallBackAuth;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.LocationDO;
@@ -16,19 +18,22 @@ import com.example.omar.outreach.Provider.LocationsDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SyncManager implements CallBackDB{
+public class SyncManager implements CallBackDB, CallBackAuth{
 
     private DynamoDBManager db;
     EntriesDataSource entriesDataSource;
     LocationsDataSource locationsDataSource;
     private Context context;
     private int numOfDirtyItems = 0;
+    private CallBackAuth callBackAuth = this;
 
     public SyncManager(Context context){
+
         this.context = context;
         db = new DynamoDBManager(this);
         entriesDataSource = new EntriesDataSource(context);
         locationsDataSource = new LocationsDataSource(context);
+
     }
 
     public void syncAll(){
@@ -45,20 +50,33 @@ public class SyncManager implements CallBackDB{
                     return;
                 }
 
-                App.log(context,"Syncing..");
+                // if the user is not signed in
 
-                syncEntries();
-                syncUserInfo();
-                //syncLocations();
-
-                if(numOfDirtyItems == 0){
-                    App.log(context,"App Synced .. ");
-
+                if(!AuthManager.isSignedIn()){
+                    String uid = SharedPreferencesManager.getInstance(context).getUserId();
+                    String pass = SharedPreferencesManager.getInstance(context).getUserPassword();
+                    AuthManager.getInstance(context).signinUser(uid,pass,callBackAuth);
+                    return;
                 }
+
+                // user is signed in and there is connection
+
+                sync();
 
             }
         }).start();
 
+    }
+
+    public void sync(){
+
+        syncEntries();
+        syncUserInfo();
+        syncLocations();
+
+        if(numOfDirtyItems == 0){
+            App.log(context,"App Synced .. ");
+        }
     }
 
     public void syncEntries(){
@@ -80,6 +98,7 @@ public class SyncManager implements CallBackDB{
         Log.d("Sync",dirtyLocations.toString());
 
         numOfDirtyItems += dirtyLocations.size();
+
         db.saveLocations(dirtyLocations);
 
     }
@@ -145,6 +164,15 @@ public class SyncManager implements CallBackDB{
 
         List<UserLocation> dirtyLocations = locationsDataSource.getDirtyItems();
         return dirtyLocations;
+
+    }
+
+    @Override
+    public void callbackAuth(Object object, int callbackId) {
+
+        if(object instanceof CognitoUser){
+            sync();
+        }
 
     }
 }

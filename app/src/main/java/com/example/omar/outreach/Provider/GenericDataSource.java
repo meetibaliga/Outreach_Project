@@ -49,7 +49,6 @@ public abstract class GenericDataSource<E extends DataItem> {
     public E insertItem(E item){
 
         String table = getTableName();
-
         ContentValues content = item.toValues();
         db.insert(table,null,content);
 

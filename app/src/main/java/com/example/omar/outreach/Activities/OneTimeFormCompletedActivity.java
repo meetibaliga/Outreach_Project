@@ -1,6 +1,7 @@
 package com.example.omar.outreach.Activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -9,15 +10,19 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Managers.DynamoDBManager;
+import com.example.omar.outreach.Managers.SharedPreferencesManager;
 import com.example.omar.outreach.R;
 
 import java.sql.Timestamp;
 
 public class OneTimeFormCompletedActivity extends AppCompatActivity implements CallBackDB {
+
+    private static final String TAG = OneTimeFormCompletedActivity.class.getSimpleName();
 
     private ProgressBar progressBar;
     private TextView textView;
@@ -26,6 +31,29 @@ public class OneTimeFormCompletedActivity extends AppCompatActivity implements C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_completed);
+
+        Log.d(TAG,"Hi there");
+
+        // start progress
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                if(App.hasActiveInternetConnection(OneTimeFormCompletedActivity.this)){
+                    Log.d(TAG,"connected");
+                    onConnected();
+                }else{
+                    Log.d(TAG,"not connected");
+                    Toast.makeText(OneTimeFormCompletedActivity.this,"Make Sure you are connected to the internet",Toast.LENGTH_LONG);
+                    finish();
+                }
+
+
+            }
+        });
     }
 
     @Override
@@ -33,14 +61,11 @@ public class OneTimeFormCompletedActivity extends AppCompatActivity implements C
         //nothing
     }
 
-    @Override
-    protected void onResume() {
+    public void onConnected(){
 
-        super.onResume();
+        Log.d(TAG,"connected");
 
         // start progressbar
-
-        progressBar = findViewById(R.id.progressBar);
         textView = findViewById(R.id.textView_complete);
 
         // set creation date
@@ -51,16 +76,20 @@ public class OneTimeFormCompletedActivity extends AppCompatActivity implements C
         //save to db
         new DynamoDBManager(this).saveUserForm();
 
-
     }
 
     @Override
     public void callbackDB(Object object,int callbackId) {
-        // change UI
 
+
+        // save in the shared pref that the form is completed
+        new SharedPreferencesManager(this).setUserFormCompleted(true);
+
+        // change UI
         Log.d("DB","At call back");
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
+
             public void run() {
                 progressBar.setVisibility(View.GONE);
                 textView.setVisibility(View.VISIBLE);

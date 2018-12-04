@@ -9,6 +9,9 @@ import com.example.omar.outreach.Helping.FormEntries.PassingString;
 
 public class EntriesManager {
 
+    private static final String TAG = EntriesManager.class.getSimpleName();
+
+
     //vars
     private static EntriesManager instance;
     private Context context;
@@ -32,11 +35,13 @@ public class EntriesManager {
     // public constructor
 
     public EntriesManager(Context context){
+
         prefMgr = SharedPreferencesManager.getInstance(context);
         this.context = context;
         this.numOfDailyUserInteries = prefMgr.getDailyEntries();
         this.lastEntryDateAdded = prefMgr.getLastEntryDate();
         this.lastEntryHourAdded = prefMgr.getLastEntryHour();
+
     }
 
     // Entries limit
@@ -56,27 +61,22 @@ public class EntriesManager {
             reason.setPassingString("You can add an entry tomorrow");
         }else if(!isMinimumHoursReached()){
             can = false;
-            reason.setPassingString("You can add an entry after "+getRemainingHours()+" Hours");
+            reason.setPassingString("You can add an entry after " + getRemainingHours()+ " Hours");
         }
 
         return can;
     }
 
     public boolean canAddEntry(){
+
         return canAddEntry(new PassingString(""));
     }
 
-    public boolean addDailyEntry(){
-
-        if(canAddEntry()){
-            numOfDailyUserInteries++;
-            lastEntryDateAdded = App.getTodayDayOfMonth();
-            lastEntryHourAdded = App.getNowHourOfDay();
-            updateDataSource();
-            return true;
-        }else{
-            return false;
-        }
+    public void addDailyEntry(){
+        numOfDailyUserInteries++;
+        lastEntryDateAdded = App.getTodayDayOfMonth();
+        lastEntryHourAdded = App.getNowHourOfDay();
+        updateDataSource();
     }
 
     public void resetNumOfDailyEntries(){
@@ -87,15 +87,19 @@ public class EntriesManager {
     //////////////// PRIVATE HELPING METHODS ///////////////
 
     private void updateDataSource(){
-
         prefMgr.setDailyEntries(numOfDailyUserInteries);
         prefMgr.setLastEntryDate(lastEntryDateAdded);
         prefMgr.setLastEntryHour(lastEntryHourAdded);
-
     }
 
     private boolean isMinimumHoursReached() {
+
+        if (lastEntryDateAdded != App.getTodayDayOfMonth()){
+            return true;
+        }
+
         return lastEntryHourAdded + MINIMUM_HOURS_BETWEEN_ENTRIES <= App.getNowHourOfDay();
+
     }
 
     private boolean isEntriesLimitReached() {
@@ -103,6 +107,11 @@ public class EntriesManager {
     }
 
     private int getRemainingHours(){
+
+        Log.d(TAG,"last hour : " + lastEntryHourAdded);
+        Log.d(TAG,"min hours : " + MINIMUM_HOURS_BETWEEN_ENTRIES);
+        Log.d(TAG,"NOW : " + App.getNowHourOfDay());
+
         return lastEntryHourAdded + MINIMUM_HOURS_BETWEEN_ENTRIES - App.getNowHourOfDay() ;
     }
 }

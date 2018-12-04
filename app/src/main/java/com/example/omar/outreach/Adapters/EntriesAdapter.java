@@ -243,7 +243,7 @@ public class EntriesAdapter extends BaseAdapter{
             activityPlaceText += " and " + activities.get(1);
         }
 
-        activityPlaceText += " at " + place;
+        activityPlaceText += "\nat " + place;
 
         return activityPlaceText;
     }

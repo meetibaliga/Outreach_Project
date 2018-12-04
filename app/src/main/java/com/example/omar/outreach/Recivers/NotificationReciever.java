@@ -11,20 +11,72 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import com.example.omar.outreach.Activities.MainActivity;
+import com.example.omar.outreach.App;
+import com.example.omar.outreach.Managers.AuthManager;
+import com.example.omar.outreach.Managers.EntriesManager;
+import com.example.omar.outreach.Managers.SharedPreferencesManager;
 import com.example.omar.outreach.R;
 
 public class NotificationReciever extends BroadcastReceiver {
+
+    EntriesManager entriesManager;
+    SharedPreferencesManager preferencesManager;
+
+    private static int numOfNotificationsSentToday;
+    private int lastNotificationSentDay;
+    private int lastNotificationSentHour;
 
     private static final String NOTIFY_CHANNEL_ID = "1002";
     private static final String NOTIFY_CHANNEL_NAME = "periodicalForm";
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        // initiate members
+        entriesManager = EntriesManager.getInstance(context);
+        preferencesManager = SharedPreferencesManager.getInstance(context);
+        numOfNotificationsSentToday = preferencesManager.getNumOfNotificationsSentToday();
+        lastNotificationSentDay = preferencesManager.getLastNotificationSentDay();
+        lastNotificationSentHour = preferencesManager.getLastNotificationSentHour();
+
+        // reset num of notifs if other day
+        int today = App.getTodayDayOfMonth();
+
+        if( today != lastNotificationSentDay ) {
+            numOfNotificationsSentToday = 0;
+        }
+
+        // if the user cannot add entry don't notify him
+        if(!entriesManager.canAddEntry()){
+            return;
+        }
+
+        // if he opens the app after the evening time and one is sent within the last 3 Hours don't send
+        int now = App.getNowHourOfDay();
+        int eveningNotifTime = preferencesManager.getIntEveningNotificationTime();
+
+        if ( eveningNotifTime != -1 && now > eveningNotifTime && lastNotificationSentHour > now - 3 ) {
+            return;
+        }
+
+        // if the app is open .. don't send
+        if(!App.isAppIsInBackground(context)){
+            return;
+        }
+
+
+        // and finally create the notification
+
         createNotification(context,intent);
+
     }
 
-    @TargetApi(26)
     public void createNotification(Context context, Intent intent) {
+
+        numOfNotificationsSentToday++;
+        lastNotificationSentDay = App.getTodayDayOfMonth();
+        lastNotificationSentHour = App.getNowHourOfDay();
+        updatePreferences();
 
         // extras
         int notifyID = intent.getIntExtra("notifyID", 0);
@@ -53,7 +105,7 @@ public class NotificationReciever extends BroadcastReceiver {
         // Set the three required items all notifications must have
         builder.setSmallIcon(R.drawable.heart_icn);
         builder.setContentTitle("Emotions app");
-        builder.setContentText("please enter your current status ❤️");
+        builder.setContentText("Please add a new entry and gain your reward ❤️");
 
         // large icon
 //        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.heart));
@@ -73,5 +125,11 @@ public class NotificationReciever extends BroadcastReceiver {
         // Build the finished notification and then display it to the user
         Notification notification = builder.build();
         mgr.notify(notifyID, notification);
+    }
+
+    private void updatePreferences() {
+        preferencesManager.setLastNotificationSentDay(lastNotificationSentDay);
+        preferencesManager.setNumOfNotificationsSentToday(numOfNotificationsSentToday);
+        preferencesManager.setLastNotificationSentHour(lastNotificationSentHour);
     }
 }

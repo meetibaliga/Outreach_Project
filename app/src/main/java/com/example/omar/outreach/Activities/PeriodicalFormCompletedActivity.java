@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.omar.outreach.App;
@@ -19,6 +20,9 @@ import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
 
 public class PeriodicalFormCompletedActivity extends AppCompatActivity implements CallBackLocation{
+
+    private static final String TAG = PeriodicalFormCompletedActivity.class.getSimpleName();
+
 
     private Location location;
     private EntriesDataSource entriesDataSource;
@@ -32,8 +36,11 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_completed);
+
+        Log.d(TAG,"ONCREATE PER");
 
         entriesDataSource = new EntriesDataSource(this);
 
@@ -46,10 +53,21 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
 
         // set location
         if(LocationManager.isLocationEnabled(this)){
+
+            Log.d(TAG,"YES LOCATION SET");
+
             new LocationManager(this,this).getCurrentLocation();
+
+
         }else{
+
+            Log.d(TAG,"SHOW DIALOG");
+
             showDialog();
+
+
         }
+
     }
 
     @Override
@@ -68,6 +86,7 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
     }
 
     private void showDialog() {
+
         // notify user
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
         dialog.setMessage("Please Enable you location");
@@ -96,6 +115,7 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
 
     private void navigateToMain() {
 
+        Log.d(TAG,"Going to main .. ");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
 
@@ -104,18 +124,31 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
     @Override
     public void callbackCurrentLocation(Object object) {
 
+        Log.d(TAG,"BACK FROM LOCATION");
+
         if(object instanceof Location){
+
+            Log.d(TAG,"BACK FROM LOCATION OK");
+
             location = (Location) object;
             App.inputEntry.setLatLng(location.getLatitude()+"",location.getLongitude()+"");
             backFromLocaion();
+
         }else{
+
+            Log.d(TAG,"BACK FROM LOCATION NO");
+
             backFromLocaion();
         }
     }
 
     private void backFromLocaion(){
 
-        entriesDataSource.insertItem(App.inputEntry);
+
+        if (App.entriesManager.canAddEntry()) {
+            entriesDataSource.insertItem(App.inputEntry);
+            App.entriesManager.addDailyEntry();
+        }
 
         // change UI
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -130,6 +163,8 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
     }
 
     private void navigateToNextScreen() {
+
+        Log.d(TAG,"navigateToNextScreen");
 
         // go back after 2 secs from the main thread
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {

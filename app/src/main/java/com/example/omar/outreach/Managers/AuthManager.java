@@ -1,12 +1,8 @@
 package com.example.omar.outreach.Managers;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.util.Log;
 
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.CognitoCachingCredentialsProvider;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoDevice;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
@@ -25,10 +21,6 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GenericHa
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.SignUpHandler;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.cognitoidentityprovider.model.RespondToAuthChallengeRequest;
-import com.example.omar.outreach.Activities.AuthActivity;
-import com.example.omar.outreach.App;
-import com.example.omar.outreach.Interfaces.AuthState;
 import com.example.omar.outreach.Interfaces.CallBackAuth;
 
 import java.util.HashMap;
@@ -53,20 +45,20 @@ public class AuthManager {
     public static Context context;
 
     //cognito
-    private CognitoUserPool userPool; // you can a lot of stuff from this
-    private CognitoUser user; // if register success
-    private CognitoUserSession session;
-    private CognitoUserDetails userDetails;
-    private CognitoCachingCredentialsProvider credentialsProvider;
+    private static CognitoUserPool userPool; // you can a lot of stuff from this
+    private static CognitoUser user; // if register success
+    private static CognitoUserSession session;
+    private static CognitoUserDetails userDetails;
+    private static CognitoCachingCredentialsProvider credentialsProvider;
 
     //Constants
-    private String userPoolId = "us-east-1_wgPxciger";
-    private String clientId = "2ovm654bbe5f3ejdol26uunt0s";
-    private String clientSecret = "1uoiobva1j1sqep01336ofjvd760vd73v63q51lc1d1jigsi4qfr";
-    private Regions cognitoRegion = Regions.US_EAST_1;
-    private String identityPoolId = "us-east-1:e33a6722-ee1a-46aa-a7e4-f29451829e31";
-    private Regions identityRegion = Regions.US_EAST_1;
-    private String identityPoolARN = "arn:aws:cognito-identity:us-east-1:182357684404:identitypool/us-east-1:7047bdd8-af02-485b-bc3a-b73cb9eee3f8";
+    private static String userPoolId = "us-east-1_wgPxciger";
+    private static String clientId = "2ovm654bbe5f3ejdol26uunt0s";
+    private static String clientSecret = "1uoiobva1j1sqep01336ofjvd760vd73v63q51lc1d1jigsi4qfr";
+    private static Regions cognitoRegion = Regions.US_EAST_1;
+    private static String identityPoolId = "us-east-1:e33a6722-ee1a-46aa-a7e4-f29451829e31";
+    private static Regions identityRegion = Regions.US_EAST_1;
+    private static String identityPoolARN = "arn:aws:cognito-identity:us-east-1:182357684404:identitypool/us-east-1:7047bdd8-af02-485b-bc3a-b73cb9eee3f8";
     private String tokenKey = "cognito-idp.us-east-1.amazonaws.com/us-east-1_wgPxciger";
 
     // call back
@@ -133,6 +125,7 @@ public class AuthManager {
                 session = userSession;
                 user = cognitoUser;
                 setupCredintialsProvider(session.getIdToken().getJWTToken());
+
                 // save them in cache
                 cachedUserNameAndPassword(userId,password);
                 callBackAuth.callbackAuth(user,CALL_BACK_ID_LOGIN);
@@ -283,7 +276,7 @@ public class AuthManager {
         return credentialsProvider;
     }
 
-    public boolean checkCachedLogin(CallBackAuth callBackAuth){
+    public boolean checkCachedLogin(){
 
         SharedPreferencesManager pref = SharedPreferencesManager.getInstance(context);
 
@@ -294,9 +287,29 @@ public class AuthManager {
             return false;
         }
 
-        signinUser(userName,pass,callBackAuth);
-
         return true;
     }
 
+    public void attemptLoginUsingCachedCredentials(CallBackAuth callBackAuth){
+
+        SharedPreferencesManager pref = SharedPreferencesManager.getInstance(context);
+
+        String userName = pref.getUserId();
+        String pass = pref.getUserPassword();
+
+        if (userName == null || pass == null) {
+            return;
+        }
+
+        signinUser(userName,pass,callBackAuth);
+
+    }
+
+    public static CognitoUserSession getSession() {
+        return session;
+    }
+
+    public static boolean isSignedIn(){
+        return session != null && session.isValid();
+    }
 }

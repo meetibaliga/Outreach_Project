@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserCodeDeliveryDetails;
@@ -36,7 +37,7 @@ public class ConfirmMobile extends AppCompatActivity {
 
 
     //activity
-    Activity activity = this;
+    Activity mThis = this;
 
     Button mConfirmButton;
     EditText mConfirmCodeView;
@@ -156,8 +157,24 @@ public class ConfirmMobile extends AppCompatActivity {
 
                 showProgress(false);
 
-                AmazonServiceException awsException = (AmazonServiceException) exception;
-                String errorMessage = awsException.getErrorMessage();
+                String errorMessage = "";
+
+                if(exception instanceof AmazonServiceException){
+
+                    AmazonServiceException awsException = (AmazonServiceException) exception;
+                    errorMessage = awsException.getErrorMessage();
+
+                }else if (exception instanceof  AmazonClientException){
+
+                    AmazonClientException awsException = (AmazonClientException) exception;
+                    errorMessage = awsException.getMessage();
+
+                    if (!App.hasActiveInternetConnection(mThis)) {
+                        errorMessage = "Make sure you are connected to the internet";
+                    }
+
+                }
+
 
                 Log.d(TAG,errorMessage);
                 TextView errorView = findViewById(R.id.errorText);

@@ -3,11 +3,14 @@ package com.example.omar.outreach.Managers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.R;
 
 public class SharedPreferencesManager {
+
+    private static final String TAG = SharedPreferencesManager.class.getSimpleName();
 
 
     private static SharedPreferencesManager instance;
@@ -78,6 +81,48 @@ public class SharedPreferencesManager {
         return preferences.getString(_context.getResources().getString(R.string.eveninig_notification_key),null);
     }
 
+    public int getIntMorningNotificationTime(){
+
+        String time = getMorningNotificationTime();
+
+        if (time == null){
+            Log.d(TAG,"Null");
+            return -1;
+        }
+
+        int intTime;
+        try{
+            intTime = Integer.parseInt(time);
+        }catch (NumberFormatException ex){
+            return -1;
+        }
+
+        return intTime;
+
+
+    }
+
+    public int getIntEveningNotificationTime(){
+
+        String time = getEveningNotificationTime();
+
+        if (time == null){
+            Log.d(TAG,"Null");
+            return -1;
+        }
+
+        int intTime;
+        try{
+            intTime = Integer.parseInt(time);
+        }catch (NumberFormatException ex){
+            return -1;
+        }
+
+        return intTime;
+
+
+    }
+
     public void setDailyEntries(int dailyEntries){
         editor.putInt(getKey(R.string.num_of_daily_entries_KEY),dailyEntries).apply();
     }
@@ -100,6 +145,30 @@ public class SharedPreferencesManager {
 
     public void setLastEntryHour(int lastDate){
         editor.putInt(getKey(R.string.last_entry_hour_KEY),lastDate).apply();
+    }
+
+    public void setLastNotificationSentDay(int day){
+        editor.putInt(getKey(R.string.LAST_NOTIF_DAY_KEY),day).apply();
+    }
+
+    public void setLastNotificationSentHour(int hour){
+        editor.putInt(getKey(R.string.LAST_NOTIF_HOUR_KEY),hour).apply();
+    }
+
+    public int getLastNotificationSentDay(){
+        return preferences.getInt(getKey(R.string.LAST_NOTIF_DAY_KEY),0);
+    }
+
+    public int getLastNotificationSentHour(){
+        return preferences.getInt(getKey(R.string.LAST_NOTIF_HOUR_KEY),0);
+    }
+
+    public void setNumOfNotificationsSentToday(int num){
+        editor.putInt(getKey(R.string.NUM_NOTIFS_KEY),num).apply();
+    }
+
+    public int getNumOfNotificationsSentToday(){
+        return preferences.getInt(getKey(R.string.NUM_NOTIFS_KEY),0);
     }
 
     public String getValue(int key){
@@ -133,8 +202,11 @@ public class SharedPreferencesManager {
     }
 
 
+    public void setUserFormCompleted(boolean userFormCompleted) {
+        editor.putBoolean(getKey(R.string.USER_FORM_KEY),userFormCompleted).apply();
+    }
 
-
-
-
+    public boolean getUserFormCompleted() {
+        return preferences.getBoolean(getKey(R.string.USER_FORM_KEY),false);
+    }
 }

@@ -1,10 +1,13 @@
 package com.example.omar.outreach;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.ComponentName;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.omar.outreach.Helping.FormEntries.FormEntry;
 import com.example.omar.outreach.Managers.AuthManager;
+import com.example.omar.outreach.Managers.EntriesManager;
 import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.UserDO;
 import com.example.omar.outreach.Provider.EntriesDataSource;
@@ -41,12 +45,15 @@ import javax.sql.DataSource;
 
 public class App extends Application {
 
+    private static final String TAG = App.class.getSimpleName();
+
     // models
     public static Entry inputEntry; // initialized every time a new entry is beign added
     public static UserDO user = new UserDO();
     public static String USER_ID;
     public static int NUM_OF_ENTRIES;
     public static AuthManager authManager;
+    public static EntriesManager entriesManager;
 
     // lists
     public static ArrayList<Entry> entriesList;
@@ -76,6 +83,7 @@ public class App extends Application {
         imagesNames = populateEmojiesMapWithDrawables();
         isSynced = checkIfAppIsSynced();
         authManager = AuthManager.getInstance(getApplicationContext());
+        entriesManager = EntriesManager.getInstance(getApplicationContext());
     }
 
 
@@ -83,15 +91,29 @@ public class App extends Application {
     //////////////////// PUBLIC HELPING METHODS /////////////////////////
 
     public static int getTodayDayOfMonth(){
-        return Calendar.DAY_OF_MONTH;
+
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return day;
     }
 
-    public static int getNowHourOfDay() { return Calendar.HOUR_OF_DAY; }
+    public static int getNowHourOfDay() {
+
+        Calendar rightNow = Calendar.getInstance();
+        int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+        Log.d(TAG,"Hour from App " + hour);
+
+        return hour;
+
+    }
 
 
     public static String getCurrentDateString(){
+
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         return timestamp.toString();
+
     }
 
     public static String getDateFromDateString(String dateString){
@@ -271,6 +293,31 @@ public class App extends Application {
         return true;
     }
 
+    public static boolean isAppIsInBackground(Context context) {
+        boolean isInBackground = true;
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
+            List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
+            for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
+                if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    for (String activeProcess : processInfo.pkgList) {
+                        if (activeProcess.equals(context.getPackageName())) {
+                            isInBackground = false;
+                        }
+                    }
+                }
+            }
+        } else {
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+            ComponentName componentInfo = taskInfo.get(0).topActivity;
+            if (componentInfo.getPackageName().equals(context.getPackageName())) {
+                isInBackground = false;
+            }
+        }
+
+        return isInBackground;
+    }
+
 
 
 
@@ -335,4 +382,5 @@ public class App extends Application {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }
+
 }

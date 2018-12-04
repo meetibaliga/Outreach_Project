@@ -13,6 +13,7 @@ public interface AuthState {
     String getSwitchTextViewText();
     String getAuthButtonText();
     float[] getExtraViewAlpha();
+    int getForgetPassVisibily();
 
     class Login implements AuthState {
 
@@ -46,6 +47,10 @@ public interface AuthState {
             activity.attemptLogin();
         }
 
+        @Override
+        public int getForgetPassVisibily() {
+            return View.VISIBLE;
+        }
     }
 
     class Signup implements AuthState {
@@ -80,6 +85,10 @@ public interface AuthState {
             activity.attemptSignup();
         }
 
+        @Override
+        public int getForgetPassVisibily() {
+            return View.GONE;
+        }
     }
 }
 

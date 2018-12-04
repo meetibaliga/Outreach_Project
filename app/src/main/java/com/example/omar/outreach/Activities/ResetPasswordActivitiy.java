@@ -13,10 +13,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ForgotPasswordContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
+import com.example.omar.outreach.App;
 import com.example.omar.outreach.Managers.AuthManager;
 import com.example.omar.outreach.R;
 
@@ -151,16 +153,30 @@ public class ResetPasswordActivitiy extends AppCompatActivity {
             @Override
             public void onFailure(Exception exception) {
 
-                AmazonServiceException awsException = (AmazonServiceException)exception;
+                String errorMessage = "";
 
-                String error = awsException.getErrorMessage();
+                if(exception instanceof AmazonServiceException){
 
-                if(error == null){
+                    AmazonServiceException awsException = (AmazonServiceException) exception;
+                    errorMessage = awsException.getErrorMessage();
+
+                }else if (exception instanceof AmazonClientException){
+
+                    AmazonClientException awsException = (AmazonClientException) exception;
+                    errorMessage = awsException.getMessage();
+
+                    if (!App.hasActiveInternetConnection(mThis)) {
+                        errorMessage = "Make sure you are connected to the internet";
+                    }
+
+                }
+
+                if(errorMessage == null){
                     return;
                 }
 
                 mErrorTextView.setVisibility(View.VISIBLE);
-                mErrorTextView.setText(error);
+                mErrorTextView.setText(errorMessage);
 
             }
         });
