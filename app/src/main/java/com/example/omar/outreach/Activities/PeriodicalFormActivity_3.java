@@ -10,6 +10,11 @@ public class PeriodicalFormActivity_3 extends PeriodicalBaseFormActivity {
 
     @Override
     protected String getScreenTitle() {
+        return "3/5 Place";
+    }
+
+    @Override
+    public String getTitleQuestion() {
         return "Where are you right now?";
     }
 
@@ -29,7 +34,9 @@ public class PeriodicalFormActivity_3 extends PeriodicalBaseFormActivity {
     }
 
     @Override
-    protected void addItemToModel(String text) {App.inputEntry.setPlace(text); }
+    protected void addItemToModel(String text) {
+        App.inputEntry.setPlace(text);
+    }
 
     @Override
     protected void removeItemFromModel() {

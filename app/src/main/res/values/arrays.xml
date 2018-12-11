@@ -205,18 +205,26 @@
     <!--How long-->
     <string-array
         name="how_long">
-        <item >1 year or less</item>
-        <item >2 years </item>
-        <item >3 years</item>
+        <item >One year or less</item>
+        <item >Two years </item>
+        <item >Three years</item>
+        <item >Four years or More</item>
     </string-array>
 
-    <!--Ventilation-->
+    <!--Heating-->
     <string-array
-        name="ventilation_type">
+        name="heating_system">
         <item >Forced air heating</item>
         <item >Baseboard heating</item>
-        <item >Forced air cooling</item>
         <item >Other(Explain)</item>
+    </string-array>
+
+    <!--Heating-->
+    <string-array
+        name="cooling_system">
+        <item >Forced air cooling</item>
+        <item >Window air conditioning</item>
+        <item >Other</item>
     </string-array>
 
     <!--Filteration system-->
@@ -231,25 +239,27 @@
     <string-array name="furnace_system">
         <item>Gas</item>
         <item>Electric</item>
-        <item>Other(Specify)</item>
+        <item>Other</item>
     </string-array>
 
     <!--ventilation practice summer-->
+
     <string-array name="ventilation_practice_summer">
-        <item>Openning window</item>
+        <item>Opening window</item>
         <item>Running exhaust fans</item>
-        <item>Rely on mechanical ventilation</item>
-        <item>Other(Specify)</item>
+        <item>Other</item>
         <item>None</item>
+        <item>I don't know</item>
     </string-array>
 
     <!--ventilation practice winter-->
+
     <string-array name="ventilation_practice_winter">
         <item>Opening window</item>
         <item>Running exhaust fans</item>
-        <item>Rely on mechanical ventilation</item>
-        <item>Other(Specify)</item>
+        <item>Other</item>
         <item>None</item>
+        <item>I don't know</item>
     </string-array>
 
     <!--windows open-->
@@ -257,12 +267,15 @@
         <item>Open day and night during summers and totally closed during winters</item>
         <item>Open very often(more than 6 hours)</item>
         <item>Not very often(less than 1 hour)</item>
-        <item>Depends from room to room (specifics)</item>
+        <item>Depends from room to room</item>
+        <item>I don't know</item>
     </string-array>
 
     <!--ventilation type window-->
     <string-array name="ventilation_type_window">
         <item>Open day and night and during summer</item>
+        <item>Other</item>
+        <item>I don't know</item>
     </string-array>
 
     <!--ventilation type window-->
@@ -275,16 +288,29 @@
 
     <!--satisfaction scale-->
     <string-array name="satisfaction_scale">
-        <item>Extremely Dissatisfied</item>
-        <item>Dissatisfied</item>
+        <item>Extremely Satisfied</item>
         <item>Satisfied</item>
+        <item>Neutral</item>
+        <item>Dissatisfied</item>
+        <item>Extremely Dissatisfied</item>
+    </string-array>
+
+    <!--Helpless -->
+    <string-array name="helpless_choices">
+        <item>Always</item>
+        <item>Often</item>
+        <item>Sometimes</item>
+        <item>Not Very Often</item>
+        <item>Never</item>
     </string-array>
 
     <!--agreement scale-->
     <string-array name="agreement_scale">
-        <item>Strongly agree</item>
+        <item>Extremely Agree</item>
         <item>Agree</item>
-        <item>Don't agree</item>
+        <item>Neutral</item>
+        <item>Disagree</item>
+        <item>Extremely Disagree</item>
     </string-array>
 
     <!-- Morning Times -->

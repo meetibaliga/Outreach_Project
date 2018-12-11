@@ -24,12 +24,13 @@ import java.util.ArrayList;
 public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
 
     //model
-    protected String [] listItems;
+    protected String[] listItems;
 
     // UI
     protected ListImageAdapter listAdapter;
     protected GridView gridView;
     private Button nextBtn;
+    private TextView subtitle;
 
     //flags
     private int numOfSelected = 0;
@@ -43,12 +44,14 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
 
     //abstract methods
     protected abstract String getScreenTitle();
+    public abstract String getTitleQuestion();
     protected abstract String[] getTextsArray();
     protected abstract String[] getFacesArray();
     protected abstract Intent getNextIntent();
     protected abstract void addItemToModel(String text);
     protected abstract void removeItemFromModel();
-    protected void specificCode(){}
+    protected boolean showSubtitle(){return false;}
+    protected void specificCode() {}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +70,11 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
 
         setTitle(getScreenTitle());
         TextView titleTV = findViewById(R.id.textView);
-        titleTV.setText(getScreenTitle());
+        titleTV.setText(getTitleQuestion());
         nextBtn = findViewById(R.id.button);
         nextBtn.setVisibility(View.INVISIBLE);
+        subtitle = findViewById(R.id.subTitle);
+        subtitle.setVisibility(showSubtitle() ? View.VISIBLE : View.GONE);
 
         //data
 
@@ -77,7 +82,7 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         String[] images = getFacesArray();
 
         gridView = (GridView) findViewById(R.id.gridView);
-        listAdapter = new ListImageAdapter(this,listItems,images);
+        listAdapter = new ListImageAdapter(this, listItems, images);
         gridView.setAdapter(listAdapter);
 
         // num of items
@@ -87,35 +92,35 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                itemSelected(view,position);
+                itemSelected(view, position);
             }
         });
 
 
     }
 
-    protected void itemSelected(View view, int position){
-        setItemSelected(view,position);
+    protected void itemSelected(View view, int position) {
+        setItemSelected(view, position);
     }
 
     protected void setItemSelected(View view, int position) {
 
-        if(isSelected(position)){
-            unselect(position,view);
+        if (isSelected(position)) {
+            unselect(position, view);
             removeItemFromModel();
-        }else{
+        } else {
 
             // get item text
             currentSelectionText = ((TextView) view.findViewById(R.id.textView_text)).getText().toString();
 
             // if other is selected
             if (currentSelectionText.equalsIgnoreCase("other")) {
-                promptUserWithInput(view,position);
-            }else{
+                promptUserWithInput(view, position);
+            } else {
                 // getting the item clicked
-                select(position,view);
+                select(position, view);
                 addItemToModel(currentSelectionText);
-                if(numOfSelected == maxAllowedSelection){
+                if (numOfSelected == maxAllowedSelection) {
                     navigateToNextScreen();
                 }
             }
@@ -131,7 +136,7 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         // Set up the input
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setPadding(16,0,0,16);
+        input.setPadding(16, 0, 0, 16);
         builder.setView(input);
 
         // Set up the buttons
@@ -146,7 +151,7 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                okClicked(input.getText().toString(),view,position);
+                okClicked(input.getText().toString(), view, position);
             }
         });
 
@@ -154,11 +159,11 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
 
     }
 
-    private void okClicked(String input, final View view,final int position) {
+    private void okClicked(String input, final View view, final int position) {
 
-        if (input != ""){
+        if (input != "") {
             currentSelectionText = input;
-        }else{
+        } else {
             currentSelectionText = "Other";
         }
 
@@ -168,9 +173,9 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             public void run() {
 
-                select(position,view);
+                select(position, view);
                 addItemToModel(currentSelectionText);
-                if(numOfSelected == maxAllowedSelection) {
+                if (numOfSelected == maxAllowedSelection) {
                     navigateToNextScreen();
                 }
             }
@@ -178,28 +183,30 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
 
     }
 
-    protected void hideButton(){
+    protected void hideButton() {
         nextBtn.setVisibility(View.VISIBLE);
         nextBtn.setEnabled(true);
     }
 
-    protected void showButton(){
+    protected void showButton() {
 
-        if(maxAllowedSelection < 2){return;}
+        if (maxAllowedSelection < 2) {
+            return;
+        }
 
         nextBtn.setVisibility(View.INVISIBLE);
         nextBtn.setEnabled(false);
     }
 
-    protected int getMaxAllowedSelection(){
+    protected int getMaxAllowedSelection() {
         return 2;
     }
 
-    protected boolean isSelected(int position){
+    protected boolean isSelected(int position) {
         return selectedItems.contains(position);
     }
 
-    protected void select(int position, View view){
+    protected void select(int position, View view) {
         selectedItems.add(position);
         numOfSelected++;
         view.setSelected(true);
@@ -207,7 +214,7 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         hideButton();
     }
 
-    protected void unselect(int position,View view){
+    protected void unselect(int position, View view) {
         selectedItems.remove(0);
         numOfSelected--;
         view.setBackgroundResource(R.drawable.cell_background);

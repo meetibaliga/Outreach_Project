@@ -12,7 +12,17 @@ public class PeriodicalFormActivity_1 extends PeriodicalBaseFormActivity {
 
     @Override
     protected String getScreenTitle() {
-        return "What are you feeling right now?";
+        return "1/5 Feelings";
+    }
+
+    @Override
+    public String getTitleQuestion() {
+        return "How Are you feeling right now ?";
+    }
+
+    @Override
+    protected boolean showSubtitle() {
+        return true;
     }
 
     @Override

@@ -20,7 +20,17 @@ public class PeriodicalFormActivity_2 extends PeriodicalBaseFormActivity {
 
     @Override
     protected String getScreenTitle() {
+        return "2/5 Activities";
+    }
+
+    @Override
+    public String getTitleQuestion() {
         return "What are you doing right now?";
+    }
+
+    @Override
+    protected boolean showSubtitle() {
+        return true;
     }
 
     @Override

@@ -31,8 +31,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <!-- ACTIVITIES -->
-
         <activity android:name=".Activities.AuthenticatorActivity"/>
         <activity
             android:name=".Activities.MainActivity"
@@ -58,7 +56,8 @@
             android:parentActivityName=".Activities.PeriodicalFormActivity_3"
             android:screenOrientation="portrait"/>
         <activity android:name=".Activities.PeriodicalFormActivity_5"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:parentActivityName=".Activities.PeriodicalFormActivity_4"/>
         <activity android:name=".Activities.PeriodicalFormCompletedActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".Activities.LocationsActivity"

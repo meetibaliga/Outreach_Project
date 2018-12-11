@@ -51,6 +51,8 @@ public class UserDO extends Model{
     private String _address2;
     private String _city;
     private String _zip;
+    private String _heatingSystem;
+    private String _coolingSystem;
 
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
@@ -387,6 +389,25 @@ public class UserDO extends Model{
 
     public void set_zip(String _zip) {
         this._zip = _zip;
+    }
+
+
+    @DynamoDBAttribute(attributeName = "heatingSystem")
+    public String get_heatingSystem() {
+        return _heatingSystem;
+    }
+
+    public void set_heatingSystem(String _heatingSystem) {
+        this._heatingSystem = _heatingSystem;
+    }
+
+    @DynamoDBAttribute(attributeName = "coolingSystem")
+    public String get_coolingSystem() {
+        return _coolingSystem;
+    }
+
+    public void set_coolingSystem(String _coolingSystem) {
+        this._coolingSystem = _coolingSystem;
     }
 
 

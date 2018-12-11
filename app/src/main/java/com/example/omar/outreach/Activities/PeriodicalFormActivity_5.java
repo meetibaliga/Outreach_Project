@@ -43,6 +43,8 @@ public class PeriodicalFormActivity_5 extends AppCompatActivity {
 
         TextView tvTitle = findViewById(R.id.textView);
         tvTitle.setText("Answer the following health questions");
+        setTitle("5/5 Health");
+
 
         // Form model
 

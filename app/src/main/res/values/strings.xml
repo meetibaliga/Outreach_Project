@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Emotions</string>
+    <string name="app_name">PUREmotion</string>
     <string name="title_activity_form_2">formActivity_2</string>
     <string name="activity_question">What are you doing right now ?</string>
     <string name="location_question">Where are you right now ?</string>
@@ -29,7 +29,7 @@
     <string name="personal_title">Household and Personal Information</string>
     <string name="home_title">Home Information</string>
     <string name="ventilation_title">Information on home ventilation and Air-Conditioning</string>
-    <string name="well_title">Well-being and climate change questions</string>
+    <string name="well_title">Well-being questions</string>
 
     <!--one time form quations-->
     <string name="firstName_question">First Name</string>
@@ -45,10 +45,11 @@
     <string name="typeOfHome_question">What type of home are you living in?</string>
     <string name="yearBuilt_question">Year home built</string>
     <string name="stories_question">How many stories is the house</string>
-    <string name="squareFeet_question">What is your home area in square feets?</string>
+    <string name="squareFeet_question">What is your home area in square feet?</string>
     <string name="pets_question">How many pets do you have ?</string>
-    <string name="occupants_question">How long have the occupants lived there ?</string>
-    <string name="ventilationType_question">Ventilation type</string>
+    <string name="occupants_question">- how long have you live here ?</string>
+    <string name="heatingSystem_question">Heating System</string>
+    <string name="coolingSystem_question">Cooling System</string>
     <string name="filterationSystem_question">Air handling unit (AHU) filtration system, if AHU is present</string>
     <string name="furnace_question">Furnace / Heating System</string>
     <string name="practice_summer_question">Most common ventilation practice during summer</string>
@@ -65,7 +66,7 @@
     <string name="concerns_question">I have concerns about the potential impacts due to the pollution or adverse effects caused by the construction outside my home</string>
     <string name="connected_question">How much do you feel connected with you community</string>
     <string name="asthma_question">Have you been diagnosed with asthma</string>
-    <string name="helpless_question">Helpless quesstion ... change later</string>
+    <string name="helpless_question">How often do you feel helpless</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

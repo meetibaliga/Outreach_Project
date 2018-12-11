@@ -18,13 +18,13 @@ public class OneTimeForm_3 extends RegistrationBaseActivity {
 
     // ui
 
-    private FormEntry ventilationType;
+    private FormEntry heatingSystem;
+    private FormEntry coolingSystem;
     private FormEntry filterationSystem;
     private FormEntry furnace;
     private FormEntry practice_summer;
     private FormEntry practice_winter;
     private FormEntry window_open;
-    private FormEntry ventilation_window;
     private FormEntry exhaust_fan;
     private YesNoFormEntry kerosen;
     private YesNoFormEntry radon;
@@ -37,13 +37,13 @@ public class OneTimeForm_3 extends RegistrationBaseActivity {
 
         // do these next
 
-        App.user.setVentilationType(ventilationType.getValue());
+        App.user.set_heatingSystem(heatingSystem.getValue());
+        App.user.set_coolingSystem(coolingSystem.getValue());
         App.user.setFilterationSystem(filterationSystem.getValue());
         App.user.setFurnaceSystem(furnace.getValue());
         App.user.setVentilationPracticeSummer(practice_summer.getValue());
         App.user.setVentilationPracticeWinter(practice_winter.getValue());
         App.user.setWindowsOpen(window_open.getValue());
-        App.user.setVentilationWindow(ventilation_window.getValue());
         App.user.setExhaustFans(exhaust_fan.getValue());
         App.user.setKerosenUse(kerosen.getTrueOrFalse());
         App.user.setRadonMitigation(radon.getTrueOrFalse());
@@ -69,8 +69,17 @@ public class OneTimeForm_3 extends RegistrationBaseActivity {
 
         ArrayList<FormEntry> entries = new ArrayList<>();
 
-        ventilationType = new DropDownFormEntry(getResources().getString(R.string.ventilationType_question),this, new ArrayList(Arrays.asList(getResources().getStringArray(R.array.ventilation_type))));
-        entries.add(ventilationType);
+        // heating system
+
+        heatingSystem = new DropDownFormEntry(getResources().getString(R.string.heatingSystem_question),this, new ArrayList(Arrays.asList(getResources().getStringArray(R.array.heating_system))));
+        entries.add(heatingSystem);
+
+        // cooling system
+
+        coolingSystem = new DropDownFormEntry(getResources().getString(R.string.coolingSystem_question),this, new ArrayList(Arrays.asList(getResources().getStringArray(R.array.cooling_system))));
+        entries.add(heatingSystem);
+
+
 
         // filteration system
 
@@ -96,11 +105,6 @@ public class OneTimeForm_3 extends RegistrationBaseActivity {
 
         window_open = new DropDownFormEntry(getResources().getString(R.string.window_open_question),this, new ArrayList(Arrays.asList(getResources().getStringArray(R.array.windows_open))));
         entries.add(window_open);
-
-        // window open
-
-        ventilation_window = new DropDownFormEntry(getResources().getString(R.string.ventilation_windo_question),this, new ArrayList(Arrays.asList(getResources().getStringArray(R.array.ventilation_type_window))));
-        entries.add(ventilation_window);
 
         // exhaust fan
 

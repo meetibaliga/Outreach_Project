@@ -35,7 +35,6 @@ public class PeriodicalFormActivity_4 extends AppCompatActivity {
 
     // consts
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +50,7 @@ public class PeriodicalFormActivity_4 extends AppCompatActivity {
 
         TextView tvTitle = findViewById(R.id.textView);
         tvTitle.setText("Answer the following environmental questions");
+        setTitle("4/5 Environment");
 
         // Form model
 

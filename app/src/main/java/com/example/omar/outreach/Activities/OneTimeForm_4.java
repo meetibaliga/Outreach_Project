@@ -105,7 +105,7 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
 
         // helpless
 
-        helpless = new YesNoFormEntry(getResources().getString(R.string.helpless_question),this);
+        helpless = new DropDownFormEntry(getResources().getString(R.string.helpless_question),this,new ArrayList(Arrays.asList(getResources().getStringArray(R.array.helpless_choices))));
         entries.add(helpless);
 
         return entries;

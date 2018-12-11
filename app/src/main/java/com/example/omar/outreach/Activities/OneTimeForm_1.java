@@ -75,7 +75,7 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
         entries.add(income);
 
         // Relationship
-        relationship = new DropDownFormEntry(getResources().getString(R.string.relationship_question),this, ListPopulatingHelpers.getListOf("Self","Son","Spouse","Father"));
+        relationship = new DropDownFormEntry(getResources().getString(R.string.relationship_question),this, ListPopulatingHelpers.getListOf("Self","Dependent","Partner","Other"));
         entries.add(relationship);
 
         // sex
@@ -91,7 +91,7 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
         entries.add(martialStatus);
 
         // Highest Degree
-        highest = new DropDownFormEntry(getResources().getString(R.string.highest_question),this,ListPopulatingHelpers.getListOf("Less than High School","High School", "College"));
+        highest = new DropDownFormEntry(getResources().getString(R.string.highest_question),this,ListPopulatingHelpers.getListOf("Less than High School","High School", "College", "Graduate Degree"));
         entries.add(highest);
 
         // employed ?
@@ -99,7 +99,7 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
         entries.add(employed);
 
         // race
-        race = new DropDownFormEntry(getResources().getString(R.string.race_question),this,ListPopulatingHelpers.getListOf("American, Indian or Alaska Native","Hispanic", "Prefer not to disclose"));
+        race = new DropDownFormEntry(getResources().getString(R.string.race_question),this,ListPopulatingHelpers.getListOf("American Indian or Alaska Native", "Asian","Black or African American", "Hispanic or Latino","Native Hawaiian or Other Pacific Islander","White", "Prefer not to disclose"));
         entries.add(race);
 
         return entries;
