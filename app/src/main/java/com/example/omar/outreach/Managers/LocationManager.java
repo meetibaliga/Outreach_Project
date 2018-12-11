@@ -1,13 +1,16 @@
 package com.example.omar.outreach.Managers;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.example.omar.outreach.Interfaces.CallBackLocation;
@@ -83,6 +86,16 @@ public class LocationManager implements CallBackLocation {
 
     public static boolean isLocationEnabled(Context context){
 
+        if(context == null){return false;}
+
+        boolean deviceLocationEnabled = isDeviceLocationEnabled(context);
+        boolean locationPermissionEnabled = isAppLocationPermissionLocationEnabled(context);
+
+        return deviceLocationEnabled && locationPermissionEnabled;
+    }
+
+    public static boolean isDeviceLocationEnabled(Context context){
+
         android.location.LocationManager locationManager =
                 (android.location.LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 
@@ -93,6 +106,14 @@ public class LocationManager implements CallBackLocation {
         } catch(Exception ex) {}
 
         return gps_enabled;
+    }
+
+    public static boolean isAppLocationPermissionLocationEnabled(Context context){
+
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context,Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED;
 
     }
 

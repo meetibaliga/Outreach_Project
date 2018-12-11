@@ -25,6 +25,7 @@ public class NotificationReciever extends BroadcastReceiver {
     private static int numOfNotificationsSentToday;
     private int lastNotificationSentDay;
     private int lastNotificationSentHour;
+    private boolean notificationsEnabled;
 
     private static final String NOTIFY_CHANNEL_ID = "1002";
     private static final String NOTIFY_CHANNEL_NAME = "periodicalForm";
@@ -33,33 +34,45 @@ public class NotificationReciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         // initiate members
+
         entriesManager = EntriesManager.getInstance(context);
         preferencesManager = SharedPreferencesManager.getInstance(context);
         numOfNotificationsSentToday = preferencesManager.getNumOfNotificationsSentToday();
         lastNotificationSentDay = preferencesManager.getLastNotificationSentDay();
         lastNotificationSentHour = preferencesManager.getLastNotificationSentHour();
+        notificationsEnabled = preferencesManager.isNotificationsEnabled();
 
         // reset num of notifs if other day
+
         int today = App.getTodayDayOfMonth();
 
         if( today != lastNotificationSentDay ) {
             numOfNotificationsSentToday = 0;
         }
 
+        // if notifications is disabled don't send
+
+        if (!notificationsEnabled){
+            return;
+        }
+
         // if the user cannot add entry don't notify him
+
         if(!entriesManager.canAddEntry()){
             return;
         }
 
-        // if he opens the app after the evening time and one is sent within the last 3 Hours don't send
+        // if a notif sent within the last Min Hours don't send
+
         int now = App.getNowHourOfDay();
         int eveningNotifTime = preferencesManager.getIntEveningNotificationTime();
 
-        if ( eveningNotifTime != -1 && now > eveningNotifTime && lastNotificationSentHour > now - 3 ) {
+        if ( lastNotificationSentHour > now - App.MIN_HOURS_BETWEEN_ENTRIES ) {
             return;
         }
 
         // if the app is open .. don't send
+
         if(!App.isAppIsInBackground(context)){
             return;
         }

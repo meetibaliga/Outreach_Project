@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,11 +14,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.example.omar.outreach.Interfaces.CallBackLambda;
+import com.example.omar.outreach.Managers.LambdaManager;
 import com.example.omar.outreach.R;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.Map;
 
 
 public class CommunityActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CallBackLambda {
+
+    private static final String TAG = CommunityActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,5 +112,65 @@ public class CommunityActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_community);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void getResults(View view) {
+
+        Log.d(TAG,"button clicked");
+        LambdaManager lambda = LambdaManager.getInstance(this,this);
+        lambda.getNumOfEmotionsToday();
+
+    }
+
+    @Override
+    public void callbackLambda(Object results, Object error, String callbackId) {
+
+        if(error != null){
+            Log.d(TAG,"error"+error);
+            return;
+        }
+
+        // no error
+
+        if (!(results instanceof Map)){
+            Log.d(TAG,"results not a map");
+            return;
+        }
+
+        // results is a map
+
+        Map<String,Object> resultMap = (Map<String,Object>) results;
+        Log.d(TAG,"result map" + resultMap);
+
+        // result map ok
+
+        if (!resultMap.containsKey("body")){
+            Log.d(TAG,"no body");
+            return;
+        }
+
+        // we have a body
+
+        String body = (String)resultMap.get("body");
+        Type type = new TypeToken<Map<String, String>>(){}.getType();
+        Gson gson = new Gson();
+        Map<String,String> bodyMap = gson.fromJson(body,type);
+
+        if(bodyMap == null){
+            Log.d(TAG,"body map is null");
+            return;
+        }
+
+        // we have a body map not null
+
+        for ( Map.Entry<String,String> entry : bodyMap.entrySet() ){
+
+            Log.d(TAG,entry.getKey() + " " + entry.getValue());
+
+            // you have the results .. show me what will you do :)
+
+
+        }
+
     }
 }

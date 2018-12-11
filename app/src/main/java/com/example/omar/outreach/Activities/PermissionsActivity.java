@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -13,8 +14,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
 import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.MapsConnectionManager;
@@ -38,52 +42,38 @@ public class PermissionsActivity extends AppCompatActivity implements CallBackMa
     @Override
     protected void onResume() {
         super.onResume();
-        if(LocationManager.isLocationEnabled(this)){
-            // Create connection with maps
-            new MapsConnectionManager(this);
+
+        // check if both are connected
+
+        if (LocationManager.isLocationEnabled(this)){
+            goToMainScreen();
+            return;
+        }
+
+        // check if the device location is not enabled
+
+        if(!LocationManager.isDeviceLocationEnabled(this)){
+            showDeviceLocationButton();
+        }
+
+        // check if the app allows location
+
+        if(!LocationManager.isAppLocationPermissionLocationEnabled(this)){
+            askForLocationPermission();
         }
 
     }
 
-    @Override
-    public void callbackMapsConnected() {
-        askForLocationPermission();
+    private void showDeviceLocationButton(){
+        Button button = findViewById(R.id.settingsButton);
+        TextView text = findViewById(R.id.settingsText);
+        button.setVisibility(View.VISIBLE);
+        text.setVisibility(View.VISIBLE);
     }
 
-    private void showDialog() {
+    @Override
+    public void callbackMapsConnected() {
 
-        Log.d(TAG,"Showing dialog ");
-
-        // notify user
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setMessage("Please Enable you device location and allow the app to use the location.");
-
-        dialog.setPositiveButton("Go to Settings", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), null);
-                intent.setData(uri);
-                startActivity(intent);
-            }
-        });
-
-        dialog.setNegativeButton("Later", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                userDidNotEnableLocation();
-            }
-        });
-
-        dialog.show();
-    } // no need
-
-    private void userDidNotEnableLocation() {
-    } // no need
-
-    private void goToMainScreen() {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
     }
 
     public void askForLocationPermission() {
@@ -125,10 +115,26 @@ public class PermissionsActivity extends AppCompatActivity implements CallBackMa
     }
 
     private void permissionGranted(){
-        goToMainScreen();
+        if(LocationManager.isDeviceLocationEnabled(this)){
+            goToMainScreen();
+        }
+    }
+
+
+    private void goToMainScreen() {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
     private void permissionNotGranted(){
+        showAppPermissionButtons();
+    }
+
+    private void showAppPermissionButtons(){
+        Button button = findViewById(R.id.allowAppButton);
+        TextView text = findViewById(R.id.allowAppText);
+        button.setVisibility(View.VISIBLE);
+        text.setVisibility(View.VISIBLE);
     }
 
     @Override

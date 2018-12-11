@@ -209,4 +209,8 @@ public class SharedPreferencesManager {
     public boolean getUserFormCompleted() {
         return preferences.getBoolean(getKey(R.string.USER_FORM_KEY),false);
     }
+
+    public boolean isNotificationsEnabled(){
+        return preferences.getBoolean(getKey(R.string.Enable_Notifications_Key),true);
+    }
 }

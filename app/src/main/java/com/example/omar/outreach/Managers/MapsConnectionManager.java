@@ -3,6 +3,7 @@ package com.example.omar.outreach.Managers;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -21,27 +22,44 @@ import com.google.android.gms.location.LocationServices;
 public class MapsConnectionManager implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
 
+    public static MapsConnectionManager instance;
+
     private Activity context;
     private CallBackMapsConnection callBack;
     private GoogleApiClient mLocationClient;
     private static final int ERROR_DIALOG_REQUEST = 9001;
 
+    public static MapsConnectionManager getInstance(Activity context) {
 
-    public MapsConnectionManager(Activity context){
+        if(instance == null){
+            instance = new MapsConnectionManager(context);
+        }
 
-        // initialize members
-
-        this.callBack = (CallBackMapsConnection) context;
-        this.context = context;
-
-        // check google play
-
-        checkGooglePlay(context);
-
+        return instance;
 
     }
 
-    private void checkGooglePlay(Activity context) {
+    private MapsConnectionManager(Activity context){
+
+        // initialize members
+        this.callBack = (CallBackMapsConnection) context;
+        this.context = context;
+
+    }
+
+    public void connectToGooglePlayMapsService() {
+
+        // no context
+        if(context == null){
+            callBack.callbackMapsFailed();
+            return;
+        }
+
+        // already connected
+        if(mLocationClient != null){
+            return;
+        }
+
         if (isServiceOK()) {
             mLocationClient = new GoogleApiClient.Builder(context)
                     .addApi(LocationServices.API)

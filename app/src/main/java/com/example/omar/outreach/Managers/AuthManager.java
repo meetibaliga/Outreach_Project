@@ -56,15 +56,22 @@ public class AuthManager {
     private static String clientId = "2ovm654bbe5f3ejdol26uunt0s";
     private static String clientSecret = "1uoiobva1j1sqep01336ofjvd760vd73v63q51lc1d1jigsi4qfr";
     private static Regions cognitoRegion = Regions.US_EAST_1;
-    private static String identityPoolId = "us-east-1:e33a6722-ee1a-46aa-a7e4-f29451829e31";
+    private static String identityPoolId = "us-east-1:7047bdd8-af02-485b-bc3a-b73cb9eee3f8";
     private static Regions identityRegion = Regions.US_EAST_1;
-    private static String identityPoolARN = "arn:aws:cognito-identity:us-east-1:182357684404:identitypool/us-east-1:7047bdd8-af02-485b-bc3a-b73cb9eee3f8";
     private String tokenKey = "cognito-idp.us-east-1.amazonaws.com/us-east-1_wgPxciger";
 
     // call back
     public static final int CALL_BACK_ID_LOGIN = 0;
     public static final int CALL_BACK_ID_SIGNUP = 1;
     public static final int CALL_BACK_ID_CHALLENGE = 2;
+
+    public static String getIdentityPoolId(){
+        return identityPoolId;
+    }
+
+    public static Regions getCognitoRegion(){
+        return cognitoRegion;
+    }
 
     private AuthManager(Context context){
         this.context = context;

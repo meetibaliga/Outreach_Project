@@ -1,24 +1,17 @@
 package com.example.omar.outreach.Activities;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -28,11 +21,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
-import com.example.omar.outreach.Adapters.EntriesAdapter;
 import com.example.omar.outreach.App;
 import com.example.omar.outreach.Fragments.CommunityFragment;
 import com.example.omar.outreach.Fragments.MeFragment;
@@ -47,15 +38,10 @@ import com.example.omar.outreach.Managers.SharedPreferencesManager;
 import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.Models.EntryDO;
 import com.example.omar.outreach.Models.UserDO;
-import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
-import com.example.omar.outreach.Recivers.LocationReciver;
 import com.example.omar.outreach.Recivers.NotificationReciever;
-import com.example.omar.outreach.Recivers.PowerReciver;
 import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -63,11 +49,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements CallBackMapsConnection, CallBackDB,MeFragment.OnFragmentInteractionListener, CommunityFragment.OnFragmentInteractionListener, NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
-    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1000;
-    private ListView listView;
-    private EntriesAdapter entriesAdapter;
-    private EntriesDataSource ds;
     private FloatingActionButton addEntryButton;
 
 
@@ -86,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         setupActionButton();
         disableButtonIfNotAllowed();
         showHomeFragment();
-
-
     }
 
     @Override
@@ -102,6 +81,17 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         App.getDefaultTracker().setScreenName(this.getClass().getSimpleName());
         App.getDefaultTracker().send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    private void connectToGoogleMapsLocationsService(){
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                MapsConnectionManager.getInstance(MainActivity.this).connectToGooglePlayMapsService();
+            }
+        });
+
     }
 
     private void setupDrawer() {
@@ -253,21 +243,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         App.mainActivity = this;
 
         // if the user has no user id go to the authentication screen
-        if(App.USER_ID == "" || App.USER_ID == null){
+        if(App.USER_ID == "" || App.USER_ID == null) {
             App.authManager.signout();
         }
-
-        // Create connection with maps
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-
-                if(App.hasActiveInternetConnection(MainActivity.this)){
-                    new MapsConnectionManager(MainActivity.this);
-                }
-
-            }
-        });
 
         //check if the user has filled the first time form
 
@@ -286,6 +264,13 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         }
 
+        // connect to google play maps service
+        if (LocationManager.isLocationEnabled(this)) {
+            connectToGoogleMapsLocationsService();
+        }else{
+            goToPermissionsScreen();
+        }
+
         // notifications
         setupNotifications();
 
@@ -299,8 +284,8 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     //////////////////////////// MAPS /////////////////////////////////
 
     @Override
-    public void callbackMapsConnected() {
-        askForLocationPermission();
+    public void callbackMapsConnected(){
+        Log.d(TAG,"connected to maps successfully !!");
     }
 
     @Override
@@ -310,50 +295,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
     @Override
     public void callbackMapsSuspended() {
-    }
-
-    public void askForLocationPermission() {
-
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED)
-        {
-
-            // NOT GRANTED
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION))
-
-            {
-
-                // Give Grant
-                permissionNotGranted();
-
-            }
-
-            else {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
-
-                // Request Grant
-
-            }
-
-        } else
-        {
-            // GRANTED
-            permissionGranted();
-        }
-
-    }
-
-    private void permissionGranted(){
-    }
-
-    private void permissionNotGranted(){
-        goToPermissionsScreen();
     }
 
     private void goToPermissionsScreen() {

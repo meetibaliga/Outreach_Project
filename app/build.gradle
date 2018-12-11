@@ -27,6 +27,7 @@ repositories {
 
 
 dependencies {
+
     //implementation 'com.google.android.material:material:1.0.0-beta01'
     implementation 'com.google.android.gms:play-services-maps:15.0.+'
     implementation 'com.google.android.gms:play-services-location:15.0.+'
@@ -39,8 +40,17 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    // AWS
+    //
     // Mobile Client for initializing the SDK
     implementation('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true }
+
+    //LambdaInterface
+    implementation 'com.amazonaws:aws-android-sdk-lambda:2.2.+'
+
+    // DB
+    implementation 'com.amazonaws:aws-android-sdk-ddb:2.6.+'
+    implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.6.+'
 
     // Cognito UserPools for SignIn
     implementation 'com.android.support:support-v4:24.+'
@@ -49,10 +59,6 @@ dependencies {
     // Sign in UI Library
     implementation 'com.android.support:appcompat-v7:24.+'
     implementation('com.amazonaws:aws-android-sdk-auth-ui:2.6.+@aar') { transitive = true }
-
-    // DB
-    implementation 'com.amazonaws:aws-android-sdk-ddb:2.6.+'
-    implementation 'com.amazonaws:aws-android-sdk-ddb-mapper:2.6.+'
 
     //Pref
     implementation 'com.android.support:preference-v7:26.+'

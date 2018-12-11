@@ -382,6 +382,7 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+
     private void showProgress(final boolean show) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {

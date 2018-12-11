@@ -289,6 +289,12 @@
 
     <!-- Morning Times -->
     <string-array name="morning_times_entries">
+        <item name="0">12:00AM</item>
+        <item name="1">1:00AM</item>
+        <item name="2">2:00AM</item>
+        <item name="3">3:00AM</item>
+        <item name="4">4:00AM</item>
+        <item name="5">5:00AM</item>
         <item name="6">6:00AM</item>
         <item name="7">7:00AM</item>
         <item name="8">8:00AM</item>
@@ -299,6 +305,12 @@
 
     <!-- Morning Times -->
     <string-array name="morning_times_values">
+        <item name="0">0</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
+        <item name="3">3</item>
+        <item name="4">4</item>
+        <item name="5">5</item>
         <item name="6">6</item>
         <item name="7">7</item>
         <item name="8">8</item>
@@ -309,6 +321,12 @@
 
     <!-- Evening Times -->
     <string-array name="evening_times_entries">
+        <item name="0">12:00PM</item>
+        <item name="1">1:00PM</item>
+        <item name="2">2:00PM</item>
+        <item name="3">3:00PM</item>
+        <item name="4">4:00PM</item>
+        <item name="5">5:00PM</item>
         <item name="6">6:00PM</item>
         <item name="7">7:00PM</item>
         <item name="8">8:00PM</item>
@@ -319,6 +337,12 @@
 
     <!-- Evening Times -->
     <string-array name="evening_times_values">
+        <item name="0">12</item>
+        <item name="1">13</item>
+        <item name="2">14</item>
+        <item name="3">15</item>
+        <item name="4">16</item>
+        <item name="5">17</item>
         <item name="6">18</item>
         <item name="7">19</item>
         <item name="8">20</item>

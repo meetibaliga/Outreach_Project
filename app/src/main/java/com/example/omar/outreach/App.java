@@ -67,6 +67,7 @@ public class App extends Application {
     public static int NOTIFY_ID_3 = 0;
     public static String sourceDateFormat = "yyyy-MM-dd HH:mm:ss.SSS";
     public static String simpleDateFormat = "EEEE, dd MMM";
+    public static int MIN_HOURS_BETWEEN_ENTRIES = 6;
 
     // flags
     public static boolean isSynced = false;

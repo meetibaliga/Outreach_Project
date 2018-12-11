@@ -7,7 +7,8 @@
     tools:context=".Activities.PermissionsActivity">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/settingsText"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -28,7 +29,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/settingsText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,6 +37,7 @@
 
     <Button
         android:id="@+id/settingsButton"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -43,12 +45,13 @@
         android:layout_marginStart="8dp"
         android:onClick="settingsClicked"
         android:text="ENABLE DEVICE LOCATION"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintBottom_toTopOf="@+id/allowAppText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/allowAppText"
+        android:visibility="gone"
         android:layout_width="330dp"
         android:layout_height="41dp"
         android:layout_marginBottom="8dp"
@@ -77,6 +80,7 @@
 
     <Button
         android:id="@+id/allowAppButton"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -87,4 +91,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
