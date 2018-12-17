@@ -33,13 +33,9 @@ public class DropDownFormEntry extends FormEntry{
     @Override
     public View getView() {
 
-        LinearLayout dropDownLayout = new LinearLayout(getContext());
-        dropDownLayout.setLayoutParams(getFormEntryParams());
-        dropDownLayout.setOrientation(LinearLayout.VERTICAL);
-
         // set padding and background color for view
-        dropDownLayout.setBackgroundResource(R.drawable.view_corner_radius);
-        GradientDrawable dr = (GradientDrawable)dropDownLayout.getBackground();
+        containerLayout.setBackgroundResource(R.drawable.view_corner_radius);
+        GradientDrawable dr = (GradientDrawable)containerLayout.getBackground();
         dr.setColor(getResources().getColor(R.color.colorLightGrey));
 
         // text
@@ -47,13 +43,13 @@ public class DropDownFormEntry extends FormEntry{
         dropDownTv.setLayoutParams(getNestedFormEntryParams());
         dropDownTv.setText(getTitle());
         dropDownTv.setTextSize(getLabelSize());
-        dropDownLayout.addView(dropDownTv);
+        containerLayout.addView(dropDownTv);
 
         // spinners container
         LinearLayout spinnerContainer = new LinearLayout(getContext());
         spinnerContainer.setLayoutParams(getNestedFormEntryParams());
         spinnerContainer.setOrientation(LinearLayout.HORIZONTAL);
-        dropDownLayout.addView(spinnerContainer);
+        containerLayout.addView(spinnerContainer);
 
         // add spinners to container
 
@@ -70,7 +66,7 @@ public class DropDownFormEntry extends FormEntry{
             spinners.add(spinner);
         }
 
-        return dropDownLayout;
+        return containerLayout;
     }
 
     @Override

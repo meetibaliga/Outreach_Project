@@ -7,12 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.omar.outreach.App;
-import com.example.omar.outreach.Helping.FormEntries.FormEntry;
+import com.example.omar.outreach.Helping.FormEntries.*;
 import com.example.omar.outreach.Helping.FormEntries.ScaleFormEntry;
-import com.example.omar.outreach.Models.Entry;
 import com.example.omar.outreach.R;
 
 import java.util.ArrayList;
@@ -20,8 +18,6 @@ import java.util.List;
 
 public class PeriodicalFormActivity_4 extends AppCompatActivity {
 
-    //model
-    Entry entry;
 
     private static LinearLayout formLayout;
     private ArrayList<FormEntry> formEntries;
@@ -59,6 +55,7 @@ public class PeriodicalFormActivity_4 extends AppCompatActivity {
         // form entries
 
         air_quality = new ScaleFormEntry(getResources().getString(R.string.air_quality_question),this,5, "unacceptable","highly acceptable");
+        air_quality = new ImageFormEntryDecorator(air_quality,R.id.airEmojie);
         formEntries.add(air_quality);
 
         noise = new ScaleFormEntry(getResources().getString(R.string.noise_question),this,5,  "unacceptable","highly acceptable");

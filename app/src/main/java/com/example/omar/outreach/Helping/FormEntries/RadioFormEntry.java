@@ -2,9 +2,11 @@ package com.example.omar.outreach.Helping.FormEntries;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -19,13 +21,17 @@ import info.hoang8f.android.segmented.SegmentedGroup;
 
 public class RadioFormEntry extends FormEntry{
 
-    private List<String> choises;
-    private RadioGroup radioGroup;
-    private List<RadioButton> radioButtons;
+    protected List<String> choises;
+    protected List<RadioButton> radioButtons;
+
+    //ui
+    protected RadioGroup radioGroup;
+    protected TextView titleView;
 
     public RadioFormEntry(String title, List<String> choises, Context context){
         super(title,context);
         this.choises = choises;
+        titleView = new TextView(getContext());
     }
 
     public RadioFormEntry(String title, Context context){
@@ -37,22 +43,16 @@ public class RadioFormEntry extends FormEntry{
 
         radioButtons = new ArrayList<>();
 
-        // layout
-        LinearLayout radioLayout = new LinearLayout(getContext());
-        radioLayout.setLayoutParams(getFormEntryParams());
-        radioLayout.setOrientation(LinearLayout.VERTICAL);
-
         // set padding and background color for view
-        radioLayout.setBackgroundResource(R.drawable.view_corner_radius);
-        GradientDrawable dr = (GradientDrawable)radioLayout.getBackground();
+        containerLayout.setBackgroundResource(R.drawable.view_corner_radius);
+        GradientDrawable dr = (GradientDrawable) containerLayout.getBackground();
         dr.setColor(getResources().getColor(R.color.colorLightGrey));
 
         // text view
-        TextView tv = new TextView(getContext());
-        tv.setLayoutParams(getNestedFormEntryParams());
-        tv.setText(getTitle());
-        tv.setTextSize(getLabelSize());
-        radioLayout.addView(tv);
+        titleView.setLayoutParams(getNestedFormEntryParams());
+        titleView.setText(getTitle());
+        titleView.setTextSize(getLabelSize());
+        containerLayout.addView(titleView);
 
         // Radios
         radioGroup = getRadioGroupType();
@@ -73,9 +73,9 @@ public class RadioFormEntry extends FormEntry{
         updateBackground(radioGroup);
 
         // add radio group to layout
-        radioLayout.addView(radioGroup);
+        containerLayout.addView(radioGroup);
 
-        return radioLayout;
+        return containerLayout;
 
     }
 
@@ -123,3 +123,4 @@ public class RadioFormEntry extends FormEntry{
     public void updateBackground(RadioGroup group) {
     }
 }
+

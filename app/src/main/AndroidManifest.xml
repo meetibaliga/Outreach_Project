@@ -31,6 +31,14 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity android:name=".Activities.LaunchingActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.AuthenticatorActivity"/>
         <activity
             android:name=".Activities.MainActivity"
@@ -54,10 +62,15 @@
         <activity
             android:name=".Activities.PeriodicalFormActivity_4"
             android:parentActivityName=".Activities.PeriodicalFormActivity_3"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait">
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
+        </activity>
         <activity android:name=".Activities.PeriodicalFormActivity_5"
             android:screenOrientation="portrait"
-            android:parentActivityName=".Activities.PeriodicalFormActivity_4"/>
+            android:parentActivityName=".Activities.PeriodicalFormActivity_4"></activity>
         <activity android:name=".Activities.PeriodicalFormCompletedActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".Activities.LocationsActivity"
@@ -95,15 +108,6 @@
             android:label="@string/title_activity_community"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity android:name=".Activities.LaunchingActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
-
         <!-- Notification Reciver -->
         <receiver android:name=".Recivers.NotificationReciever" />
 

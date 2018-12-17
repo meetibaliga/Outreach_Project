@@ -216,7 +216,7 @@
         name="heating_system">
         <item >Forced air heating</item>
         <item >Baseboard heating</item>
-        <item >Other(Explain)</item>
+        <item >Other</item>
     </string-array>
 
     <!--Heating-->

@@ -419,7 +419,6 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
     public void goToMainScreen(){
 
         // check location
-
         if(LocationManager.isLocationEnabled(this)){
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
@@ -450,6 +449,12 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
 
         setPasswordAction();
 
+        changeTitle();
+
+    }
+
+    private void changeTitle() {
+        setTitle(authState.getTitle());
     }
 
 

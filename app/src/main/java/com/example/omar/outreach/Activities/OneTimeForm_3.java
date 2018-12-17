@@ -77,7 +77,7 @@ public class OneTimeForm_3 extends RegistrationBaseActivity {
         // cooling system
 
         coolingSystem = new DropDownFormEntry(getResources().getString(R.string.coolingSystem_question),this, new ArrayList(Arrays.asList(getResources().getStringArray(R.array.cooling_system))));
-        entries.add(heatingSystem);
+        entries.add(coolingSystem);
 
 
 

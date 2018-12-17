@@ -15,11 +15,10 @@ import java.util.ArrayList;
 
 public abstract class RegistrationBaseActivity extends AppCompatActivity {
 
-    protected static LinearLayout formLayout;
+    protected LinearLayout formLayout;
     protected ArrayList<FormEntry> formEntries;
     protected final String ACTION_BUTTON_TEXT_NEXT = "Next";
     protected final String ACTION_BUTTON_TEXT_DONE= "Done";
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +44,14 @@ public abstract class RegistrationBaseActivity extends AppCompatActivity {
                 nextButtonClicked();
             }
         });
-
         formLayout.addView(actionButton);
 
     }
 
     private void addEntriesToLayout(ArrayList<FormEntry> formEntries) {
         for (int i = 0 ; i < formEntries.size() ; i++){
-            FormEntry entry = formEntries.get(i);
-            formLayout.addView(entry.getView());
+            View entry = formEntries.get(i).getView();
+            formLayout.addView(entry);
         }
     }
 

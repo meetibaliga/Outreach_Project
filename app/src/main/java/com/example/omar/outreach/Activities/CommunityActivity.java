@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
 
 import com.example.omar.outreach.Interfaces.CallBackLambda;
 import com.example.omar.outreach.Managers.LambdaManager;
@@ -30,11 +31,24 @@ public class CommunityActivity extends AppCompatActivity
 
     private static final String TAG = CommunityActivity.class.getSimpleName();
 
+    //ui
+    ProgressBar progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
 
+        //init
+        progress = findViewById(R.id.progress);
+
+        //setup
+        setupNav();
+        setupUI();
+        loadData();
+    }
+
+    private void setupNav() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -47,6 +61,10 @@ public class CommunityActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void setupUI(){
+
     }
 
     @Override
@@ -114,12 +132,29 @@ public class CommunityActivity extends AppCompatActivity
         return true;
     }
 
-    public void getResults(View view) {
+    private void loadData(){
 
-        Log.d(TAG,"button clicked");
+        // show progress
+        showProgress(true);
+
+        // call api
+        callGetNumOfEmotionsToday();
+
+    }
+
+    private void showProgress(boolean show){
+        progress.setVisibility(show?View.VISIBLE:View.GONE);
+    }
+
+    private void callGetNumOfEmotionsToday(){
+
         LambdaManager lambda = LambdaManager.getInstance(this,this);
         lambda.getNumOfEmotionsToday();
 
+    }
+
+    public void getResults(View view) {
+        callGetNumOfEmotionsToday();
     }
 
     @Override
@@ -131,26 +166,22 @@ public class CommunityActivity extends AppCompatActivity
         }
 
         // no error
-
         if (!(results instanceof Map)){
             Log.d(TAG,"results not a map");
             return;
         }
 
         // results is a map
-
         Map<String,Object> resultMap = (Map<String,Object>) results;
         Log.d(TAG,"result map" + resultMap);
 
         // result map ok
-
         if (!resultMap.containsKey("body")){
             Log.d(TAG,"no body");
             return;
         }
 
         // we have a body
-
         String body = (String)resultMap.get("body");
         Type type = new TypeToken<Map<String, String>>(){}.getType();
         Gson gson = new Gson();
@@ -162,13 +193,9 @@ public class CommunityActivity extends AppCompatActivity
         }
 
         // we have a body map not null
-
         for ( Map.Entry<String,String> entry : bodyMap.entrySet() ){
-
             Log.d(TAG,entry.getKey() + " " + entry.getValue());
-
             // you have the results .. show me what will you do :)
-
 
         }
 

@@ -68,17 +68,15 @@ public class ShortTextFormEntry extends FormEntry{
     @Override
     public View getView() {
 
-        LinearLayout layout = new LinearLayout(getContext());
-        layout.setLayoutParams(getFormEntryParams());
 
         // set padding and background color for view
-        layout.setBackgroundResource(R.drawable.view_corner_radius);
-        GradientDrawable dr = (GradientDrawable)layout.getBackground();
+        containerLayout.setBackgroundResource(R.drawable.view_corner_radius);
+        GradientDrawable dr = (GradientDrawable)containerLayout.getBackground();
         dr.setColor(getResources().getColor(R.color.colorLightGrey));
 
-        layout.addView(et);
+        containerLayout.addView(et);
 
-        return layout;
+        return containerLayout;
     }
 
     @Override

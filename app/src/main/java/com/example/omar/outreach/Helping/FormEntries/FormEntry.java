@@ -5,37 +5,45 @@ import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class FormEntry extends View{
+interface FormEntryInterface {
+    public View getView();
+    public Context getContext();
+}
 
-    private String title;
-    private boolean required = true;
+public abstract class FormEntry extends View implements FormEntryInterface{
+
+    protected String title;
+    protected boolean required = true;
 
     // ui
-    private static LinearLayout.LayoutParams formEntryParams;
-    private static LinearLayout.LayoutParams nestedFormEntryParams;
-    private static LinearLayout.LayoutParams nestedHorizontalFormEntryParams;
+    protected LinearLayout containerLayout;
+    protected static LinearLayout.LayoutParams formEntryParams;
+    protected static LinearLayout.LayoutParams nestedFormEntryParams;
+    protected static LinearLayout.LayoutParams nestedHorizontalFormEntryParams;
+
 
     //consts
-    private static final int formEntryBottomMargin = 24+16;
-    private static final int nestedFormEntryBottomMargin = 16;
-    private static final int nestedHorizontalformEntryBottomMargin = 8;
-    private static final int nestedHorizontalformEntryRightMargin = 8;
-    private static final int labelSize = 16;
-    private static final int formEntryPaddingTopBottom = 16;
+    protected static final int formEntryBottomMargin = 24+16;
+    protected static final int nestedFormEntryBottomMargin = 16;
+    protected static final int nestedHorizontalformEntryBottomMargin = 8;
+    protected static final int nestedHorizontalformEntryRightMargin = 8;
+    protected static final int labelSize = 16;
+    protected static final int formEntryPaddingTopBottom = 16;
 
 
     // constructors
-
     public FormEntry(Context context){
         this("Untitled",context);
     }
 
     public FormEntry(String title, Context context) {
+
         super(context);
         this.title = title;
 
@@ -52,7 +60,11 @@ public abstract class FormEntry extends View{
         nestedHorizontalFormEntryParams.bottomMargin = nestedHorizontalformEntryBottomMargin;
         nestedHorizontalFormEntryParams.rightMargin = nestedHorizontalformEntryRightMargin;
 
-        // padding
+        // container layout
+        this.containerLayout = new LinearLayout(getContext());
+        containerLayout.setLayoutParams(getFormEntryParams());
+        containerLayout.setOrientation(LinearLayout.VERTICAL);
+
     }
 
     public String getTitle() {
@@ -108,3 +120,4 @@ public abstract class FormEntry extends View{
 
     }
 }
+

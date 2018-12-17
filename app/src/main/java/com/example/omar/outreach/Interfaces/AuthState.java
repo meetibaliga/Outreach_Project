@@ -14,6 +14,7 @@ public interface AuthState {
     String getAuthButtonText();
     float[] getExtraViewAlpha();
     int getForgetPassVisibily();
+    String getTitle();
 
     class Login implements AuthState {
 
@@ -50,6 +51,11 @@ public interface AuthState {
         @Override
         public int getForgetPassVisibily() {
             return View.VISIBLE;
+        }
+
+        @Override
+        public String getTitle() {
+            return "Sign in";
         }
     }
 
@@ -88,6 +94,11 @@ public interface AuthState {
         @Override
         public int getForgetPassVisibily() {
             return View.GONE;
+        }
+
+        @Override
+        public String getTitle() {
+            return "Sign up";
         }
     }
 }
