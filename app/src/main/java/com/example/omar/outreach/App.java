@@ -348,6 +348,33 @@ public class App extends Application {
     }
 
 
+    public static int getImageResourceMappedWith(String name, Context context){
+
+        if(!App.imagesNames.containsKey(name)){
+            return R.drawable.not_found_icn;
+        }
+
+        String mDrawableName = App.imagesNames.get(name);
+        mDrawableName += "_icn";
+        mDrawableName = mDrawableName.toLowerCase();
+
+        return getImageResourceNamed(mDrawableName, context);
+
+    }
+
+    public static int getImageResourceNamed(String name, Context context){
+
+        if (name == null || name == ""){
+            return -1;
+        }
+
+        int resID = context.getResources().getIdentifier(name,"drawable", context.getPackageName());
+
+        return resID;
+
+    }
+
+
 
 
 
@@ -411,5 +438,7 @@ public class App extends Application {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null;
     }
+
+
 
 }

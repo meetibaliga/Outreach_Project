@@ -37,30 +37,37 @@ public class PermissionsActivity extends AppCompatActivity implements CallBackMa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permissions);
 
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        // check if both are connected
 
-        if (LocationManager.isLocationEnabled(this)){
-            goToMainScreen();
-            return;
-        }
+        boolean locationEnabled = true;
 
         // check if the device location is not enabled
-
         if(!LocationManager.isDeviceLocationEnabled(this)){
+            Log.d(TAG,"device not allowd");
+            locationEnabled = false;
             showDeviceLocationButton();
         }
 
         // check if the app allows location
-
         if(!LocationManager.isAppLocationPermissionLocationEnabled(this)){
+            Log.d(TAG,"app not allowed");
+            locationEnabled = false;
             askForLocationPermission();
         }
+
+        if(locationEnabled){
+            Log.d(TAG,"location enabled");
+            goToMainScreen();
+        }else{
+            Log.d(TAG,"location not enabled");
+        }
+
 
     }
 
@@ -78,16 +85,16 @@ public class PermissionsActivity extends AppCompatActivity implements CallBackMa
 
     public void askForLocationPermission() {
 
-        if ( ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        if ( ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
         {
+            Log.d(TAG,"case 1");
 
             // NOT GRANTED
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION) && ActivityCompat.shouldShowRequestPermissionRationale(this,
+            if ( ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION))
 
             {
+                Log.d(TAG,"case 1-a");
 
                 // Give Grant
                 permissionNotGranted();
@@ -96,9 +103,7 @@ public class PermissionsActivity extends AppCompatActivity implements CallBackMa
 
             else {
 
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_COARS_LOCATION);
+                Log.d(TAG,"case 1-b");
 
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -108,6 +113,8 @@ public class PermissionsActivity extends AppCompatActivity implements CallBackMa
 
         } else
         {
+            Log.d(TAG,"case 2");
+
             // GRANTED
             permissionGranted();
         }

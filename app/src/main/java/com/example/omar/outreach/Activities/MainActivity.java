@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
@@ -276,7 +277,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         //setup location reciver
         setupLocationReciver();
-
 
     }
 

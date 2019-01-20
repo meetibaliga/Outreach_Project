@@ -26,6 +26,9 @@ public class PowerReciver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+        // is charging
+        Log.d(TAG,"Power Recived");
+
 
         // if the app is synced dont do anything
         if(App.isSynced){

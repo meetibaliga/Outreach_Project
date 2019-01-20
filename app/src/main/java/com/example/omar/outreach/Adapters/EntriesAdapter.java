@@ -27,6 +27,8 @@ import java.util.ListIterator;
 
 public class EntriesAdapter extends BaseAdapter{
 
+    private static final String TAG = EntriesAdapter.class.getSimpleName();
+
     private final Context context;
     private final List<Object> entries;
     LayoutInflater layoutInflater;
@@ -224,10 +226,10 @@ public class EntriesAdapter extends BaseAdapter{
 
     private void setEnvEmojies(ImageView airEmojie, ImageView noiseEmojie, ImageView transEmojie, ImageView activeEmojie) {
 
-        airEmojie.setImageResource(getImageResourceMappedWith("air"));
-        noiseEmojie.setImageResource(getImageResourceMappedWith("noise"));
-        transEmojie.setImageResource(getImageResourceMappedWith("traffic"));
-        activeEmojie.setImageResource(getImageResourceMappedWith("active"));
+        airEmojie.setImageResource(App.getImageResourceMappedWith("air",context));
+        noiseEmojie.setImageResource(App.getImageResourceMappedWith("noise",context));
+        transEmojie.setImageResource(App.getImageResourceMappedWith("traffic",context));
+        activeEmojie.setImageResource(App.getImageResourceMappedWith("active",context));
 
     }
 
@@ -274,44 +276,19 @@ public class EntriesAdapter extends BaseAdapter{
 
         // setting first emojie face
         String emotion_1 = emotions.get(0);
-        int resID_1 = getImageResourceMappedWith(emotion_1);
+        Log.d(TAG,emotion_1);
+        int resID_1 = App.getImageResourceMappedWith(emotion_1,context);
         emotionEmojie_1.setImageResource(resID_1);
 
         // set other emojie face if found
 
         if (emotions.size() > 1){
             String emotion_2 = emotions.get(1);
-            int resID_2 = getImageResourceMappedWith(emotion_2);
+            int resID_2 = App.getImageResourceMappedWith(emotion_2,context);
             emotionEmojie_2.setImageResource(resID_2);
         }else{
             emotionEmojie_2.setVisibility(View.INVISIBLE);
         }
-    }
-
-    private int getImageResourceMappedWith(String name){
-
-        if(!App.imagesNames.containsKey(name)){
-            return R.drawable.not_found_icn;
-        }
-
-        String mDrawableName = App.imagesNames.get(name);
-        mDrawableName += "_icn";
-        mDrawableName = mDrawableName.toLowerCase();
-
-        return getImageResourceNamed(mDrawableName);
-
-    }
-
-    private int getImageResourceNamed(String name){
-
-        if (name == null || name == ""){
-            return -1;
-        }
-
-        int resID = context.getResources().getIdentifier(name,"drawable", context.getPackageName());
-
-        return resID;
-
     }
 
     private String getTimeFormatted(String creationDate) {
