@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -446,6 +448,11 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
 
         View forgetPass = findViewById(R.id.forgotPasswordLabel);
         forgetPass.setVisibility(authState.getForgetPassVisibily());
+
+        TextView terms = findViewById(R.id.terms);
+        Spanned sp = Html.fromHtml(getString(R.string.terms));
+        terms.setText(sp);
+        terms.setVisibility(authState.getTermsVisibility());
 
         setPasswordAction();
 

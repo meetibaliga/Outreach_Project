@@ -29,6 +29,7 @@ import com.example.omar.outreach.App;
 import com.example.omar.outreach.Fragments.CommunityFragment;
 import com.example.omar.outreach.Fragments.MeFragment;
 import com.example.omar.outreach.Helping.FormEntries.PassingString;
+import com.example.omar.outreach.HowTo;
 import com.example.omar.outreach.Interfaces.CallBackDB;
 import com.example.omar.outreach.Interfaces.CallBackMapsConnection;
 import com.example.omar.outreach.Managers.DynamoDBManager;
@@ -215,11 +216,14 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         Intent nextIntent;
 
         switch (id){
-            case R.id.HomeScreen:
-                nextIntent = null;
-                break;
             case R.id.CommunityScreen:
                 nextIntent = new Intent(this,CommunityActivity.class);
+                break;
+            case R.id.AboutScreen:
+                nextIntent = new Intent(this,AboutActivity.class);
+                break;
+            case R.id.HowToScreen:
+                nextIntent = new Intent(this,HowTo.class);
                 break;
             default:
                 nextIntent = null;
@@ -252,6 +256,8 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         if(!new SharedPreferencesManager(this).getUserFormCompleted()){
 
+            Log.d(TAG,"form not completed");
+
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
@@ -263,6 +269,8 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
                 }
             });
 
+        }else{
+            Log.d(TAG,"form completed");
         }
 
         // connect to google play maps service

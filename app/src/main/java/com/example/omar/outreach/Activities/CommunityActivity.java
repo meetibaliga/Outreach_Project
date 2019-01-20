@@ -18,6 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.omar.outreach.App;
+import com.example.omar.outreach.HowTo;
 import com.example.omar.outreach.Interfaces.CallBackLambda;
 import com.example.omar.outreach.Managers.LambdaManager;
 import com.example.omar.outreach.R;
@@ -146,8 +147,11 @@ public class CommunityActivity extends AppCompatActivity
             case R.id.HomeScreen:
                 nextIntent = new Intent(this,MainActivity.class);
                 break;
-            case R.id.CommunityScreen:
-                nextIntent = null;
+            case R.id.AboutScreen:
+                nextIntent = new Intent(this,AboutActivity.class);;
+                break;
+            case R.id.HowToScreen:
+                nextIntent = new Intent(this,HowTo.class);
                 break;
             default:
                 nextIntent = null;
