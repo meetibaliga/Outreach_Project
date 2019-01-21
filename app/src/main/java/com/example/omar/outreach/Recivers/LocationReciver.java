@@ -52,9 +52,7 @@ public class LocationReciver extends BroadcastReceiver {
         this.movementDetector.startDetecting();
     }
 
-    public LocationReciver(){
-
-    } // to shut up the error
+    public LocationReciver(){} // to shut up the error
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -166,19 +164,19 @@ public class LocationReciver extends BroadcastReceiver {
         start();
     }
 
-    public void setRepeatingInterval(long intervalInMinutes){
+    public void setRepeatingInterval(long intervalInMillis){
 
         Log.d(TAG,"current repeating interval = " + this.repeatingInterval);
-        Log.d(TAG,"set to .. "+ intervalInMinutes*1000*60);
+        Log.d(TAG,"set to .. "+ intervalInMillis);
 
-        if(this.repeatingInterval == intervalInMinutes*1000*60){
-            Log.d(TAG,"same interval return "+ intervalInMinutes);
+        if(this.repeatingInterval == intervalInMillis){
+            Log.d(TAG,"same interval return "+ intervalInMillis);
             return;
         }
 
-        Log.d(TAG,"Alarm is set to " + intervalInMinutes);
+        Log.d(TAG,"Alarm is set to " + intervalInMillis);
 
-        this.repeatingInterval = intervalInMinutes*1000*60;
+        this.repeatingInterval = intervalInMillis;
         updateAlarm();
     }
 

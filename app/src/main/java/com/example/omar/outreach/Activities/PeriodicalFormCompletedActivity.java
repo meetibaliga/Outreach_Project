@@ -16,6 +16,7 @@ import com.example.omar.outreach.App;
 import com.example.omar.outreach.Interfaces.CallBackLocation;
 import com.example.omar.outreach.Managers.LocationManager;
 import com.example.omar.outreach.Managers.RewardManager;
+import com.example.omar.outreach.Managers.SyncManager;
 import com.example.omar.outreach.Provider.EntriesDataSource;
 import com.example.omar.outreach.R;
 
@@ -149,6 +150,10 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
             entriesDataSource.insertItem(App.inputEntry);
             App.entriesManager.addDailyEntry();
         }
+
+        // if there is internet it will sync all entries
+        SyncManager mgr = new SyncManager(this);
+        mgr.syncAllEntries();
 
         // change UI
         new Handler(Looper.getMainLooper()).post(new Runnable() {

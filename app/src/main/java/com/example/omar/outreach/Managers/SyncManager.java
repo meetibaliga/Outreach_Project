@@ -60,8 +60,38 @@ public class SyncManager implements CallBackDB, CallBackAuth{
                 }
 
                 // user is signed in and there is connection
-
                 sync();
+
+            }
+        }).start();
+
+    }
+
+    public void syncAllEntries(){
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // if there is no internet return
+
+                if(!App.hasActiveInternetConnection(context)){
+                    App.log(context,"No internet connection");
+                    return;
+                }
+
+                // if the user is not signed in
+
+                if(!AuthManager.isSignedIn()){
+                    String uid = SharedPreferencesManager.getInstance(context).getUserId();
+                    String pass = SharedPreferencesManager.getInstance(context).getUserPassword();
+                    AuthManager.getInstance(context).signinUser(uid,pass,callBackAuth);
+                    return;
+                }
+
+                // user is signed in and there is connection
+                syncEntries();
 
             }
         }).start();
