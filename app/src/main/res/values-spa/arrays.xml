@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--EMOTIONS ARRAY-->
+    <string-array
+        name="emotions">
+        <item>Surprised</item>
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Loved</item>
+        <item>Disgusted</item>
+        <item>Excited</item>
+        <item>Relaxed</item>
+        <item>Angry</item>
+        <item>Fearful</item>
+        <item>Confused</item>
+        <item>Stressed</item>
+        <item>Bored</item>
+    </string-array>
+
+    <!--EMOTIONS Images Names-->
+    <string-array
+        name="emotions_image_names">
+        <item>Surprised</item>
+        <item>Happy</item>
+        <item>Sad</item>
+        <item>Loved</item>
+        <item>Disgusted</item>
+        <item>Excited</item>
+        <item>Relaxed</item>
+        <item>Angry</item>
+        <item>Fearful</item>
+        <item>Confused</item>
+        <item>Stressed</item>
+        <item>Bored</item>
+    </string-array>
+
+    <!--EMOTIONS Faces-->
+    <string-array
+        name="emotions_faces">
+        <item>😲</item>
+        <item>😁</item>
+        <item>😢</item>
+        <item>😍</item>
+        <item>🤢</item>
+        <item>🤩</item>
+        <item>😌</item>
+        <item>😡</item>
+        <item>😨</item>
+        <item>😕</item>
+        <item>😥</item>
+        <item>😑</item>
+    </string-array>
+
+    <!--ACTIVITIES ARRAY-->
+    <string-array
+        name="activities">
+        <item>Working</item>
+        <item>Eating</item>
+        <item>Studying</item>
+        <item>Exercise</item>
+        <item>Cooking</item>
+        <item>Shopping</item>
+        <item>Socializing</item>
+        <item>TV/Movies</item>
+        <item>Social Media</item>
+        <item>Musical</item>
+        <item>Reading</item>
+        <item>In-Between</item>
+        <item>Religion</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--activities Images Names-->
+    <string-array
+        name="activities_images_names">
+        <item>Working</item>
+        <item>Eating</item>
+        <item>Studying</item>
+        <item>Exercise</item>
+        <item>Cooking</item>
+        <item>Shopping</item>
+        <item>Socializing</item>
+        <item>Movies</item>
+        <item>Social_Media</item>
+        <item>Musical</item>
+        <item>Reading</item>
+        <item>In_Between</item>
+        <item>Religious_Activity</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--activities Faces-->
+    <string-array
+        name="activities_faces">
+        <item>👷‍</item>
+        <item>🥪</item>
+        <item>📚</item>
+        <item>🏃‍‍️</item>
+        <item>🥘</item>
+        <item>🛍</item>
+        <item>🎭</item>
+        <item>🎬</item>
+        <item>📱</item>
+        <item>🎶</item>
+        <item>📖</item>
+        <item>⏳</item>
+        <item>🤲</item>
+        <item>""</item>
+    </string-array>
+
+    <!--LOCATIONS ARRAY-->
+    <string-array
+        name="locations">
+        <item >Work</item>
+        <item >Home</item>
+        <item >School</item>
+        <item >Grocery</item>
+        <item >Retail</item>
+        <item >Restaurant</item>
+        <item >Coffee Shop</item>
+        <item >Gym</item>
+        <item >Outdoor </item>
+        <item >Party/Club</item>
+        <item >Religious</item>
+        <item >Other</item>
+    </string-array>
+
+    <!--LOCATIONS Images Names-->
+    <string-array
+        name="locations_images_names">
+        <item >Work</item>
+        <item >Home</item>
+        <item >School</item>
+        <item >Grocery</item>
+        <item >Retail</item>
+        <item >Restaurant</item>
+        <item >Coffee_Shop</item>
+        <item >Gym</item>
+        <item >Outdoor </item>
+        <item >Party</item>
+        <item >Religious_Place</item>
+        <item >Other</item>
+    </string-array>
+
+    <!--locations Faces-->
+    <string-array
+        name="locations_faces">
+        <item>🏢</item>
+        <item>🏠</item>
+        <item>🏫</item>
+        <item>🛒</item>
+        <item>🏬</item>
+        <item>🍽</item>
+        <item>☕️</item>
+        <item>🏋️‍</item>
+        <item>🌞</item>
+        <item>🎊</item>
+        <item>🛐</item>
+        <item>""</item>
+    </string-array>
+
+    <!--Env Faces-->
+    <string-array
+        name="env_faces">
+        <item>💨</item> // air
+        <item>🔊</item> // noise
+        <item>🚦</item> // trans
+        <item>🏃‍♂️</item> // active
+    </string-array>
+
+    <!--Env Images Names-->
+    <string-array
+        name="env_Images_names">
+        <item>air</item> // air
+        <item>noise</item> // noise
+        <item>traffic</item> // trans
+        <item>active</item> // active
+    </string-array>
+
+    <!--Months ARRAY-->
+    <string-array
+        name="months">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September </item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <!--First Form-->
+    <string-array name="relationship">
+        <item>Self</item>
+        <item>Dependent</item>
+        <item>Partner</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="sex">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Don't want to say</item>
+    </string-array>
+
+    <string-array name="martialStatus">
+        <item>Single</item>
+        <item>Married</item>
+    </string-array>
+
+    <string-array name="highest">
+        <item>Less than High School</item>
+        <item>High School</item>
+        <item>College</item>
+        <item>Graduate Degree</item>
+    </string-array>
+
+    <string-array name="race">
+        <item>American Indian or Alaska Native</item>
+        <item>Asian","Black or African American</item>
+        <item>Hispanic or Latino</item>
+        <item>Native Hawaiian or Other Pacific Islander</item>
+        <item>White</item>
+        <item>Prefer not to disclose</item>
+    </string-array>
+
+    <!--Type of homes-->
+    <string-array
+        name="type_of_homes">
+        <item >Apartment</item>
+        <item >Hometown</item>
+        <item >Other</item>
+    </string-array>
+
+    <!--How long-->
+    <string-array
+        name="how_long">
+        <item >One year or less</item>
+        <item >Two years </item>
+        <item >Three years</item>
+        <item >Four years or More</item>
+    </string-array>
+
+    <!--Heating-->
+    <string-array
+        name="heating_system">
+        <item >Forced air heating</item>
+        <item >Baseboard heating</item>
+        <item >Other</item>
+    </string-array>
+
+    <!--Heating-->
+    <string-array
+        name="cooling_system">
+        <item >Forced air cooling</item>
+        <item >Window air conditioning</item>
+        <item >Other</item>
+    </string-array>
+
+    <!--Filteration system-->
+    <string-array name="filteration_sysytem">
+        <item>Standard</item>
+        <item>Electrically enhanced</item>
+        <item>Other(Specify)</item>
+        <item>Filter Specification,if available</item>
+    </string-array>
+
+    <!--furnace system-->
+    <string-array name="furnace_system">
+        <item>Gas</item>
+        <item>Electric</item>
+        <item>Other</item>
+    </string-array>
+
+    <!--ventilation practice summer-->
+
+    <string-array name="ventilation_practice_summer">
+        <item>Opening window</item>
+        <item>Running exhaust fans</item>
+        <item>Other</item>
+        <item>None</item>
+        <item>I don't know</item>
+    </string-array>
+
+    <!--ventilation practice winter-->
+
+    <string-array name="ventilation_practice_winter">
+        <item>Opening window</item>
+        <item>Running exhaust fans</item>
+        <item>Other</item>
+        <item>None</item>
+        <item>I don't know</item>
+    </string-array>
+
+    <!--windows open-->
+    <string-array name="windows_open">
+        <item>Open day and night during summers and totally closed during winters</item>
+        <item>Open very often(more than 6 hours)</item>
+        <item>Not very often(less than 1 hour)</item>
+        <item>Depends from room to room</item>
+        <item>I don't know</item>
+    </string-array>
+
+    <!--ventilation type window-->
+    <string-array name="ventilation_type_window">
+        <item>Open day and night and during summer</item>
+        <item>Other</item>
+        <item>I don't know</item>
+    </string-array>
+
+    <!--ventilation type window-->
+    <string-array name="exhaust_fan_use">
+        <item>with each use</item>
+        <item>Sometimes,not always</item>
+        <item>Never</item>
+        <item>Other(Specify)</item>
+    </string-array>
+
+    <!--satisfaction scale-->
+    <string-array name="satisfaction_scale">
+        <item>Extremely Satisfied</item>
+        <item>Satisfied</item>
+        <item>Neutral</item>
+        <item>Dissatisfied</item>
+        <item>Extremely Dissatisfied</item>
+    </string-array>
+
+    <!--Helpless -->
+    <string-array name="helpless_choices">
+        <item>Always</item>
+        <item>Often</item>
+        <item>Sometimes</item>
+        <item>Not Very Often</item>
+        <item>Never</item>
+    </string-array>
+
+    <!--agreement scale-->
+    <string-array name="agreement_scale">
+        <item>Extremely Agree</item>
+        <item>Agree</item>
+        <item>Neutral</item>
+        <item>Disagree</item>
+        <item>Extremely Disagree</item>
+    </string-array>
+
+    <!-- Morning Times -->
+    <string-array name="morning_times_entries">
+        <item name="0">12:00AM</item>
+        <item name="1">1:00AM</item>
+        <item name="2">2:00AM</item>
+        <item name="3">3:00AM</item>
+        <item name="4">4:00AM</item>
+        <item name="5">5:00AM</item>
+        <item name="6">6:00AM</item>
+        <item name="7">7:00AM</item>
+        <item name="8">8:00AM</item>
+        <item name="9">9:00AM</item>
+        <item name="10">10:00AM</item>
+        <item name="11">11:00AM</item>
+    </string-array>
+
+    <!-- Morning Times -->
+    <string-array name="morning_times_values">
+        <item name="0">0</item>
+        <item name="1">1</item>
+        <item name="2">2</item>
+        <item name="3">3</item>
+        <item name="4">4</item>
+        <item name="5">5</item>
+        <item name="6">6</item>
+        <item name="7">7</item>
+        <item name="8">8</item>
+        <item name="9">9</item>
+        <item name="10">10</item>
+        <item name="11">11</item>
+    </string-array>
+
+    <!-- Evening Times -->
+    <string-array name="evening_times_entries">
+        <item name="0">12:00PM</item>
+        <item name="1">1:00PM</item>
+        <item name="2">2:00PM</item>
+        <item name="3">3:00PM</item>
+        <item name="4">4:00PM</item>
+        <item name="5">5:00PM</item>
+        <item name="6">6:00PM</item>
+        <item name="7">7:00PM</item>
+        <item name="8">8:00PM</item>
+        <item name="9">9:00PM</item>
+        <item name="10">10:00PM</item>
+        <item name="11">11:00PM</item>
+    </string-array>
+
+    <!-- Evening Times -->
+    <string-array name="evening_times_values">
+        <item name="0">12</item>
+        <item name="1">13</item>
+        <item name="2">14</item>
+        <item name="3">15</item>
+        <item name="4">16</item>
+        <item name="5">17</item>
+        <item name="6">18</item>
+        <item name="7">19</item>
+        <item name="8">20</item>
+        <item name="9">21</item>
+        <item name="10">22</item>
+        <item name="11">23</item>
+    </string-array>
+
+</resources>

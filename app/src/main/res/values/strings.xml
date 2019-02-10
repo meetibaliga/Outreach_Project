@@ -5,7 +5,8 @@
     <string name="location_question">Where are you right now ?</string>
     <string name="emotions_question">What are you feeling right now ? you can choose up to two items</string>
     <string name="env_quesion">Please answer the following environmental questions</string>
-    <string name="fillForm">Please fill out the form</string>
+    <string name="fillForm">Please fill out all the form fields</string>
+
     <!--Authentication-->
     <string name="terms"><![CDATA[By creating an account your agree to the <a href="">Terms & Conditions</a>]]></string>
 
@@ -44,7 +45,7 @@
     <string name="highest_question">Highest Degree</string>
     <string name="employed_question">Are you currently employed?</string>
     <string name="race_question">What race do you consider yourself ?</string>
-    <string name="income_question">What is your yearly average income?</string>
+    <string name="income_question">What is your yearly average income (in USD)?</string>
     <string name="typeOfHome_question">What type of home are you living in?</string>
     <string name="yearBuilt_question">Year home built</string>
     <string name="stories_question">How many stories is the house</string>
@@ -117,5 +118,88 @@
     <string name="USER_FORM_KEY">USER_FORM_KEY</string>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_how_to">HowTo</string>
+    <string name="aboutUsTitle">About Us</string>
+    <string name="wrongNumber">Wrong Number</string>
+    <string name="requiredField">This field is required</string>
+    <string name="passCannotBeEmpty">Password cannot be empty</string>
+    <string name="passEightChars">Password must be at least 8 characters</string>
+    <string name="incorrectMobileNum">This mobile number is incorrect</string>
+    <string name="makeSureConnected">Make sure you are connected to the internet</string>
+    <string name="pleaseEnterMobile">Please enter you mobile number</string>
+    <string name="noUserWithMobile">No user with this mobile number</string>
+    <string name="communityTitle">Community Emotions</string>
+    <string name="pleaseWrithCode">Please write the code</string>
+    <string name="resendCode">Resend Code After %d seconds</string>
+    <string name="resendCodeNow">Resend Code Now</string>
+    <string name="cannotAddEntry">You cannot add an entry at this time. Try later</string>
+    <string name="failedConnection">Failed Connection</string>
+    <string name="feelings">1/5 Feelings</string>
+    <string name="areYouFeelingGood">How Are you feeling right now ?</string>
+    <string name="activities">2/5 Activities</string>
+    <string name="whatAreYouDoing">What are you doing right now?</string>
+    <string name="place">3/5 Place</string>
+    <string name="whereAreYou">Where are you right now?</string>
+    <string name="answerTheFollowing">Answer the following environmental questions</string>
+    <string name="env">4/5 Environment</string>
+    <string name="unacceptable">unacceptable</string>
+    <string name="highlyAccept">highly acceptable</string>
+    <string name="notActive">not active</string>
+    <string name="veryActive">very active</string>
+    <string name="answerTheFollowingHealth">Answer the following health questions</string>
+    <string name="health">5/5 Health</string>
+    <string name="button">button</string>
+    <string name="youErned">👍 You earned +¢</string>
+    <string name="pleaseEnableLocation">Please Enable you location</string>
+    <string name="enableNow">Enable Now</string>
+    <string name="later">Later</string>
+    <string name="failedConnectionWithMaps">Failed Connection with google maps</string>
+    <string name="passResetSuccess">Password Reset Succesfully</string>
+    <string name="enterNewPass">Enter The New Password</string>
+    <string name="enterVerif">Enter the verification Code</string>
+    <string name="whatOther">What Other Activity are yo doing ?</string>
+    <string name="ok">OK</string>
+    <string name="next">Next</string>
+    <string name="done">Done</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="mobileNum">Mobile Number</string>
+    <string name="email">Email</string>
+    <string name="forgot">Forgot ?</string>
+    <string name="byClicking">By Clicking on CREATE ACCOUNT, you agree to the Terms and Conditions</string>
+    <string name="createAccount">CREATE ACCOUNT</string>
+    <string name="already">Already have an account ? Click here to sign in</string>
+    <string name="confirmationCode">Confirmation Code</string>
+    <string name="confirmMobikle">Confirm Mobile Number</string>
+    <string name="pleaseEnter">Please enter the number sent to</string>
+    <string name="chooseOneOrTwo">Choose One or Two</string>
+    <string name="youEarned">👍 You earned +¢8</string>
+    <string name="totalRewards">Total Rewards</string>
+    <string name="getLocation">get Location</string>
+    <string name="toEnableDeviceLoc">To enable the device location click on this button</string>
+    <string name="enableDevLoc">ENABLE DEVICE LOCATION</string>
+    <string name="toAllowApp">To allow the app to use the location click on the button below then go to Permessions</string>
+    <string name="pleaseAllowLocation">Please Allow Location</string>
+    <string name="allowApp">ALLOW APP TO USE LOCATION</string>
+    <string name="thankYou">Thank you 🙏</string>
+    <string name="pleaseEnterConf">please enter the confirmation code sent by SMS and the new password</string>
+    <string name="conf">Confirmation Code</string>
+    <string name="newPass">New Password</string>
+    <string name="resetPass">RESET PASSWORD</string>
+    <string name="aVideo">A Video showing how to use the app</string>
+    <string name="home">Home</string>
+    <string name="community">Community</string>
+    <string name="aboutUS">About Us</string>
+    <string name="howToUseApp">How to use the app</string>
+    <string name="reload">Reload</string>
+    <string name="signout">Signout</string>
+
+    <!--Auth-->
+    <string name="noAccount">No account? Click here to create one</string>
+    <string name="signInCap">SIGN IN</string>
+    <string name="signIn">Sign in</string>
+    <string name="alreadyAcct">Already have an account ? Click here to sign in</string>
+    <string name="createAcct">CREATE ACCOUNT</string>
+    <string name="signUp">Sign up</string>
+    <string name="pleaseComplete">Please complete all the form fields</string>
 
 </resources>

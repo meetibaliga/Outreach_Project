@@ -53,7 +53,7 @@
                     android:id="@+id/mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Mobile Number"
+                    android:hint="@string/mobileNum"
                     android:imeOptions="actionNext"
                     android:inputType="phone"
                     android:maxLines="1"
@@ -71,7 +71,7 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
@@ -110,7 +110,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_weight="1"
                     android:onClick="forgotClicked"
-                    android:text="Forgot ?"
+                    android:text="@string/forgot"
                     android:textAlignment="textEnd"
                     android:textColor="@color/colorAccent"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="-10dp"
                 android:layout_marginTop="16dp"
-                android:text="By Clicking on CREATE ACCOUNT, you agree to the Terms and Conditions"
+                android:text="@string/byClicking"
                 android:textAlignment="textStart" />
 
             <Button
@@ -144,7 +144,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:onClick="authenticate"
-                android:text="CREATE ACCOUNT"
+                android:text="@string/createAccount"
                 android:textStyle="bold" />
 
             <TextView
@@ -153,7 +153,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:onClick="switchStateLabelClicked"
-                android:text="Already have an account ? Click here to sign in"
+                android:text="@string/already"
                 android:textAlignment="center"
                 android:textColor="@color/colorAccent" />
 

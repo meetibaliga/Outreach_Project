@@ -4,15 +4,15 @@
     tools:showIn="navigation_view">
     <item
         android:id="@+id/HomeScreen"
-        android:title="Home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/CommunityScreen"
-        android:title="Community" />
+        android:title="@string/community" />
     <item
         android:id="@+id/AboutScreen"
-        android:title="About Us" />
+        android:title="@string/aboutUS" />
     <item
         android:id="@+id/HowToScreen"
-        android:title="How to use the app" />
+        android:title="@string/howToUseApp" />
 
 </menu>

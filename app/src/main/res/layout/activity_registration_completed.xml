@@ -10,7 +10,7 @@
         android:id="@+id/textView_complete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thank you 🙏 "
+        android:text="@string/thankYou"
         android:textAlignment="center"
         android:textSize="36sp"
         android:visibility="invisible"

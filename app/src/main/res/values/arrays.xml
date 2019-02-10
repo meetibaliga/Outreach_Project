@@ -194,6 +194,41 @@
         <item>December</item>
     </string-array>
 
+    <!--First Form-->
+    <string-array name="relationship">
+        <item>Self</item>
+        <item>Dependent</item>
+        <item>Partner</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="sex">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Don't want to say</item>
+    </string-array>
+
+    <string-array name="martialStatus">
+        <item>Single</item>
+        <item>Maried</item>
+    </string-array>
+
+    <string-array name="highest">
+        <item>Less than High School</item>
+        <item>High School</item>
+        <item>College</item>
+        <item>Graduate Degree</item>
+    </string-array>
+
+    <string-array name="race">
+        <item>American Indian or Alaska Native</item>
+        <item>Asian","Black or African American</item>
+        <item>Hispanic or Latino</item>
+        <item>Native Hawaiian or Other Pacific Islander</item>
+        <item>White</item>
+        <item>Prefer not to disclose</item>
+    </string-array>
+
     <!--Type of homes-->
     <string-array
         name="type_of_homes">

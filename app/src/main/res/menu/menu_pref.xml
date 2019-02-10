@@ -9,7 +9,7 @@
         android:id="@+id/signout_item"
         app:showAsAction="ifRoom"
         android:orderInCategory="301"
-        android:title="Signout">
+        android:title="@string/signout">
     </item>
 
 </menu>
