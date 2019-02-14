@@ -4,10 +4,13 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -101,9 +104,10 @@ public class LocationManager implements CallBackLocation {
 
         boolean gps_enabled = false;
 
-        try {
-            gps_enabled = locationManager.isProviderEnabled(android.location.LocationManager.GPS_PROVIDER);
-        } catch(Exception ex) {}
+        String provider = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        if (provider.contains("gps") || provider.contains("network")){
+            gps_enabled = true;
+        }
 
         return gps_enabled;
     }

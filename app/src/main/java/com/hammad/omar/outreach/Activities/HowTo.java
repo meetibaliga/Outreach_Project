@@ -1,4 +1,4 @@
-package com.hammad.omar.outreach;
+package com.hammad.omar.outreach.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,23 +14,60 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.youtube.player.YouTubeBaseActivity;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerView;
 import com.hammad.omar.outreach.Activities.AboutActivity;
 import com.hammad.omar.outreach.Activities.CommunityActivity;
 import com.hammad.omar.outreach.Activities.MainActivity;
 import com.hammad.omar.outreach.R;
 
-public class HowTo extends AppCompatActivity
+public class HowTo extends YouTubeBaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    YouTubePlayerView youtubePlayer;
+    YouTubePlayer.OnInitializedListener mOninitializedLister;
+    private String YT_API_KEY = "AIzaSyAuznTjuv35yWT7z3qB7b-IPJBYuV3AVbI";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_how_to);
+
+        setupNav();
+        setupYoutubePlayer();
+
+    }
+
+    private void setupYoutubePlayer() {
+
+        youtubePlayer = findViewById(R.id.youtubePlayerView);
+
+        mOninitializedLister = new YouTubePlayer.OnInitializedListener() {
+
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+
+                youTubePlayer.loadVideo("XnrnwwCYcus");
+
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        };
+
+        // init
+        youtubePlayer.initialize(YT_API_KEY,mOninitializedLister);
+
+    }
+
+    private void setupNav(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        //setSupportActionBar(toolbar);
         setTitle("How To Use The App");
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_how_to);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

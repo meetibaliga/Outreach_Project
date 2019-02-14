@@ -37,13 +37,11 @@ public class PermissionsActivity extends AppCompatActivity implements CallBackMa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permissions);
 
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
 
         boolean locationEnabled = true;
 

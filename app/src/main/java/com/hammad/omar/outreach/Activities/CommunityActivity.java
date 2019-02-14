@@ -18,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.hammad.omar.outreach.App;
-import com.hammad.omar.outreach.HowTo;
 import com.hammad.omar.outreach.Interfaces.CallBackLambda;
 import com.hammad.omar.outreach.Managers.LambdaManager;
 import com.hammad.omar.outreach.R;

@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.hammad.omar.outreach.HowTo;
 import com.hammad.omar.outreach.R;
 
 
