@@ -11,6 +11,7 @@ import com.hammad.omar.outreach.Interfaces.CallBackDB;
 import com.hammad.omar.outreach.Models.Entry;
 import com.hammad.omar.outreach.Models.EntryDO;
 import com.hammad.omar.outreach.Models.LocationDO;
+import com.hammad.omar.outreach.Models.RewardDO;
 import com.hammad.omar.outreach.Models.UserDO;
 import com.hammad.omar.outreach.Models.UserLocation;
 
@@ -21,6 +22,8 @@ import java.util.TimerTask;
 
 public class DynamoDBManager {
 
+    private static final String TAG = DynamoDBManager.class.getSimpleName();
+
     private DynamoDBMapper dynamoDBMapper;
     private CallBackDB callback;
 
@@ -30,6 +33,8 @@ public class DynamoDBManager {
     public static int CALL_BACK_ID_ENTRY_SAVED = 3;
     public static int CALL_BACK_ID_LOCATION_SAVED = 4;
     public static int CALL_BACK_ID_USER_SAVED = 5;
+    public static int CALL_BACK_ID_REWARD_UPDATED = 6;
+
 
     //consts
     public static long SAVE_ITEM_TO_DB_RATE = 1 * 1000;
@@ -150,6 +155,19 @@ public class DynamoDBManager {
 
     }
 
+    public void updateUserForm(){
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // save
+                Log.d("DB","User Saved");
+                callback.callbackDB(null,CALL_BACK_ID_USER_SAVED);
+            }
+
+        }).start();
+    }
+
     public void saveLocation(final UserLocation location){
 
         final LocationDO locationDO = new LocationDO(location);
@@ -210,6 +228,23 @@ public class DynamoDBManager {
                 dynamoDBMapper.save(user);
                 Log.d("MainActivity","User Saved with ID : " + user.getUserId());
                 callback.callbackDB(user,CALL_BACK_ID_USER_SAVED);
+            }
+        }).start();
+
+    }
+
+    public void updateReward(double value){
+
+        final RewardDO rewardDO = new RewardDO(App.USER_ID,value);
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                // save
+                dynamoDBMapper.save(rewardDO);
+                Log.d(TAG,"Reward updated with ID : " + rewardDO.getUsrId());
+                callback.callbackDB(rewardDO,CALL_BACK_ID_USER_SAVED);
             }
         }).start();
 

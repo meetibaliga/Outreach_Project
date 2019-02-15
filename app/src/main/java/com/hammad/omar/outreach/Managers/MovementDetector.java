@@ -20,7 +20,7 @@ public class MovementDetector implements SensorEventListener {
     long stoppedAt = Calendar.getInstance().getTimeInMillis();
 
     // Constants
-    double MOVEMENT_THRESHOLD = 0.5 ;
+    double MOVEMENT_THRESHOLD = 0.1 ;
     double STOPPING_TIMES_THRESHOLD = 100;
 
     //public consts

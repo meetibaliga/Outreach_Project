@@ -51,6 +51,7 @@ public abstract class GenericDataSource<E extends DataItem> {
         String table = getTableName();
         ContentValues content = item.toValues();
         db.insert(table,null,content);
+        App.isSynced = false;
 
         return item;
 

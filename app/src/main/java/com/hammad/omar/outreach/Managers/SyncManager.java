@@ -160,6 +160,14 @@ public class SyncManager implements CallBackDB, CallBackAuth{
 
     }
 
+    public void syncReward(){
+
+        EntriesDataSource ds = new EntriesDataSource(context);
+        double value = RewardManager.calculateReward(ds.getNumOfItems());
+        db.updateReward(value);
+
+    }
+
     @Override
     public void callbackDB(final Object object, final int callbackId) {
 

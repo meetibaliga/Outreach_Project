@@ -23,16 +23,16 @@ public class LocationReciver extends BroadcastReceiver {
     private static MovementDetector movementDetector;
 
     //consts
-    private static final long STABLE_TIME_TO_SWITCH = 1 * 1000 * 60; // 5 mins
-    private static final long MAX_CHECK_AGAIN_TIME_INTERVAL = 15 * 1000 * 60; // 15 mins
-    private static final long MIN_CHECK_AGAIN_TIME_INTERVAL = 2 * 1000 * 60; // 15 mins
+    private static final long STABLE_TIME_TO_SWITCH = 3 * 1000 * 60; // 5 mins
+    private static final long MAX_CHECK_AGAIN_TIME_INTERVAL = 10 * 1000 * 60; // 15 mins
+    private static final long MIN_CHECK_AGAIN_TIME_INTERVAL =  500 * 60; // 0.5 mins
     private static final long MOVING_TIME_INTERVAL = 1 * 1000 * 60; // 1 min
     private static final long CHECK_AGAIN_INCREASE_RATE = 2;
 
     // for the alram
     private static PendingIntent pendingIntent;
     private static long repeatingInterval = MOVING_TIME_INTERVAL; // default is one minute
-    private static long checkAgainTimeInterval = MIN_CHECK_AGAIN_TIME_INTERVAL; // start with 2 mins
+    private static long checkAgainTimeInterval = MIN_CHECK_AGAIN_TIME_INTERVAL; // start with 1 mins
 
 
     public static LocationReciver instance;
