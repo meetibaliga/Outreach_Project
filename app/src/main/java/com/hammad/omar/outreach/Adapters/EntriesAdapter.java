@@ -320,9 +320,21 @@ public class EntriesAdapter extends BaseAdapter{
             amOrPm = "AM";
         }
 
-        String hourString = "";
+        String hourString = ""+hour;
 
-        String time = hour +":"+min+"\n"+amOrPm;
+        if(hour < 10){
+            hourString = "0"+hour;
+        }
+
+        String minString = ""+min;
+
+        if(min < 10){
+            minString = "0"+min;
+        }
+
+
+
+        String time = hourString +":"+minString+"\n"+amOrPm;
 
         return time;
     }

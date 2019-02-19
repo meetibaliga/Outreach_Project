@@ -104,7 +104,7 @@ public interface AuthState {
 
         @Override
         public String getTitle() {
-            return "Sign up";
+            return "Create an Account";
         }
 
         @Override

@@ -76,6 +76,11 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        //nothing
+    }
+
 
     private void setupUI() {
 

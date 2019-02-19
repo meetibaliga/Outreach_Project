@@ -5,10 +5,15 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.util.Log;
 
 import java.util.Calendar;
 
+import static android.support.constraint.Constraints.TAG;
+
 public class MovementDetector implements SensorEventListener {
+
+    private static final String TAG = MovementDetector.class.getSimpleName();
 
     // Create
     private Context context;
@@ -20,7 +25,7 @@ public class MovementDetector implements SensorEventListener {
     long stoppedAt = Calendar.getInstance().getTimeInMillis();
 
     // Constants
-    double MOVEMENT_THRESHOLD = 0.1 ;
+    double MOVEMENT_THRESHOLD = 0.3;
     double STOPPING_TIMES_THRESHOLD = 100;
 
     //public consts
@@ -100,11 +105,15 @@ public class MovementDetector implements SensorEventListener {
 
             if(isMoving()){
 
+                Log.d(TAG,"isMoving");
+
                 // from stopping to moving
                 stoppedAt = -1;
 
 
             }else{
+
+                Log.d(TAG,"stopped");
 
                 // from moving to stopping
                 stoppedAt = Calendar.getInstance().getTimeInMillis();

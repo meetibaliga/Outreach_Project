@@ -379,7 +379,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         int eveningTime = 18;
         if(prefMgr.getEveningNotificationTime() != null){
-            eveningTime = Integer.parseInt(prefMgr.getMorningNotificationTime());
+            eveningTime = Integer.parseInt(prefMgr.getEveningNotificationTime());
         }else {
             prefMgr.setEveningNotificationTime(eveningTime);
         }
@@ -395,8 +395,8 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
     private void setNotificationAlarm(int hour, int min, int notifyId) {
 
 
-        //time to repeat
 
+        //time to repeat
         Calendar callendar = Calendar.getInstance();
         callendar.set(Calendar.HOUR_OF_DAY,hour);
         callendar.set(Calendar.MINUTE,min);
@@ -408,9 +408,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),notifyId,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         // Set alarm
-
         AlarmManager alarm = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP,callendar.getTime().getTime(),AlarmManager.INTERVAL_DAY,pendingIntent);
+        long timeOfAlarm = callendar.getTime().getTime();
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP,timeOfAlarm,AlarmManager.INTERVAL_DAY,pendingIntent);
 
     }
 

@@ -191,7 +191,7 @@ public class SyncManager implements CallBackDB, CallBackAuth{
                     App.log(context,"Item Saved .. ");
                     UserLocation location = (UserLocation) object;
                     location.set_isDirty(false); // synced
-                    locationsDataSource.updateItem(location);
+                    locationsDataSource.deleteItem(location);
                     numOfDirtyItems--;
 
                 }

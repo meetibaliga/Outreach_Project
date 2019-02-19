@@ -34,6 +34,9 @@ public class LocationManager implements CallBackLocation {
     private LocationsDataSource locationsDataSource;
     private LocationReciver locationReciver;
 
+    // last point
+    private static Location lastLocation = null;
+
     public LocationManager(Activity context, @Nullable CallBackLocation callBack) {
 
         this.mContext = context;
@@ -126,6 +129,22 @@ public class LocationManager implements CallBackLocation {
         if(object instanceof Location) {
 
             Location location = (Location) object;
+
+            if(lastLocation != null){
+
+                double distanceInMeters = distance(location.getLatitude(),location.getLongitude(),lastLocation.getLatitude(),lastLocation.getLongitude()) * 1000;
+
+                Log.d(TAG,"Distance between last location and this is " + distanceInMeters + " meters");
+
+                // dont store the location if the distance is less than 5 meters
+                
+                if(distanceInMeters <= 5) {
+                    return;
+                }
+
+            }
+
+            lastLocation = location;
             UserLocation userLocation = new UserLocation(location.getLatitude() + "", location.getLongitude() + "");
             locationsDataSource.insertItem(userLocation);
             Log.d("Tracking","Stored a new location: "+ userLocation.get_latitude()+" "+userLocation.get_longitude());
@@ -180,9 +199,32 @@ public class LocationManager implements CallBackLocation {
         };
 
         // Register the listener with the Location Manager to receive location updates
-        locationManager.requestLocationUpdates(android.location.LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(android.location.LocationManager.GPS_PROVIDER, 0, 2, locationListener);
 
 
 
+    }
+
+    // helping methods
+
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }

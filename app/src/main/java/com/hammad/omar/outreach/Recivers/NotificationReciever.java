@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+
 import com.hammad.omar.outreach.Activities.MainActivity;
 import com.hammad.omar.outreach.App;
 import com.hammad.omar.outreach.Managers.AuthManager;
@@ -18,6 +20,8 @@ import com.hammad.omar.outreach.Managers.SharedPreferencesManager;
 import com.hammad.omar.outreach.R;
 
 public class NotificationReciever extends BroadcastReceiver {
+
+    private static final String TAG = NotificationReciever.class.getSimpleName();
 
     EntriesManager entriesManager;
     SharedPreferencesManager preferencesManager;
@@ -28,7 +32,6 @@ public class NotificationReciever extends BroadcastReceiver {
     private boolean notificationsEnabled;
 
     private static final String NOTIFY_CHANNEL_ID = "1002";
-    private static final String NOTIFY_CHANNEL_NAME = "periodicalForm";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -43,43 +46,38 @@ public class NotificationReciever extends BroadcastReceiver {
         notificationsEnabled = preferencesManager.isNotificationsEnabled();
 
         // reset num of notifs if other day
-
         int today = App.getTodayDayOfMonth();
-
         if( today != lastNotificationSentDay ) {
             numOfNotificationsSentToday = 0;
         }
 
         // if notifications is disabled don't send
-
         if (!notificationsEnabled){
+            Log.d(TAG,"notifs disabled");
             return;
         }
 
         // if the user cannot add entry don't notify him
-
         if(!entriesManager.canAddEntry()){
+            Log.d(TAG,"cannot add entry");
             return;
         }
 
         // if a notif sent within the last Min Hours don't send
-
         int now = App.getNowHourOfDay();
-        int eveningNotifTime = preferencesManager.getIntEveningNotificationTime();
-
-        if ( lastNotificationSentHour > now - App.MIN_HOURS_BETWEEN_ENTRIES ) {
+        if ( (lastNotificationSentHour > now - App.MIN_HOURS_BETWEEN_ENTRIES) && numOfNotificationsSentToday > 0 ) {
+            Log.d(TAG,"Just sent I will not send again");
             return;
         }
 
         // if the app is open .. don't send
-
         if(!App.isAppIsInBackground(context)){
+            Log.d(TAG,"app is open I will not send");
             return;
         }
 
 
         // and finally create the notification
-
         createNotification(context,intent);
 
     }

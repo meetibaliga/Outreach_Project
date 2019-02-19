@@ -98,6 +98,13 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
             }
         });
 
+        //button clicked
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToNextScreen();
+            }
+        });
 
     }
 
@@ -232,10 +239,6 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         Intent intent = getNextIntent();
         startActivity(intent);
 
-    }
-
-    protected void nextClicked(View view) {
-        navigateToNextScreen();
     }
 
 }

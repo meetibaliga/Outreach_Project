@@ -34,7 +34,6 @@ public class LocationReciver extends BroadcastReceiver {
     private static long repeatingInterval = MOVING_TIME_INTERVAL; // default is one minute
     private static long checkAgainTimeInterval = MIN_CHECK_AGAIN_TIME_INTERVAL; // start with 1 mins
 
-
     public static LocationReciver instance;
 
     public static LocationReciver getInstance(Activity context, LocationManager mgr) {
@@ -98,6 +97,8 @@ public class LocationReciver extends BroadcastReceiver {
 
             }
 
+        }else{
+            Log.d(TAG,"moving");
         }
 
         // and finally get it if he is moving or stop time < min stable time

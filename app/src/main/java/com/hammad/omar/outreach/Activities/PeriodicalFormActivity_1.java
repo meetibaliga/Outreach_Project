@@ -2,6 +2,7 @@ package com.hammad.omar.outreach.Activities;
 
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
 import com.hammad.omar.outreach.App;
 import com.hammad.omar.outreach.BaseActivites.PeriodicalBaseFormActivity;
