@@ -39,7 +39,7 @@ public class PowerReciver extends BroadcastReceiver {
         // on AC power
         Log.d(TAG,"AC");
         SyncManager syncManager = new SyncManager(context);
-        syncManager.syncAll();
+        syncManager.syncAll(0);
 
     }
 }

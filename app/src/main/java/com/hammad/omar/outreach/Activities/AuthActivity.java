@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -25,17 +26,34 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ForgotPasswordContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
+import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.hammad.omar.outreach.App;
 import com.hammad.omar.outreach.Interfaces.AuthState;
 import com.hammad.omar.outreach.Interfaces.CallBackAuth;
+import com.hammad.omar.outreach.Interfaces.CallBackDB;
 import com.hammad.omar.outreach.Managers.AuthManager;
+import com.hammad.omar.outreach.Managers.DynamoDBManager;
 import com.hammad.omar.outreach.Managers.LocationManager;
+import com.hammad.omar.outreach.Managers.RewardManager;
+import com.hammad.omar.outreach.Managers.SharedPreferencesManager;
+import com.hammad.omar.outreach.Models.Entry;
+import com.hammad.omar.outreach.Models.EntryDO;
+import com.hammad.omar.outreach.Models.UserDO;
+import com.hammad.omar.outreach.Provider.EntriesDataSource;
 import com.hammad.omar.outreach.R;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import javax.sql.DataSource;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class AuthActivity extends AppCompatActivity implements CallBackAuth {
+public class AuthActivity extends AppCompatActivity implements CallBackAuth,CallBackDB {
 
     private static final String TAG = AuthActivity.class.getSimpleName();
 
@@ -71,7 +89,17 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
         authManager = AuthManager.getInstance(this);
 
         //default state
-        authState = new AuthState.Signup();
+
+        if(getIntent().hasExtra("from")){
+            if(getIntent().getExtras().get("from").equals("signout")){
+                authState = new AuthState.Login();
+            }else{
+                authState = new AuthState.Signup();
+            }
+        }else{
+            authState = new AuthState.Signup();
+        }
+
         modifyAuthUIAfterSwitch();
 
     }
@@ -311,7 +339,30 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
         Log.d(TAG,"success log in ");
         CognitoUser user = (CognitoUser) object;
         App.USER_ID = user.getUserId();
-        goToMainScreen();
+        loadUserInfo();
+    }
+
+    private void loadUserInfo() {
+
+        // load user first form
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                if(App.hasActiveInternetConnection(AuthActivity.this)){
+                    DynamoDBManager db = new DynamoDBManager(AuthActivity.this);
+                    db.getEntries();
+                }else{
+                    showProgress(false);
+                    mLoginFormView.setVisibility(View.VISIBLE);
+                    mPasswordView.requestFocus();
+                    mErrorText.setVisibility(View.VISIBLE);
+                    mErrorText.setText("Please connect to the internet");
+                    App.authManager.signout();
+                }
+
+            }
+        });
     }
 
     private void callbackChallenge(Object object){
@@ -518,6 +569,84 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth {
         Intent intent = new Intent(this,ResetPasswordActivitiy.class);
         intent.putExtra("userName",userName);
         startActivity(intent);
+
+    }
+
+    @Override
+    public void callbackDB(Object object, int callbackId) {
+
+        if (callbackId == DynamoDBManager.CALL_BACK_ID_GET_ENTRIES){
+            callBackEntries(object);
+        }else if (callbackId == DynamoDBManager.CALL_BACK_ID_GET_USER){
+            callbackidUser(object);
+        }else{
+            // do nothing
+        }
+    }
+
+    // CALL BACK DB
+
+    private void callBackEntries(Object object) {
+
+        List<Entry> entries = Entry.getEntries((PaginatedList<EntryDO>) object);
+
+        // calculate rewards
+        App.NUM_OF_ENTRIES = App.entriesList.size();
+
+        // insert all items in ds
+        EntriesDataSource ds = new EntriesDataSource(this);
+        ds.insertAllItems(entries);
+
+        //setup the time and date of the entry
+        setupDateAndTimeOfEntries(entries);
+
+        Log.d(TAG,"num of entries today" + new SharedPreferencesManager(this).getDailyEntries());
+
+
+        // get the user form
+        new DynamoDBManager(this).getUserFirstForm();
+
+    }
+
+    private void setupDateAndTimeOfEntries(List<Entry> entries) {
+
+        Entry latest = entries.get(entries.indexOf(Collections.max(entries)));
+        entries.remove(latest);
+        Entry beforeLatest = entries.get(entries.indexOf(Collections.max(entries)));
+
+        int numOfEntriesToday = 0;
+
+        String dayOfLates = new SimpleDateFormat("dd").format(App.getDateFromString(latest.getCreationDate(),App.sourceDateFormat));
+        String dayOfBeforeLatest = new SimpleDateFormat("dd").format(App.getDateFromString(beforeLatest.getCreationDate(),App.sourceDateFormat));
+        String todayDay = new SimpleDateFormat("dd").format(new Date());
+
+        if(todayDay.equals(dayOfLates)){numOfEntriesToday++;}
+        if(todayDay.equals(dayOfBeforeLatest)){numOfEntriesToday++;}
+
+        String lastEntryHour = new SimpleDateFormat("HH").format(App.getDateFromString(latest.getCreationDate(),App.sourceDateFormat));
+
+
+        // update the model
+        App.entriesManager.setNumOfDailyUserInteries(numOfEntriesToday);
+        App.entriesManager.setLastEntryDateAdded(Integer.parseInt(dayOfLates));
+        App.entriesManager.setLastEntryHourAdded(Integer.parseInt(lastEntryHour));
+    }
+
+    private void callbackidUser(Object object) {
+
+        PaginatedList<UserDO> results = (PaginatedList<UserDO>) object;
+        Intent intent;
+
+        if(results.size() == 0 || results == null){
+            intent = new Intent(this,OneTimeForm_1.class);
+        }else{
+            App.user = results.get(0);
+            new SharedPreferencesManager(this).setUserFormCompleted(true);
+            intent = new Intent(this,MainActivity.class);
+        }
+
+        startActivity(intent);
+
 
     }
 }

@@ -213,4 +213,8 @@ public class SharedPreferencesManager {
     public boolean isNotificationsEnabled(){
         return preferences.getBoolean(getKey(R.string.Enable_Notifications_Key),true);
     }
+
+    public void clearAll(){
+        editor.clear().commit();
+    }
 }

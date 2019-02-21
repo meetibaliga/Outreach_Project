@@ -1,5 +1,6 @@
 package com.hammad.omar.outreach.Managers;
 
+import android.location.Location;
 import android.util.Log;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBMapper;
@@ -34,6 +35,9 @@ public class DynamoDBManager {
     public static int CALL_BACK_ID_LOCATION_SAVED = 4;
     public static int CALL_BACK_ID_USER_SAVED = 5;
     public static int CALL_BACK_ID_REWARD_UPDATED = 6;
+    public static final int CALL_BACK_ID_LOCATIONS_BATCH_SAVED = 7;
+    public static final int CALL_BACK_ID_ENTRIES_BATCH_SAVED = 8;
+
 
 
     //consts
@@ -50,6 +54,7 @@ public class DynamoDBManager {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
                 // get num of items
                 EntryDO entryDO = new EntryDO();
                 entryDO.setUserId(App.USER_ID);
@@ -105,35 +110,60 @@ public class DynamoDBManager {
 
     }
 
+    public void saveEntries(final List<Entry> entries,final long rate){
+
+        if(rate == 0){
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    // save
+                    List<EntryDO> entryDOS = EntryDO.fromEntriesList(entries);
+                    dynamoDBMapper.batchSave(entryDOS);
+                    Log.d("MainActivity","Entries Saved");
+                    callback.callbackDB(entries,CALL_BACK_ID_ENTRIES_BATCH_SAVED);
+
+                }
+            }).start();
+
+        }else {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    final Iterator<Entry> i = entries.iterator();
+                    final Timer timer = new Timer();
+
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+
+                            if (!i.hasNext()) {
+                                timer.cancel();
+                                return;
+                            }
+                            Entry entry = i.next();
+
+                            // save
+                            dynamoDBMapper.save(new EntryDO(entry));
+                            Log.d("MainActivity", "Entry Saved with ID : " + entry.getEntryId());
+                            callback.callbackDB(entry, CALL_BACK_ID_ENTRY_SAVED);
+
+
+                        }
+                    }, 0, rate);
+
+
+                }
+            }).start();
+        }
+
+    }
+
     public void saveEntries(final List<Entry> entries){
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                final Iterator<Entry> i = entries.iterator();
-                final Timer timer = new Timer();
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-
-                        if(!i.hasNext()){timer.cancel();return;}
-                        Entry entry = i.next();
-
-                        // save
-                        dynamoDBMapper.save(new EntryDO(entry));
-                        Log.d("MainActivity","Entry Saved with ID : " + entry.getEntryId());
-                        callback.callbackDB(entry,CALL_BACK_ID_ENTRY_SAVED);
-
-
-                    }
-                },0,SAVE_ITEM_TO_DB_RATE);
-
-
-            }
-        }).start();
-
+        saveEntries( entries,SAVE_ITEM_TO_DB_RATE);
     }
 
 
@@ -185,37 +215,62 @@ public class DynamoDBManager {
 
     }
 
+    public void saveLocations(final List<UserLocation> locations, final long rate){
+
+
+        if(rate == 0){
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    // save
+                    List<LocationDO> locationDOS = LocationDO.fromLocationsList(locations);
+                    dynamoDBMapper.batchSave(locationDOS);
+                    Log.d("MainActivity","Locations Saved with");
+                    callback.callbackDB(locations,CALL_BACK_ID_LOCATIONS_BATCH_SAVED);
+
+                }
+            }).start();
+
+        }else{
+
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    final Iterator<UserLocation> i = locations.iterator();
+                    final Timer timer = new Timer();
+
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+
+                            if(!i.hasNext()){timer.cancel();return;}
+                            UserLocation location = i.next();
+
+                            LocationDO locationDO = new LocationDO(location);
+
+                            // save
+                            dynamoDBMapper.save(locationDO);
+                            Log.d("MainActivity","Location Saved with ID : " + location.get_locationId());
+                            callback.callbackDB(location,CALL_BACK_ID_LOCATION_SAVED);
+
+                        }
+                    },0,rate);
+
+                }
+            }).start();
+
+        }
+
+
+
+    }
+
     public void saveLocations(final List<UserLocation> locations){
-
-
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                final Iterator<UserLocation> i = locations.iterator();
-                final Timer timer = new Timer();
-
-                timer.schedule(new TimerTask() {
-                    @Override
-                    public void run() {
-
-                        if(!i.hasNext()){timer.cancel();return;}
-                        UserLocation location = i.next();
-
-                        LocationDO locationDO = new LocationDO(location);
-
-                        // save
-                        dynamoDBMapper.save(locationDO);
-                        Log.d("MainActivity","Location Saved with ID : " + location.get_locationId());
-                        callback.callbackDB(location,CALL_BACK_ID_LOCATION_SAVED);
-
-                    }
-                },0,SAVE_ITEM_TO_DB_RATE);
-
-            }
-        }).start();
-
+        saveLocations(locations,SAVE_ITEM_TO_DB_RATE);
     }
 
     public void saveUserEncrypted(final UserDO user){

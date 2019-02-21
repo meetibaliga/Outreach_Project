@@ -13,6 +13,7 @@ import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
 import com.hammad.omar.outreach.App;
 import com.hammad.omar.outreach.Interfaces.CallBackAuth;
 import com.hammad.omar.outreach.Interfaces.CallBackDB;
+import com.hammad.omar.outreach.Interfaces.CallBackSync;
 import com.hammad.omar.outreach.Models.Entry;
 import com.hammad.omar.outreach.Models.LocationDO;
 import com.hammad.omar.outreach.Models.UserLocation;
@@ -25,6 +26,8 @@ import java.util.List;
 public class SyncManager implements CallBackDB, CallBackAuth{
 
     private static final String TAG = SyncManager.class.getSimpleName();
+    public static final int CALL_BACK_SYNC_FAILED = 0;
+    public static final int CALL_BACK_SYNC_SUCESS = 1;
 
     private DynamoDBManager db;
     EntriesDataSource entriesDataSource;
@@ -32,6 +35,7 @@ public class SyncManager implements CallBackDB, CallBackAuth{
     private Context context;
     private int numOfDirtyItems = 0;
     private CallBackAuth callBackAuth = this;
+    private CallBackSync callBackSync;
 
     public SyncManager(Context context){
 
@@ -42,7 +46,14 @@ public class SyncManager implements CallBackDB, CallBackAuth{
 
     }
 
-    public void syncAll(){
+    public void syncAll(CallBackSync callBackSync, int rate){
+
+        this.callBackSync = callBackSync;
+        syncAll(rate);
+
+    }
+
+    public void syncAll(final int rate){
 
         new Thread(new Runnable() {
 
@@ -64,6 +75,7 @@ public class SyncManager implements CallBackDB, CallBackAuth{
                     float batteryPct = level / (float)scale;
                     if(batteryPct < 0.2){
                         App.log(context,"low battery .. not syncing");
+                        if(callBackSync != null){callBackSync.callbackSync(CALL_BACK_SYNC_FAILED);}
                         return;
                     }
                 }
@@ -73,6 +85,7 @@ public class SyncManager implements CallBackDB, CallBackAuth{
 
                 if(!App.hasActiveInternetConnection(context)){
                     App.log(context,"No internet connection");
+                    if(callBackSync != null){callBackSync.callbackSync(CALL_BACK_SYNC_FAILED);}
                     return;
                 }
 
@@ -82,81 +95,50 @@ public class SyncManager implements CallBackDB, CallBackAuth{
                     String uid = SharedPreferencesManager.getInstance(context).getUserId();
                     String pass = SharedPreferencesManager.getInstance(context).getUserPassword();
                     AuthManager.getInstance(context).signinUser(uid, pass, callBackAuth);
+                    if(callBackSync != null){callBackSync.callbackSync(CALL_BACK_SYNC_FAILED);}
                     return;
                 }
 
                 // user is signed in and there is connection
-
-                sync();
+                sync(rate);
 
             }
         }).start();
 
     }
 
-    public void syncAllEntries(){
+    public void sync(int rate){
 
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                // if there is no internet return
-
-                if(!App.hasActiveInternetConnection(context)){
-                    App.log(context,"No internet connection");
-                    return;
-                }
-
-                // if the user is not signed in
-
-                if(!AuthManager.isSignedIn()){
-                    String uid = SharedPreferencesManager.getInstance(context).getUserId();
-                    String pass = SharedPreferencesManager.getInstance(context).getUserPassword();
-                    AuthManager.getInstance(context).signinUser(uid,pass,callBackAuth);
-                    return;
-                }
-
-                // user is signed in and there is connection
-                syncEntries();
-
-            }
-        }).start();
-
-    }
-
-    public void sync(){
-
-        syncEntries();
-        syncUserInfo();
-        syncLocations();
+        syncEntries(rate);
+        syncLocations(rate);
 
         if(numOfDirtyItems == 0){
-            App.log(context,"App Synced .. ");
+            App.log(context,"App Synced..");
+            App.isSynced = true;
+            if(callBackSync != null){callBackSync.callbackSync(CALL_BACK_SYNC_SUCESS);}
+            return;
         }
     }
 
-    public void syncEntries(){
+    public void syncEntries(int rate){
 
         List<Entry> dirtyEntries = getDirtyEntriesList();
         numOfDirtyItems += dirtyEntries.size();
-        db.saveEntries(dirtyEntries);
+        if(numOfDirtyItems == 0){return;}
+        db.saveEntries(dirtyEntries,rate);
 
     }
 
-    public void syncUserInfo(){
 
-    }
-
-    public void syncLocations(){
+    public void syncLocations(int rate){
 
         List<UserLocation> dirtyLocations = getDirtyLocations();
 
-        Log.d("Sync",dirtyLocations.toString());
-
         numOfDirtyItems += dirtyLocations.size();
 
-        db.saveLocations(dirtyLocations);
+        if(numOfDirtyItems == 0){return;}
+
+        db.saveLocations(dirtyLocations,rate);
 
     }
 
@@ -194,11 +176,35 @@ public class SyncManager implements CallBackDB, CallBackAuth{
                     locationsDataSource.deleteItem(location);
                     numOfDirtyItems--;
 
+                }else if (callbackId == DynamoDBManager.CALL_BACK_ID_LOCATIONS_BATCH_SAVED){
+
+                    App.log(context,"Locations Saved .. ");
+                    List <UserLocation> locations = (List<UserLocation>) object;
+
+                    for (UserLocation location:locations) {
+                        location.set_isDirty(false); // synced
+                        locationsDataSource.deleteItem(location);
+                        numOfDirtyItems--;
+                    }
+
+
+                }else if (callbackId == DynamoDBManager.CALL_BACK_ID_ENTRIES_BATCH_SAVED){
+
+                    App.log(context,"Entries saved ..");
+                    List<Entry> entries = (List<Entry>) object;
+
+                    for (Entry entry : entries){
+                        entry.setDirty(false); // synced
+                        entriesDataSource.updateItem(entry);
+                        numOfDirtyItems--;
+                    }
+
                 }
 
                 if(numOfDirtyItems == 0){
                     App.isSynced = true;
                     App.log(context,"App Synced .. ");
+                    if(callBackSync!=null){callBackSync.callbackSync(CALL_BACK_SYNC_SUCESS);}
                 }
 
             }
@@ -236,7 +242,7 @@ public class SyncManager implements CallBackDB, CallBackAuth{
     public void callbackAuth(Object object, int callbackId) {
 
         if(object instanceof CognitoUser){
-            sync();
+            sync(0);
         }
 
     }

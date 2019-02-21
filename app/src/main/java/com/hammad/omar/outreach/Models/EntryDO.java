@@ -9,6 +9,7 @@ import com.hammad.omar.outreach.App;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -87,6 +88,18 @@ public class EntryDO {
         this._transportation = entry.getTransportation();
         this._isDeleted = entry.isDeleted();
 
+    }
+
+    public static List<EntryDO> fromEntriesList(List<Entry> entries){
+
+        ListIterator i = entries.listIterator();
+        List<EntryDO> entryDOS = new ArrayList<EntryDO>();
+
+        while (i.hasNext()){
+            entryDOS.add(new EntryDO((Entry) i.next()));
+        }
+
+        return entryDOS;
     }
 
 

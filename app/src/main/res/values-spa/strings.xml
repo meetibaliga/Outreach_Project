@@ -193,6 +193,13 @@
     <string name="signout">Sign out</string>
 
     <!-- Auth -->
+    <string name="noAccount">No account? Click here to create one</string>
+    <string name="signInCap">SIGN IN</string>
+    <string name="signIn">Sign in</string>
+    <string name="alreadyAcct">Already have an account ? Click here to sign in</string>
+    <string name="createAcct">CREATE ACCOUNT</string>
+    <string name="signUp">Sign up</string>
+    <string name="pleaseComplete">Please complete all the form fields</string>
 
 
 </resources>

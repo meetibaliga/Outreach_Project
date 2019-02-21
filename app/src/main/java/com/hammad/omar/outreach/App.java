@@ -70,7 +70,7 @@ public class App extends Application {
     public static int MIN_HOURS_BETWEEN_ENTRIES = 6;
 
     // flags
-    public static boolean isSynced = false;
+    public static boolean isSynced = true;
     public static boolean mainActivityViewd = false;
 
     //enums
@@ -91,6 +91,7 @@ public class App extends Application {
         isSynced = checkIfAppIsSynced();
         authManager = AuthManager.getInstance(getApplicationContext());
         entriesManager = EntriesManager.getInstance(getApplicationContext());
+        entriesList = new ArrayList<>();
 
         // google anaytics
         sAnalytics = GoogleAnalytics.getInstance(this);
@@ -158,6 +159,19 @@ public class App extends Application {
         }
 
         return "";
+
+    }
+
+    public static Date getDateFromString(String dateString, String format){
+
+        try {
+            Date date = new SimpleDateFormat(format).parse(dateString);
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
 
     }
 
@@ -371,6 +385,10 @@ public class App extends Application {
         int resID = context.getResources().getIdentifier(name,"drawable", context.getPackageName());
 
         return resID;
+
+    }
+
+    public static void deleteEverything(){
 
     }
 

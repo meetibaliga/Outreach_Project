@@ -1,23 +1,20 @@
 package com.hammad.omar.outreach.Models;
 
 import android.content.ContentValues;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.hammad.omar.outreach.App;
 import com.hammad.omar.outreach.Interfaces.DataItem;
-import com.hammad.omar.outreach.Interfaces.UUIDUser;
-import com.hammad.omar.outreach.Managers.SharedPreferencesManager;
-import com.hammad.omar.outreach.Managers.UUIDManager;
 import com.hammad.omar.outreach.Provider.EntryContentContract;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-public class Entry extends Model implements DataItem {
+public class Entry extends Model implements DataItem,Comparable {
 
     private String _userId;
     private String _entryId;
@@ -312,6 +309,12 @@ public class Entry extends Model implements DataItem {
 
     }
 
+    public Date getDateCreationDate(){
+        String dateString = getCreationDate();
+        Date date = App.getDateFromString(dateString,App.sourceDateFormat);
+        return date;
+    }
+
 
     // to string
 
@@ -343,6 +346,12 @@ public class Entry extends Model implements DataItem {
     @Override
     public Initials getUUIDInitials() {
         return new Initials("Entry");
+    }
+
+    @Override
+    public int compareTo(@NonNull Object o) {
+        Entry other = (Entry)o;
+        return this.getDateCreationDate().compareTo(other.getDateCreationDate());
     }
 }
 

@@ -1,9 +1,15 @@
 package com.hammad.omar.outreach.Models;
 
+import android.location.Location;
+
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBAttribute;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBHashKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 
 //@DynamoDBTable(tableName = "outreach-mobilehub-787670546-Location")
 @DynamoDBTable(tableName = "Outreach-Location")
@@ -21,6 +27,18 @@ public class LocationDO {
         this._creationDate = location.get_creationDate();
         this._latitude = location.get_latitude();
         this._longitude = location.get_longitude();
+    }
+
+    public static List<LocationDO> fromLocationsList(List<UserLocation> entries){
+
+        ListIterator i = entries.listIterator();
+        List<LocationDO> entryDOS = new ArrayList<LocationDO>();
+
+        while (i.hasNext()){
+            entryDOS.add(new LocationDO((UserLocation) i.next()));
+        }
+
+        return entryDOS;
     }
 
     @DynamoDBHashKey(attributeName = "userId")

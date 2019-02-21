@@ -153,7 +153,7 @@ public class PeriodicalFormCompletedActivity extends AppCompatActivity implement
 
         // if there is internet it will sync all entries
         SyncManager mgr = new SyncManager(this);
-        mgr.syncAll();
+        mgr.syncAll(0);
 
         // change UI
         new Handler(Looper.getMainLooper()).post(new Runnable() {

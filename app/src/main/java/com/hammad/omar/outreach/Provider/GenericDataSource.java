@@ -46,6 +46,15 @@ public abstract class GenericDataSource<E extends DataItem> {
         dbHelper.close();
     }
 
+    public void insertAllItems(List<E> items){
+
+        for (E item:items) {
+            insertItem(item);
+        }
+
+    }
+
+
     public E insertItem(E item){
 
         String table = getTableName();
@@ -74,6 +83,10 @@ public abstract class GenericDataSource<E extends DataItem> {
 
         return db.delete(getTableName(),where,args);
 
+    }
+
+    public void deleteAllItems(){
+        db.execSQL("delete from "+ getTableName());
     }
 
 

@@ -84,6 +84,21 @@ public class EntriesManager {
         updateDataSource();
     }
 
+    public void setNumOfDailyUserInteries(int numOfDailyUserInteries) {
+        this.numOfDailyUserInteries = numOfDailyUserInteries;
+        prefMgr.setDailyEntries(numOfDailyUserInteries);
+    }
+
+    public void setLastEntryDateAdded(int lastEntryDateAdded) {
+        this.lastEntryDateAdded = lastEntryDateAdded;
+        prefMgr.setLastEntryDate(lastEntryDateAdded);
+    }
+
+    public void setLastEntryHourAdded(int lastEntryHourAdded) {
+        this.lastEntryHourAdded = lastEntryHourAdded;
+        prefMgr.setLastEntryHour(lastEntryHourAdded);
+    }
+
     //////////////// PRIVATE HELPING METHODS ///////////////
 
     private void updateDataSource(){

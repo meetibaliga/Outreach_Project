@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
                 PassingString reason = new PassingString("");
 
                 if(!App.entriesManager.canAddEntry(reason)){
+
                     if(reason == null){
                         reason = new PassingString(getString(R.string.cannotAddEntry));
                     }
@@ -273,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         }
 
         // connect to google play maps service
+
         if (LocationManager.isLocationEnabled(this)) {
             connectToGoogleMapsLocationsService();
         }else{
