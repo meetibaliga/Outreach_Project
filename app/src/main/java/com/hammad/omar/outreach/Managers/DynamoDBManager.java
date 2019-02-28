@@ -13,6 +13,7 @@ import com.hammad.omar.outreach.Models.Entry;
 import com.hammad.omar.outreach.Models.EntryDO;
 import com.hammad.omar.outreach.Models.LocationDO;
 import com.hammad.omar.outreach.Models.RewardDO;
+import com.hammad.omar.outreach.Models.UpdateDO;
 import com.hammad.omar.outreach.Models.UserDO;
 import com.hammad.omar.outreach.Models.UserLocation;
 
@@ -37,6 +38,7 @@ public class DynamoDBManager {
     public static int CALL_BACK_ID_REWARD_UPDATED = 6;
     public static final int CALL_BACK_ID_LOCATIONS_BATCH_SAVED = 7;
     public static final int CALL_BACK_ID_ENTRIES_BATCH_SAVED = 8;
+    public static final int CALL_BACK_ID_GET_UPDATE = 9;
 
 
 
@@ -87,6 +89,25 @@ public class DynamoDBManager {
                         .withConsistentRead(false);
                 PaginatedList<UserDO> result = dynamoDBMapper.query(UserDO.class, queryExpression);
                 callback.callbackDB(result,CALL_BACK_ID_GET_USER);
+
+            }
+        }).start();
+    }
+
+    public void getUpdates(){
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                // get num of items
+                UpdateDO updateDO = new UpdateDO("1");
+                DynamoDBQueryExpression queryExpression = new DynamoDBQueryExpression()
+                        .withHashKeyValues(updateDO)
+                        .withConsistentRead(false);
+                PaginatedList<UpdateDO> result = dynamoDBMapper.query(UpdateDO.class, queryExpression);
+
+                callback.callbackDB(result,CALL_BACK_ID_GET_UPDATE);
 
             }
         }).start();
@@ -304,6 +325,8 @@ public class DynamoDBManager {
         }).start();
 
     }
+
+
 
 
     // PRIVATE METHODS

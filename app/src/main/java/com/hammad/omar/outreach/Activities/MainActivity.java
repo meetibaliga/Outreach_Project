@@ -2,13 +2,19 @@ package com.hammad.omar.outreach.Activities;
 
 import android.app.Activity;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -17,10 +23,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
@@ -37,6 +45,7 @@ import com.hammad.omar.outreach.Managers.MapsConnectionManager;
 import com.hammad.omar.outreach.Managers.SharedPreferencesManager;
 import com.hammad.omar.outreach.Models.Entry;
 import com.hammad.omar.outreach.Models.EntryDO;
+import com.hammad.omar.outreach.Models.UpdateDO;
 import com.hammad.omar.outreach.Models.UserDO;
 import com.hammad.omar.outreach.R;
 import com.hammad.omar.outreach.Recivers.NotificationReciever;
@@ -287,7 +296,12 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         //setup location reciver
         setupLocationReciver();
 
+        //check if it needs update
+        checkForUpdates();
+
     }
+
+
 
 
     //////////////////////////// MAPS /////////////////////////////////
@@ -321,11 +335,12 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             callBackEntries(object);
         }else if (callbackid == DynamoDBManager.CALL_BACK_ID_GET_USER){
             callbackidUser(object);
-        }else{
-            // do nothing
+        }else if (callbackid == DynamoDBManager.CALL_BACK_ID_GET_UPDATE){
+            callbackUpdate(object);
         }
 
     }
+
 
     private void callBackEntries(Object object) {
 
@@ -422,6 +437,116 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         locationManager.initiateReciver();
 
     }
+
+    private void checkForUpdates() {
+
+        Log.d(TAG,"checking for updates..");
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+
+                if(App.hasActiveInternetConnection(MainActivity.this)){
+
+                    new DynamoDBManager(MainActivity.this).getUpdates();
+
+                }else{
+
+                    Log.d(TAG,"No internet ..");
+
+                }
+
+            }
+        });
+
+    }
+
+    private void callbackUpdate(Object o) {
+
+        // get list
+
+        PaginatedList<UpdateDO> updateDOS = (PaginatedList<UpdateDO>) o;
+
+        // get update
+
+        UpdateDO updateDO = updateDOS.get(0);
+
+        // current version
+
+        String appVersion="";
+
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            appVersion = pInfo.versionName;
+            Log.d(TAG,"Version "+ appVersion);
+
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        // compare
+
+        boolean latest = appVersion.equals(updateDO.getVersionCode());
+        boolean required = updateDO.getRequired();
+
+        // decision
+
+        if(!latest && required){
+
+            // needs update
+
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                @Override
+                public void run() {
+                    createAndShowDialog(
+                            "An Update Is Required",
+                            "Please update the app by clicking on the following button");
+                }
+            });
+
+
+        }else{
+
+            Log.d(TAG,"No need to update");
+
+        }
+
+    }
+
+    private void createAndShowDialog(String title, String text){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title);
+        builder.setMessage(text);
+
+        // Set up the buttons
+        builder.setPositiveButton("Update Now", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //String url = "market://search?q=pname:com.example.myapp"; // production url
+                String url = "https://play.google.com/apps/testing/com.hammad.omar.outreach"; // testing url
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+
+            }
+        });
+
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                createAndShowDialog(
+                        "An Update Is Required",
+                        "Please update the app by clicking on the following button");
+            }
+        });
+
+        builder.show();
+
+    }
+
+
 
 
     @Override

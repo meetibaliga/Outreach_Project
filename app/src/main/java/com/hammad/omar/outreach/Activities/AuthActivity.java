@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.Spanned;
@@ -24,8 +25,10 @@ import android.widget.Toast;
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUser;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.CognitoUserDetails;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.continuations.ForgotPasswordContinuation;
 import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.ForgotPasswordHandler;
+import com.amazonaws.mobileconnectors.cognitoidentityprovider.handlers.GetDetailsHandler;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.hammad.omar.outreach.App;
 import com.hammad.omar.outreach.Interfaces.AuthState;
@@ -47,6 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -76,6 +80,13 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
 
     //state
     private AuthState authState;
+
+    //flags
+    private final boolean onlyAuthorizeFromGoogleSheet = false;
+    // GoogleSheet Id to verify from :
+    // https://docs.google.com/spreadsheets/d/11avOioEaR_cW6lq-3PeCfq5i1Z330hiWkIMOMnrCqds/edit#gid=731841134
+
+
 
 
     @Override
@@ -312,23 +323,35 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
                 AmazonClientException awsException = (AmazonClientException) object;
                 errorMessage = awsException.getMessage();
 
+                Log.d(TAG,"Error message" + errorMessage);
+
                 if (!App.hasActiveInternetConnection(this)) {
                     errorMessage = getString(R.string.makeSureConnected);
                 }
 
             }
 
+            // not confirmed exeption
+
             if (errorCode.equalsIgnoreCase("userNotConfirmedException")){
 
-                goToMobileAuthentication();
+                if(onlyAuthorizeFromGoogleSheet){
 
-            }else {
+                    goBackToLoginForm(errorMessage);
 
-                showProgress(false);
-                mLoginFormView.setVisibility(View.VISIBLE);
-                mPasswordView.requestFocus();
-                mErrorText.setVisibility(View.VISIBLE);
-                mErrorText.setText(errorMessage);
+                }else{
+
+                    // if we allow any user
+
+                    goToMobileAuthentication();
+
+                }
+
+
+            } else {
+
+                // different exception
+                goBackToLoginForm(errorMessage);
 
             }
             return;
@@ -342,6 +365,22 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         loadUserInfo();
     }
 
+    private void goBackToLoginForm(String errorMessage) {
+
+        showProgress(false);
+        mLoginFormView.setVisibility(View.VISIBLE);
+        mPasswordView.requestFocus();
+        mErrorText.setVisibility(View.VISIBLE);
+
+        String modifiedErrorMessage = errorMessage;
+        if(errorMessage.equalsIgnoreCase("user is not confirmed.")){
+            modifiedErrorMessage = "You need to be admitted by the c70 study using the same user email and phone number provided before you cn register in the app. For help please contact c70study@gmail.com";
+        }
+
+        mErrorText.setText(modifiedErrorMessage);
+
+    }
+
     private void loadUserInfo() {
 
         // load user first form
@@ -353,14 +392,18 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
                     DynamoDBManager db = new DynamoDBManager(AuthActivity.this);
                     db.getEntries();
                 }else{
-                    showProgress(false);
-                    mLoginFormView.setVisibility(View.VISIBLE);
-                    mPasswordView.requestFocus();
-                    mErrorText.setVisibility(View.VISIBLE);
-                    mErrorText.setText("Please connect to the internet");
-                    App.authManager.signout();
+                    new Handler(getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showProgress(false);
+                            mLoginFormView.setVisibility(View.VISIBLE);
+                            mPasswordView.requestFocus();
+                            mErrorText.setVisibility(View.VISIBLE);
+                            mErrorText.setText("Please connect to the internet");
+                            App.authManager.signout();
+                        }
+                    });
                 }
-
             }
         });
     }
@@ -405,11 +448,37 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         App.USER_ID = user.getUserId();
 
 
+        //check if email is verified
+
+        user.getDetails(new GetDetailsHandler() {
+
+            @Override
+            public void onSuccess(CognitoUserDetails cognitoUserDetails) {
+
+                // if email verified sign in user
+
+                Map<String,String> attrs = cognitoUserDetails.getAttributes().getAttributes();
+                String emailVerified = attrs.get("email_verified");
+                Log.d(TAG,emailVerified);
+
+                // if email not verified show message that sorry you have to be verified through our group
+
+            }
+
+            @Override
+            public void onFailure(Exception exception) {
+                Log.d(TAG,"Cannot get details");
+                return;
+            }
+
+        });
+
+
         // sign in user
+
         if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)){
             return;
         }
-
         authManager.signinUser(userName,password,this);
 
     }
@@ -609,6 +678,8 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
     }
 
     private void setupDateAndTimeOfEntries(List<Entry> entries) {
+
+        if(entries.size() == 0)return;
 
         Entry latest = entries.get(entries.indexOf(Collections.max(entries)));
         entries.remove(latest);
