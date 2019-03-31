@@ -13,7 +13,7 @@
     <!--Environmentak Periodical form qeuestions -->
     <string name="air_quality_question">How acceptable is the air quality near you?</string>
     <string name="noise_question">How acceptable is the noise near you?</string>
-    <string name="transportation_question">How acceptable was your transportation today?</string>
+    <string name="transportation_question">How acceptable was your transportation experience today?</string>
     <string name="active_question">How active were you in the past 6 hours?</string>
 
     <!--Health Periodical form qeuestions -->

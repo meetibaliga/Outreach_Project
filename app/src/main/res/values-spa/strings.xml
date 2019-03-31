@@ -1,205 +1,63 @@
-<resources>
-    <string name="app_name">PUREmotion</string>
+<?xml version="1.0" encoding="UTF-8"?><resources>
+    <string name="app_name">Emociones</string>
     <string name="title_activity_form_2">formActivity_2</string>
-    <string name="activity_question">What are you doing right now?</string>
-    <string name="location_question">Where are you right now?</string>
-    <string name="emotions_question">How are you feeling right now? you can choose up to two items</string>
-    <string name="env_quesion">Please answer the following environmental questions</string>
-    <string name="fillForm">Please fill out the form</string>
-    <!--Authentication-->
-    <string name="terms"><![CDATA[By creating an account you agree to the <a href="">Terms & Conditions</a>]]></string>
-
+    <string name="activity_question">¿Qué estás haciendo ahora mismo?</string>
+    <string name="location_question">¿Dónde estás ahora mismo?</string>
+    <string name="emotions_question">¿Cómo te sientes ahora mismo? Puedes elegir hasta dos elementos</string>
+    <string name="env_quesion">Por favor, responde las siguientes preguntas ambientales</string>
+    <string name="fillForm">Por favor, llena el formulario</string>
 
     <!--Environmentak Periodical form qeuestions -->
-    <string name="air_quality_question">How acceptable is the air quality near you?</string>
-    <string name="noise_question">How acceptable is the noise near you?</string>
-    <string name="transportation_question">How acceptable was your transportation today?</string>
-    <string name="active_question">How active were you in the past 6 hours?</string>
+    <string name="air_quality_question">¿Qué tan aceptable es la calidad del aire cerca de ti?</string>
+    <string name="noise_question">¿Qué tan aceptable es el ruido cerca de ti?</string>
+    <string name="transportation_question">¿Qué tan aceptable es tu transporte actualmente?</string>
+    <string name="active_question">¿Qué tan activo has estado en las últimas 6 horas?</string>
 
     <!--Health Periodical form qeuestions -->
-    <string name="cough_question">Is coughing bothering you recently?</string>
-    <string name="limited_activities_question">Have your activities been limited due to respiratory issues?</string>
-    <string name="asthma_attack_question">Have you had an asthma attack recently?</string>
-    <string name="asthma_medication_question">Have you taken asthma medication recently?</string>
-
-    <!--Health Short phrases -->
-    <string name="cough_phrase">WAS COUGHING</string>
-    <string name="limited_activities_phrase">LIMITED ACTIVITY</string>
-    <string name="asthma_attack_phrase">HAD ASTHMA ATTACK</string>
-    <string name="asthma_medication_phrase">TOOK MEDICATION</string>
+    <string name="cough_question">¿Has estado tosiendo recientemente?</string>
+    <string name="limited_activities_question">¿Tus actividades han sido limitadas debido a problemas respiratorios?</string>
+    <string name="asthma_attack_question">¿Has tenido un ataque de asma recientemente?</string>
+    <string name="asthma_medication_question">¿Has tomado medicamentos para el asma recientemente?</string>
 
     <!--one time form titles-->
-    <string name="personal_title">Household and Personal Information</string>
-    <string name="home_title">Home Information</string>
-    <string name="ventilation_title">Information on Home Ventilation and Air-Conditioning</string>
-    <string name="well_title">Well-being questions</string>
+    <string name="personal_title">Información del hogar y personal</string>
+    <string name="home_title">Información del hogar</string>
+    <string name="ventilation_title">Información sobre ventilación del hogar y aire acondicionado</string>
+    <string name="well_title">Preguntas sobre bienestar y cambio climático</string>
 
     <!--one time form quations-->
-    <string name="firstName_question">First Name</string>
-    <string name="lastName_question">Last Name</string>
-    <string name="relationship_question">Relationship with household head</string>
-    <string name="sex_question">Sex</string>
-    <string name="dateOfBirth_question">Date of Birth</string>
-    <string name="martialStatus_question">Marital Status</string>
-    <string name="highest_question">Highest Degree</string>
-    <string name="employed_question">Are you currently employed?</string>
-    <string name="race_question">What race do you consider yourself?</string>
-    <string name="income_question">What is your yearly average income?</string>
-    <string name="typeOfHome_question">What type of home are you living in?</string>
-    <string name="yearBuilt_question">Year home built</string>
-    <string name="stories_question">How many stories is the house?</string>
-    <string name="squareFeet_question">What is your home area in square feet?</string>
-    <string name="pets_question">How many pets do you have?</string>
-    <string name="occupants_question">How long have you lived here?</string>
-    <string name="heatingSystem_question">Heating System</string>
-    <string name="coolingSystem_question">Cooling System</string>
-    <string name="filterationSystem_question">Air handling unit (AHU) filtration system, if AHU is present</string>
-    <string name="furnace_question">Furnace / Heating System</string>
-    <string name="practice_summer_question">Most common ventilation practice during summer</string>
-    <string name="practice_winter_question">Most common ventilation practice during winter</string>
-    <string name="window_open_question">How often are the windows open in any given day?</string>
-    <string name="ventilation_windo_question">Window Ventilation type</string>
-    <string name="exhaust_fan_question">How often are the kitchen/bathroom exhaust fans used?</string>
-    <string name="kerosen_question">Do the residents use kerosene heaters/ovens to heat the home?</string>
-    <string name="radon_question">Do the residents have a radon mitigation system in place?</string>
-    <string name="fresh_air_question">Do you think that the air is fresh in your home?</string>
-    <string name="life_satisfied_question">How satisfied are you with how your life has turned out so far?</string>
-    <string name="all_things_question">Taking all things together, how happy would you say you are?</string>
-    <string name="standard_question">How satisfied are you with your present standard of living? </string>
-    <string name="concerns_question">I have concerns about the potential impacts due to the pollution or adverse effects caused by the construction outside my home</string>
-    <string name="connected_question">How much do you feel connected with you community?</string>
-    <string name="asthma_question">Have you been diagnosed with asthma?</string>
-    <string name="helpless_question">How often do you feel helpless?</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="enter_email">Enter your Email</string>
-    <string name="enter_mobile">Enter your mobile Number</string>
-    <string name="last_entry_hour_KEY">LAST_ENTRY_HOUR_KEY</string>
-    <string name="address1_question">Address Line 1</string>
-    <string name="address2_question">Address Line 2</string>
-    <string name="city">City</string>
-    <string name="city_question">City</string>
-    <string name="zip_code">Zip Code</string>
-    <string name="title_activity_tabbed">TabbedActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-
-    <!-- Drawer -->
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="title_activity_side_bar">SideBar</string>
-    <string name="title_activity_auth">Sign in</string>
-
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email or Mobile Number</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">Error in password</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="USER_ID_KEY">USER_ID_KEY</string>
-    <string name="USER_PASS_KEY">USER_PASS_KEY</string>
-    <string name="title_activity_community">CommunityActivity</string>
-    <string name="LAST_NOTIF_HOUR_KEY">LAST_NOTIF_HOUR_KEY</string>
-    <string name="NUM_NOTIFS_KEY">NUM_NOTIFS_KEY</string>
-    <string name="LAST_NOTIF_DAY_KEY">LAST_NOTIF_DAY_KEY</string>
-    <string name="USER_FORM_KEY">USER_FORM_KEY</string>
-    <string name="title_activity_about">AboutActivity</string>
-    <string name="title_activity_how_to">HowTo</string>
-    <string name="aboutUsTitle">About Us</string>
-    <string name="wrongNumber">Wrong Number</string>
-    <string name="requiredField">This field is required</string>
-    <string name="passCannotBeEmpty">Password cannot be empty</string>
-    <string name="passEightChars">Password must be at least 8 characters</string>
-    <string name="incorrectMobileNum">This mobile number is incorrect</string>
-    <string name="makeSureConnected">Make sure you are connected to the internet</string>
-    <string name="pleaseEnterMobile">Please enter you mobile number</string>
-    <string name="noUserWithMobile">No user with this mobile number</string>
-    <string name="communityTitle">Community Emotions</string>
-    <string name="pleaseWrithCode">Please write the code</string>
-    <string name="resendCode">Resend Code After %d seconds</string>
-    <string name="resendCodeNow">Resend Code Now</string>
-    <string name="cannotAddEntry">You cannot add an entry at this time. Try later</string>
-    <string name="failedConnection">Failed Connection</string>
-    <string name="feelings">1/5 Feelings</string>
-    <string name="areYouFeelingGood">How Are you feeling right now?</string>
-    <string name="activities">2/5 Activities</string>
-    <string name="whatAreYouDoing">What are you doing right now?</string>
-    <string name="place">3/5 Place</string>
-    <string name="whereAreYou">Where are you right now?</string>
-    <string name="answerTheFollowing">Answer the following environmental questions</string>
-    <string name="env">4/5 Environment</string>
-    <string name="unacceptable">Unacceptable</string>
-    <string name="highlyAccept">Highly acceptable</string>
-    <string name="notActive">Not active</string>
-    <string name="veryActive">Very active</string>
-    <string name="answerTheFollowingHealth">Answer the following health questions</string>
-    <string name="health">5/5 Health</string>
-    <string name="button">button</string>
-    <string name="youErned">👍 You earned +¢</string>
-    <string name="pleaseEnableLocation">Please Enable you location</string>
-    <string name="enableNow">Enable Now</string>
-    <string name="later">Later</string>
-    <string name="failedConnectionWithMaps">Failed Connection with google maps</string>
-    <string name="passResetSuccess">Password Reset Succesfully</string>
-    <string name="enterNewPass">Enter The New Password</string>
-    <string name="enterVerif">Enter the verification Code</string>
-    <string name="whatOther">What Other Activity are yo doing?</string>
-    <string name="ok">OK</string>
-    <string name="next">Next</string>
-    <string name="done">Done</string>
-    <string name="yes">YES</string>
-    <string name="no">NO</string>
-    <string name="mobileNum">Mobile Number</string>
-    <string name="email">Email</string>
-    <string name="forgot">Forgot?</string>
-    <string name="byClicking">By Clicking on CREATE ACCOUNT, you agree to the Terms and Conditions</string>
-    <string name="createAccount">CREATE ACCOUNT</string>
-    <string name="already">Already have an account? Click here to sign in</string>
-    <string name="confirmationCode">Confirmation Code</string>
-    <string name="confirmMobikle">Confirm Mobile Number</string>
-    <string name="pleaseEnter">Please enter the number sent to</string>
-    <string name="chooseOneOrTwo">Choose One or Two</string>
-    <string name="youEarned">👍 You earned +¢8</string>
-    <string name="totalRewards">Total Rewards</string>
-    <string name="getLocation">get Location</string>
-    <string name="toEnableDeviceLoc">To enable the device location click on this button</string>
-    <string name="enableDevLoc">ENABLE DEVICE LOCATION</string>
-    <string name="toAllowApp">To allow the app to use the location click on the button below then go to Permessions</string>
-    <string name="pleaseAllowLocation">Please Allow Location</string>
-    <string name="allowApp">ALLOW APP TO USE LOCATION</string>
-    <string name="thankYou">Thank you 🙏</string>
-    <string name="pleaseEnterConf">please enter the confirmation code sent by SMS and the new password</string>
-    <string name="conf">Confirmation Code</string>
-    <string name="newPass">New Password</string>
-    <string name="resetPass">RESET PASSWORD</string>
-    <string name="aVideo">A Video showing how to use the app</string>
-    <string name="home">Home</string>
-    <string name="community">Community</string>
-    <string name="aboutUS">About Us</string>
-    <string name="howToUseApp">How to use the app?</string>
-    <string name="reload">Reload</string>
-    <string name="signout">Sign out</string>
-
-    <!-- Auth -->
-    <string name="noAccount">No account? Click here to create one</string>
-    <string name="signInCap">SIGN IN</string>
-    <string name="signIn">Sign in</string>
-    <string name="alreadyAcct">Already have an account ? Click here to sign in</string>
-    <string name="createAcct">CREATE ACCOUNT</string>
-    <string name="signUp">Sign up</string>
-    <string name="pleaseComplete">Please complete all the form fields</string>
-
-
+    <string name="firstName_question">Nombre</string>
+    <string name="lastName_question">Apellido</string>
+    <string name="relationship_question">Relación con el jefe de familia</string>
+    <string name="sex_question">Sexo</string>
+    <string name="dateOfBirth_question">Fecha de nacimiento</string>
+    <string name="martialStatus_question">Estado civil</string>
+    <string name="highest_question">Nivel de estudios</string>
+    <string name="employed_question">¿Actualmente trabajas?</string>
+    <string name="race_question">¿De qué raza te consideras?</string>
+    <string name="income_question">¿Cuál es tu ingreso anual promedio?</string>
+    <string name="typeOfHome_question">¿En qué tipo de casa vives?</string>
+    <string name="yearBuilt_question">Año de construcción de la casa</string>
+    <string name="stories_question">¿Cuántos pisos tiene la casa?</string>
+    <string name="squareFeet_question">¿Cuántos pies cuadrados tiene tu casa?</string>
+    <string name="pets_question">¿Cuántas mascotas tienes ?</string>
+    <string name="occupants_question">¿Cuánto tiempo han vivido allí los ocupantes?</string>
+    <string name="ventilationType_question">Tipo de ventilación</string>
+    <string name="filterationSystem_question">Sistema de filtración de unidad de tratamiento de aire (AHU), si hay AHU</string>
+    <string name="furnace_question">Calentador / Sistema de calefacción</string>
+    <string name="practice_summer_question">Práctica de ventilación más común durante el verano</string>
+    <string name="practice_winter_question">Práctica de ventilación más común durante el invierno</string>
+    <string name="window_open_question">¿Con qué frecuencia se abren las ventanas cualquier día?</string>
+    <string name="ventilation_windo_question">Tipo de ventilación de ventana</string>
+    <string name="exhaust_fan_question">¿Con qué frecuencia se utilizan los extractores de cocina/baño?</string>
+    <string name="kerosen_question">¿Los residentes usan calentadores/hornos de keroseno para calentar la casa?</string>
+    <string name="radon_question">¿Los residentes cuentan con un sistema de mitigación de radón?</string>
+    <string name="fresh_air_question">¿Crees que el aire está fresco en tu casa?</string>
+    <string name="life_satisfied_question">¿Qué tan satisfecho estás con tu vida hasta ahora?</string>
+    <string name="all_things_question">Considerando todos estos factores, ¿qué tan feliz dirías que eres?</string>
+    <string name="standard_question">¿Qué tan satisfecho estás con tu calidad de vida actual?</string>
+    <string name="concerns_question">Me preocupan los posibles impactos de la contaminación o los efectos adversos causados ​​por la construcción fuera de mi casa</string>
+    <string name="connected_question">¿Qué tan conectado te sientes con tu comunidad?</string>
+    <string name="asthma_question">¿Te han diagnosticado asma?</string>
+    <string name="helpless_question">Pregunta indefensa... cambiar después</string>
 </resources>

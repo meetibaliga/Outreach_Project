@@ -342,7 +342,6 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
                 }else{
 
                     // if we allow any user
-
                     goToMobileAuthentication();
 
                 }
@@ -387,23 +386,8 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-
-                if(App.hasActiveInternetConnection(AuthActivity.this)){
-                    DynamoDBManager db = new DynamoDBManager(AuthActivity.this);
-                    db.getEntries();
-                }else{
-                    new Handler(getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            showProgress(false);
-                            mLoginFormView.setVisibility(View.VISIBLE);
-                            mPasswordView.requestFocus();
-                            mErrorText.setVisibility(View.VISIBLE);
-                            mErrorText.setText("Please connect to the internet");
-                            App.authManager.signout();
-                        }
-                    });
-                }
+                DynamoDBManager db = new DynamoDBManager(AuthActivity.this);
+                db.getEntries();
             }
         });
     }
@@ -668,8 +652,6 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
 
         //setup the time and date of the entry
         setupDateAndTimeOfEntries(entries);
-
-        Log.d(TAG,"num of entries today" + new SharedPreferencesManager(this).getDailyEntries());
 
 
         // get the user form

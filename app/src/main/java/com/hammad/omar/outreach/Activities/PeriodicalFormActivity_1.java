@@ -47,6 +47,7 @@ public class PeriodicalFormActivity_1 extends PeriodicalBaseFormActivity {
 
     @Override
     protected void addItemToModel(String text) {
+        String emotionInDefaultLang = App.getEmotionInDefaultLang();
         App.inputEntry.getEmotions().add(text);
         Log.d(TAG,App.inputEntry.getEmotions().toString());
     }

@@ -42,15 +42,19 @@ public class OneTimeFormCompletedActivity extends AppCompatActivity implements C
             @Override
             public void run() {
 
-                if(App.hasActiveInternetConnection(OneTimeFormCompletedActivity.this)){
-                    Log.d(TAG,"connected");
-                    onConnected();
-                }else{
-                    Log.d(TAG,"not connected");
-                    Toast.makeText(OneTimeFormCompletedActivity.this,getString(R.string.makeSureConnected),Toast.LENGTH_LONG);
-                    finish();
-                }
-
+            if(App.hasActiveInternetConnection(OneTimeFormCompletedActivity.this)){
+                Log.d(TAG,"connected");
+                onConnected();
+            }else{
+                Log.d(TAG,"not connected");
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                     @Override
+                     public void run() {
+                         Toast.makeText(OneTimeFormCompletedActivity.this, getString(R.string.makeSureConnected), Toast.LENGTH_LONG).show();
+                         finish();
+                     }
+                 });
+            }
 
             }
         });

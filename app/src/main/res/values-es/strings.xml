@@ -1,0 +1,204 @@
+﻿<resources>
+    <string name="app_name">PUREmotion</string>
+    <string name="title_activity_form_2">formActivity_2</string>
+    <string name="activity_question">¿Qué estás haciendo ahora mismo?</string>
+    <string name="location_question">¿Dónde estás ahora mismo?</string>
+    <string name="emotions_question">¿Cómo te sientes ahora mismo? Puedes elegir hasta dos elementos</string>
+    <string name="env_quesion">Por favor, responde las siguientes preguntas ambientales</string>
+    <string name="fillForm">Por favor, llena el formulario</string>
+    <!--Authentication-->
+    <string name="terms"><![CDATA[Al crear una cuenta, aceptas los <a href="">términos y condiciones<a/>]]></string>
+
+
+    <!--Environmentak Periodical form qeuestions -->
+    <string name="air_quality_question">¿Qué tan aceptable es la calidad del aire cerca de ti?</string>
+    <string name="noise_question">¿Qué tan aceptable es el ruido cerca de ti?</string>
+    <string name="transportation_question">¿Qué tan aceptable es tu transporte actualmente?</string>
+    <string name="active_question">¿Qué tan activo has estado en las últimas 6 horas?</string>
+
+    <!--Health Periodical form qeuestions -->
+    <string name="cough_question">¿Has estado tosiendo recientemente?</string>
+    <string name="limited_activities_question">¿Tus actividades se han limitado debido a problemas respiratorios?</string>
+    <string name="asthma_attack_question">¿Has tenido un ataque de asma recientemente?</string>
+    <string name="asthma_medication_question">¿Has tomado medicamentos para el asma recientemente?</string>
+
+    <!--Health Short phrases -->
+    <string name="cough_phrase">ESTUVE TOSIENDO</string>
+    <string name="limited_activities_phrase">ACTIVIDAD LIMITADA</string>
+    <string name="asthma_attack_phrase">TUVE UN ATAQUE DE ASMA</string>
+    <string name="asthma_medication_phrase">TOMÉ MEDICAMENTOS</string>
+
+    <!--one time form titles-->
+    <string name="personal_title">Información del hogar y personal</string>
+    <string name="home_title">Información del hogar</string>
+    <string name="ventilation_title">Información sobre ventilación del hogar y aire acondicionado</string>
+    <string name="well_title">Preguntas sobre bienestar</string>
+
+    <!--one time form quations-->
+    <string name="firstName_question">Nombre</string>
+    <string name="lastName_question">Apellido</string>
+    <string name="relationship_question">Relación con el jefe de familia</string>
+    <string name="sex_question">Sexo</string>
+    <string name="dateOfBirth_question">Fecha de nacimiento</string>
+    <string name="martialStatus_question">Estado civil</string>
+    <string name="highest_question">Nivel de estudios</string>
+    <string name="employed_question">¿Actualmente trabajas?</string>
+    <string name="race_question">¿De qué raza te consideras?</string>
+    <string name="income_question">¿Cuál es tu ingreso anual promedio?</string>
+    <string name="typeOfHome_question">¿En qué tipo de casa vives?</string>
+    <string name="yearBuilt_question">Año de construcción de la casa</string>
+    <string name="stories_question">¿Cuántos pisos tiene la casa?</string>
+    <string name="squareFeet_question">¿Cuántos pies cuadrados tiene tu casa?</string>
+    <string name="pets_question">¿Cuántas mascotas tienes?</string>
+    <string name="occupants_question">¿Cuánto tiempo han vivido allí los ocupantes?</string>
+    <string name="heatingSystem_question">Sistema de calefacción</string>
+    <string name="coolingSystem_question">Sistema de enfriamiento</string>
+    <string name="filterationSystem_question">Sistema de filtración de unidad de tratamiento de aire (AHU), si hay AHU</string>
+    <string name="furnace_question">Calentador / Sistema de calefacción</string>
+    <string name="practice_summer_question">Práctica de ventilación más común durante el verano</string>
+    <string name="practice_winter_question">Práctica de ventilación más común durante el invierno</string>
+    <string name="window_open_question">¿Con qué frecuencia se abren las ventanas cualquier día?</string>
+    <string name="ventilation_windo_question">Tipo de ventilación de ventana</string>
+    <string name="exhaust_fan_question">¿Con qué frecuencia se utilizan los extractores de cocina/baño?</string>
+    <string name="kerosen_question">¿Los residentes usan calentadores/hornos de queroseno para calentar la casa?</string>
+    <string name="radon_question">¿Los residentes cuentan con un sistema de mitigación de radón?</string>
+    <string name="fresh_air_question">¿Crees que el aire está fresco en tu casa?</string>
+    <string name="life_satisfied_question">¿Qué tan satisfecho estás con tu vida hasta ahora?</string>
+    <string name="all_things_question">Considerando todos estos factores, ¿qué tan feliz dirías que eres?</string>
+    <string name="standard_question">¿Qué tan satisfecho estás con tu calidad de vida actual? </string>
+    <string name="concerns_question">Me preocupan los posibles impactos de la contaminación o los efectos adversos causados ​​por la construcción fuera de mi casa</string>
+    <string name="connected_question">¿Qué tan conectado te sientes con tu comunidad?</string>
+    <string name="asthma_question">¿Te han diagnosticado asma?</string>
+    <string name="helpless_question">¿Con qué frecuencia te sientes impotente?</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hola fragmento en blanco</string>
+    <string name="enter_email">Ingresa tu correo electrónico</string>
+    <string name="enter_mobile">Ingresa tu número de teléfono móvil</string>
+    <string name="last_entry_hour_KEY">LAST_ENTRY_HOUR_KEY</string>
+    <string name="address1_question">Dirección</string>
+    <string name="address2_question">Dirección (cont.)</string>
+    <string name="city">Ciudad</string>
+    <string name="city_question">Ciudad</string>
+    <string name="zip_code">Código postal</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="section_format">Hola mundo desde la sección: %1$d</string>
+
+    <!-- Drawer -->
+
+    <string name="navigation_drawer_open">Abrir panel de navegación</string>
+    <string name="navigation_drawer_close">Cerrar panel de navegación</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Encabezado de navegación</string>
+    <string name="title_activity_side_bar">Barra lateral</string>
+    <string name="title_activity_auth">Iniciar sesión</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Correo electrónico o número de teléfono móvil</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="action_sign_in">Iniciar sesión</string>
+    <string name="action_sign_in_short">Iniciar sesión</string>
+    <string name="error_invalid_email">Este correo electrónico no es válido</string>
+    <string name="error_invalid_password">Esta contraseña es muy corta</string>
+    <string name="error_incorrect_password">Esta contraseña es incorrecta</string>
+    <string name="error_field_required">Error en la contraseña</string>
+    <string name="permission_rationale">"Los permisos de contactos son necesarios para completar el correo electrónico".
+    </string>
+    <string name="USER_ID_KEY">USER_ID_KEY</string>
+    <string name="USER_PASS_KEY">USER_PASS_KEY</string>
+    <string name="title_activity_community">CommunityActivity</string>
+    <string name="LAST_NOTIF_HOUR_KEY">LAST_NOTIF_HOUR_KEY</string>
+    <string name="NUM_NOTIFS_KEY">NUM_NOTIFS_KEY</string>
+    <string name="LAST_NOTIF_DAY_KEY">LAST_NOTIF_DAY_KEY</string>
+    <string name="USER_FORM_KEY">USER_FORM_KEY</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_how_to">Cómo</string>
+    <string name="aboutUsTitle">Quiénes somos</string>
+    <string name="wrongNumber">Número incorrecto</string>
+    <string name="requiredField">Este campo es obligatorio</string>
+    <string name="passCannotBeEmpty">La contraseña no puede estar vacía</string>
+    <string name="passEightChars">La contraseña debe tener al menos 8 caracteres</string>
+    <string name="incorrectMobileNum">Este número de teléfono móvil es incorrecto</string>
+    <string name="makeSureConnected">Asegúrate de estar conectado a Internet</string>
+    <string name="pleaseEnterMobile">Por favor, ingresa tu número de teléfono móvil</string>
+    <string name="noUserWithMobile">No hay ningún usuario con este número de teléfono móvil</string>
+    <string name="communityTitle">Emociones de la comunidad</string>
+    <string name="pleaseWrithCode">Por favor, escribe el código</string>
+    <string name="resendCode">Reenviar el código después de %d segundos</string>
+    <string name="resendCodeNow">Reenviar código ahora</string>
+    <string name="cannotAddEntry">No puedes añadir una entrada en este momento. Inténtalo más tarde</string>
+    <string name="failedConnection">Error de conexión</string>
+    <string name="feelings">1/5 Sentimientos</string>
+    <string name="areYouFeelingGood">¿Cómo te sientes ahora mismo?</string>
+    <string name="activities">2/5 Actividades</string>
+    <string name="whatAreYouDoing">¿Qué estás haciendo ahora mismo?</string>
+    <string name="place">3/5 Lugar</string>
+    <string name="whereAreYou">¿Dónde estás ahora mismo?</string>
+    <string name="answerTheFollowing">Responde las siguientes preguntas ambientales</string>
+    <string name="env">4/5 Medio ambiente</string>
+    <string name="unacceptable">Inaceptable</string>
+    <string name="highlyAccept">Altamente aceptable</string>
+    <string name="notActive">No activo</string>
+    <string name="veryActive">Muy activo</string>
+    <string name="answerTheFollowingHealth">Responde las siguientes preguntas sobre salud</string>
+    <string name="health">5/5 Salud</string>
+    <string name="button">botón</string>
+    <string name="youErned">👍 Has ganado +¢ </string>
+    <string name="pleaseEnableLocation">Por favor, habilita tu ubicación</string>
+    <string name="enableNow">Habilitar ahora</string>
+    <string name="later">Más tarde</string>
+    <string name="failedConnectionWithMaps">Error de conexión con Google Maps</string>
+    <string name="passResetSuccess">Contraseña restablecida correctamente</string>
+    <string name="enterNewPass">Ingresa la nueva contraseña</string>
+    <string name="enterVerif">Ingresa el código de verificación</string>
+    <string name="whatOther">¿Qué otra actividad estás haciendo?</string>
+    <string name="ok">Aceptar</string>
+    <string name="next">Siguiente</string>
+    <string name="done">Listo</string>
+    <string name="yes">SÍ</string>
+    <string name="no">NO</string>
+    <string name="mobileNum">Número de teléfono móvil</string>
+    <string name="email">Correo electrónico</string>
+    <string name="forgot">¿Olvidaste tu contraseña?</string>
+    <string name="byClicking">Al hacer clic en CREAR CUENTA, aceptas los términos y condiciones</string>
+    <string name="createAccount">CREAR CUENTA</string>
+    <string name="already">¿Ya tienes una cuenta? Haz clic aquí para iniciar sesión</string>
+    <string name="confirmationCode">Código de confirmación</string>
+    <string name="confirmMobikle">Confirmar número de teléfono móvil</string>
+    <string name="pleaseEnter">Por favor, ingresa el número enviado a</string>
+    <string name="chooseOneOrTwo">Elige uno o dos</string>
+    <string name="youEarned">👍 Has ganado +¢ 8</string>
+    <string name="totalRewards">Recompensas totales</string>
+    <string name="getLocation">obtener ubicación</string>
+    <string name="toEnableDeviceLoc">Para habilitar la ubicación del dispositivo, haz clic en este botón</string>
+    <string name="enableDevLoc">HABILITAR LA UBICACIÓN DEL DISPOSITIVO</string>
+    <string name="toAllowApp">Para permitir que la aplicación use la ubicación, haz clic en el botón que aparece abajo y después ve a Permisos</string>
+    <string name="pleaseAllowLocation">Por favor, permite la ubicación</string>
+    <string name="allowApp">PERMITIR QUE LA APLICACIÓN USE LA UBICACIÓN</string>
+    <string name="thankYou">Gracias 🙏</string>
+    <string name="pleaseEnterConf">por favor, ingresa el código de confirmación enviado por SMS y la nueva contraseña</string>
+    <string name="conf">Código de confirmación</string>
+    <string name="newPass">Nueva contraseña</string>
+    <string name="resetPass">RESTABLECER CONTRASEÑA</string>
+    <string name="aVideo">Un video que muestra cómo usar la aplicación</string>
+    <string name="home">Inicio</string>
+    <string name="community">Comunidad</string>
+    <string name="aboutUS">Quiénes somos</string>
+    <string name="howToUseApp">Cómo usar la aplicación</string>
+    <string name="reload">Volver a cargar</string>
+    <string name="signout">Cerrar sesión</string>
+
+    <!-- Auth -->
+    <string name="noAccount">¿No tienes una cuenta? Haz clic aquí para crear una</string>
+    <string name="signInCap">INICIAR SESIÓN</string>
+    <string name="signIn">Iniciar sesión</string>
+    <string name="alreadyAcct">¿Ya tienes una cuenta? Haz clic aquí para iniciar sesión</string>
+    <string name="createAcct">CREAR CUENTA</string>
+    <string name="signUp">Regístrate</string>
+    <string name="pleaseComplete">Por favor, llena todos los campos del formulario</string>
+
+
+</resources>

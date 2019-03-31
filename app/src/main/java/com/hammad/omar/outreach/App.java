@@ -299,6 +299,8 @@ public class App extends Application {
                 urlc.connect();
                 return (urlc.getResponseCode() == 200);
             } catch (IOException e) {
+                Log.d(TAG,e.getMessage());
+                Log.d(TAG,"Cache a problem");
                 log(context, "Error checking internet connection");
             }
         } else {
