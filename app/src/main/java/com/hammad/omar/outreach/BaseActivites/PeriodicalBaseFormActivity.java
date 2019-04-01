@@ -114,18 +114,15 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
     protected void setItemSelected(View view, int position) {
 
         if (isSelected(position)) {
-            Log.d(TAG,"already selected");
             unselect(position, view);
             removeItemFromModel();
         } else {
-
-            Log.d(TAG,"new");
 
             // get item text
             String currentSelectionText = getDefaultNamesArray()[position];
 
             // if other is selected
-            if (currentSelectionText.equalsIgnoreCase(getResources().getString(R.string.Other))) {
+            if (currentSelectionText.equalsIgnoreCase("Other")) {
                 promptUserWithInput(view, position);
             } else {
                 // getting the item clicked

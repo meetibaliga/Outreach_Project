@@ -143,6 +143,9 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             @Override
             public void onClick(View v) {
 
+                Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
+                startActivity(intent);
+
                 PassingString reason = new PassingString("");
 
                 if(!App.entriesManager.canAddEntry(reason)){
@@ -161,8 +164,8 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
                     Snackbar.make(mainView,reason.getPassingString(),Snackbar.LENGTH_LONG).show();
 
                 }else{
-                    Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
-                    startActivity(intent);
+                    //Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
+                    //startActivity(intent);
                 }
 
             }
