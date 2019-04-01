@@ -46,6 +46,7 @@ public class ListImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         final String text = texts[position];
+        final String imageName = images[position];
 
         // resuse functionality
         if (convertView == null) {
@@ -60,9 +61,7 @@ public class ListImageAdapter extends BaseAdapter {
 
         // set values to elements
 
-        Log.d("Img",text);
-
-        tv_img.setImageResource(getImageResourceMappedWith(text));
+        tv_img.setImageResource(getImageResourceMappedWith(imageName));
         tv.setText(text);
 
         // setup background cell

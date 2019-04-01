@@ -200,5 +200,23 @@
     <string name="signUp">Regístrate</string>
     <string name="pleaseComplete">Por favor, llena todos los campos del formulario</string>
 
+    <!-- Other word ( Google Translated ) -->
+
+    <string name="Other">Otro</string>
+    <string name="Self">Yo</string>
+    <string name="aboutText">El proyecto C70 está ampliando un tramo de 10 millas de la carretera interestatal I-70 hasta el noreste de Denver y está eliminando un viaducto existente en Brighton Avenue. Este importante proyecto de construcción puede afectar a las comunidades vecinas al exponer a los residentes a contaminantes ambientales debido a las actividades de construcción y, por lo tanto, causar problemas de salud.</string>
+    <string name="visit_our_website">Visita nuestro sitio web</string>
+    <string name="createAnAccount">Crea una cuenta</string>
+    <string name="user_not_confirmed">El usuario no está confirmado.</string>
+    <string name="you_need_admit">Debe ser admitido por el estudio c70 utilizando el mismo correo electrónico y el número de teléfono del usuario antes de registrarse en la aplicación. Para obtener ayuda, póngase en contacto con c70study@gmail.com</string>
+    <string name="turn_notif">Activar / desactivar la notificación</string>
+    <string name="enable_notif">Permitir notificaciones</string>
+    <string name="morninig_notif">Hora de la notificación de la mañana</string>
+    <string name="evening_notif">Hora de la notificación de la tarde</string>
+    <string name="notifs">Notificaciones</string>
+
+
+
+
 
 </resources>

@@ -139,7 +139,7 @@ public class OneTimeForm_1 extends RegistrationBaseActivity {
 
         Intent intent;
 
-        if(relationship.getValue().equalsIgnoreCase("self")){
+        if(relationship.getValue().equalsIgnoreCase(getResources().getString(R.string.Self))){
              intent = new Intent(this,OneTimeForm_2.class);
         }else{
             intent = new Intent(this,OneTimeForm_4.class);

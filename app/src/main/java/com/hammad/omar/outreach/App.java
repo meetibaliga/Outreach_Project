@@ -96,6 +96,20 @@ public class App extends Application {
         // google anaytics
         sAnalytics = GoogleAnalytics.getInstance(this);
 
+        //test
+        //test();
+
+    }
+
+    private void test() {
+
+        String hp = "TV/Movies";
+        hp = hp.replaceAll("/|-| /","_");
+        int id = getResources().getIdentifier("AC_"+hp,"string",getPackageName());
+        int index = Integer.parseInt(getResources().getString(id));
+        String v = getResources().getStringArray(R.array.activities)[index];
+        Log.d("TestingApp","String:"+v);
+
     }
 
     /**
@@ -418,9 +432,9 @@ public class App extends Application {
     private HashMap<String,String> populateEmojiesMapWithDrawables() {
 
         // Keys
-        String[] emotions = getResources().getStringArray(R.array.emotions);
-        String[] activities = getResources().getStringArray(R.array.activities);
-        String[] locations = getResources().getStringArray(R.array.locations);
+        String[] emotions = getResources().getStringArray(R.array.emotions_def);
+        String[] activities = getResources().getStringArray(R.array.activities_def);
+        String[] locations = getResources().getStringArray(R.array.locations_def);
         String[] envs = getResources().getStringArray(R.array.env_Images_names);
 
         // Values

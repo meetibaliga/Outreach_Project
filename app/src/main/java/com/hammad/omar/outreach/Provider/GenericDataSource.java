@@ -128,11 +128,11 @@ public abstract class GenericDataSource<E extends DataItem> {
 
     }
 
-    public List<E> getAllItemsOrderedByDate(boolean DESC){
+    public List<E> getAllItemsOrderedByDate(boolean DESC,String limit){
 
         String order = DESC ? "DESC" : "ASC";
 
-        return getResults(query(null,null,getCreationDateColumnName()+" "+order));
+        return getResults(query(null,null,getCreationDateColumnName()+" "+order,limit));
     }
 
     public List<E> getAllItems(){
@@ -144,7 +144,7 @@ public abstract class GenericDataSource<E extends DataItem> {
     }
 
     public List<E> getAllItems(String orderBy){
-        return getResults(query(null,null,orderBy));
+        return getResults(query(null,null,orderBy,null));
     }
 
 
@@ -210,12 +210,12 @@ public abstract class GenericDataSource<E extends DataItem> {
 
     private Cursor query(String selection, String[] args){
 
-        return query(selection,args,null);
+        return query(selection,args,null,null);
     }
 
-    private Cursor query(String selection, String[] args, @Nullable String orderBy){
+    private Cursor query(String selection, String[] args, @Nullable String orderBy, String limit){
 
-        Cursor cursor = db.query(getTableName(),getProjection(),selection,args,null,null,orderBy,null);
+        Cursor cursor = db.query(getTableName(),getProjection(),selection,args,null,null,orderBy,limit);
 
         return cursor;
     }

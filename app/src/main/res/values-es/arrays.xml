@@ -3,35 +3,18 @@
     <!--EMOTIONS ARRAY-->
     <string-array
         name="emotions">
-        <item>Sorprendido</item>
-        <item>Feliz</item>
-        <item>Triste</item>
-        <item>Amado</item>
-        <item>Disgustado</item>
-        <item>Emocionado</item>
-        <item>Relajado</item>
-        <item>Enojado</item>
-        <item>Temeroso</item>
-        <item>Confundido</item>
-        <item>Estresado</item>
-        <item>Aburrido</item>
-    </string-array>
-
-    <!--EMOTIONS Images Names-->
-    <string-array
-        name="emotions_image_names">
-        <item>Sorprendido</item>
-        <item>Feliz</item>
-        <item>Triste</item>
-        <item>Amado</item>
-        <item>Disgustado</item>
-        <item>Emocionado</item>
-        <item>Relajado</item>
-        <item>Enojado</item>
-        <item>Temeroso</item>
-        <item>Confundido</item>
-        <item>Estresado</item>
-        <item>Aburrido</item>
+        <item name="Surprised">Sorprendido</item>
+        <item name="Happy">Feliz</item>
+        <item name="Sad">Triste</item>
+        <item name="Loved">Amado</item>
+        <item name="Disgusted">Disgustado</item>
+        <item name="Excited">Emocionado</item>
+        <item name="Relaxed">Relajado</item>
+        <item name="Angry">Enojado</item>
+        <item name="Fearful">Temeroso</item>
+        <item name="Confused">Confundido</item>
+        <item name="Stressed">Estresado</item>
+        <item name="Bored">Aburrido</item>
     </string-array>
 
     <!--EMOTIONS Faces-->
@@ -54,40 +37,22 @@
     <!--ACTIVITIES ARRAY-->
     <string-array
         name="activities">
-        <item>Trabajo</item>
-        <item>Comida</item>
-        <item>Estudio</item>
-        <item>Ejercicio</item>
-        <item>Cocina</item>
-        <item>Compras</item>
-        <item>Vida social</item>
-        <item>TV/Películas</item>
-        <item>Redes sociales</item>
-        <item>Musical</item>
-        <item>Lectura</item>
-        <item>Intermedio</item>
-        <item>Religión</item>
-        <item>Otro</item>
+        <item name="Working">Trabajo</item>
+        <item name="Eating">Comida</item>
+        <item name="Studying">Estudio</item>
+        <item name="Exercise">Ejercicio</item>
+        <item name="Cooking">Cocina</item>
+        <item name="Shopping">Compras</item>
+        <item name="Socializing">Vida social</item>
+        <item name="TV/Movies">TV/Películas</item>
+        <item name="Social Media">Redes sociales</item>
+        <item name="Musical">Musical</item>
+        <item name="Reading">Lectura</item>
+        <item name="In-Between">Intermedio</item>
+        <item name="Religion">Religión</item>
+        <item name="Other">Otro</item>
     </string-array>
 
-    <!--activities Images Names-->
-    <string-array
-        name="activities_images_names">
-        <item>Trabajo</item>
-        <item>Comida</item>
-        <item>Estudio</item>
-        <item>Ejercicio</item>
-        <item>Cocina</item>
-        <item>Compras</item>
-        <item>Vida social</item>
-        <item>Películas</item>
-        <item>Redes sociales</item>
-        <item>Musical</item>
-        <item>Lectura</item>
-        <item>Intermedio</item>
-        <item>Actividad religiosa</item>
-        <item>Otro</item>
-    </string-array>
 
     <!--activities Faces-->
     <string-array
@@ -111,35 +76,18 @@
     <!--LOCATIONS ARRAY-->
     <string-array
         name="locations">
-        <item >Trabajo</item>
-        <item >Casa</item>
-        <item >Escuela</item>
-        <item >Tienda de comestibles</item>
-        <item >Venta al por menor</item>
-        <item >Restaurante</item>
-        <item >Cafetería</item>
-        <item >Gimnasio</item>
-        <item >Aire libre </item>
-        <item >Fiesta/club</item>
-        <item >Religioso</item>
-        <item >Otro</item>
-    </string-array>
-
-    <!--LOCATIONS Images Names-->
-    <string-array
-        name="locations_images_names">
-        <item >Trabajo</item>
-        <item >Casa</item>
-        <item >Escuela</item>
-        <item >Tienda de comestibles</item>
-        <item >Venta al por menor</item>
-        <item >Restaurante</item>
-        <item >Cafetería</item>
-        <item >Gimnasio</item>
-        <item >Aire libre </item>
-        <item >Fiesta</item>
-        <item >Lugar religioso</item>
-        <item >Otro</item>
+        <item name="Work" >Trabajo</item>
+        <item name="Home" >Casa</item>
+        <item name="School" >Escuela</item>
+        <item name="Grocery" >Tienda de comestibles</item>
+        <item name="Retail" >Venta al por menor</item>
+        <item name="Restaurant" >Restaurante</item>
+        <item name="Coffee Shop" >Cafetería</item>
+        <item name="Gym">Gimnasio</item>
+        <item name="Outdoor" >Aire libre </item>
+        <item name="Party/Club" >Fiesta/club</item>
+        <item name="Religious" >Religioso</item>
+        <item name="Other" >Otro</item>
     </string-array>
 
     <!--locations Faces-->
@@ -168,15 +116,6 @@
         <item>‍‍🏃‍♂️</item> // activo
     </string-array>
 
-    <!--Env Images Names-->
-    <string-array
-        name="env_Images_names">
-        <item>aire</item> // aire
-        <item>ruido</item> // ruido
-        <item>tráfico</item> // transporte
-        <item>activo</item> // activo
-    </string-array>
-
     <!--Months ARRAY-->
     <string-array
         name="months">
@@ -196,7 +135,7 @@
 
     <!--First Form-->
     <string-array name="relationship">
-        <item>Independiente</item>
+        <item>Yo</item>
         <item>Dependiente</item>
         <item>Socio</item>
         <item>Otro</item>

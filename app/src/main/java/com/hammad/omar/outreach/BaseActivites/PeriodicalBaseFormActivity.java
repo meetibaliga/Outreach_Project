@@ -16,7 +16,6 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.hammad.omar.outreach.Adapters.ListImageAdapter;
-import com.hammad.omar.outreach.App;
 import com.hammad.omar.outreach.R;
 
 import java.util.ArrayList;
@@ -48,7 +47,7 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
     protected abstract String getScreenTitle();
     public abstract String getTitleQuestion();
     protected abstract String[] getTextsArray();
-    protected abstract String[] getFacesArray();
+    protected abstract String[] getDefaultNamesArray();
     protected abstract Intent getNextIntent();
     protected abstract void addItemToModel(String text);
     protected abstract void removeItemFromModel();
@@ -81,7 +80,7 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
         //data
 
         listItems = getTextsArray();
-        String[] images = getFacesArray();
+        String[] images = getDefaultNamesArray();
 
         gridView = (GridView) findViewById(R.id.gridView);
         listAdapter = new ListImageAdapter(this, listItems, images);
@@ -123,11 +122,10 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
             Log.d(TAG,"new");
 
             // get item text
-            currentSelectionText = ((TextView) view.findViewById(R.id.textView_text)).getText().toString();
-            Log.d(TAG,currentSelectionText);
+            String currentSelectionText = getDefaultNamesArray()[position];
 
             // if other is selected
-            if (currentSelectionText.equalsIgnoreCase("other")) {
+            if (currentSelectionText.equalsIgnoreCase(getResources().getString(R.string.Other))) {
                 promptUserWithInput(view, position);
             } else {
                 // getting the item clicked

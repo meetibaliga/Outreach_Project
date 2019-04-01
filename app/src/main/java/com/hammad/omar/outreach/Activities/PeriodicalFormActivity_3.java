@@ -24,8 +24,8 @@ public class PeriodicalFormActivity_3 extends PeriodicalBaseFormActivity {
     }
 
     @Override
-    protected String[] getFacesArray() {
-        return getResources().getStringArray(R.array.locations_faces);
+    protected String[] getDefaultNamesArray() {
+        return getResources().getStringArray(R.array.locations_def);
     }
 
     @Override

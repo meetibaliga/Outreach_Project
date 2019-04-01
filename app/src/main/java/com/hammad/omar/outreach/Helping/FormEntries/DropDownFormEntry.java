@@ -72,7 +72,7 @@ public class DropDownFormEntry extends FormEntry{
 
     @Override
     public List<String> getValues() {
-        ArrayList<String>list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<String>();
 
         for (Spinner s : spinners){
             list.add(s.getSelectedItem().toString());

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="Notifications"
+    <PreferenceCategory android:title="@string/notifs"
         android:id="@+id/notification_group">
 
         <SwitchPreferenceCompat
             android:defaultValue="true"
             android:key="@string/Enable_Notifications_Key"
-            android:summary="Turn notification On/Off"
-            android:title="Enable Notifications" />
+            android:summary="@string/turn_notif"
+            android:title="@string/enable_notif" />
         <ListPreference
             android:defaultValue="9"
             android:entries="@array/morning_times_entries"
             android:entryValues="@array/morning_times_values"
             android:key="@string/morning_notification_key"
             android:summary="9:00AM"
-            android:title="Morning Notification Time" />
+            android:title="@string/morninig_notif" />
         <ListPreference
             android:defaultValue="18"
             android:entries="@array/evening_times_entries"
             android:entryValues="@array/evening_times_values"
             android:key="@string/eveninig_notification_key"
             android:summary="6:00PM"
-            android:title="Evening Notification Time" />
+            android:title="@string/evening_notif" />
     </PreferenceCategory>
 </PreferenceScreen>

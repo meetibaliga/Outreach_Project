@@ -5,16 +5,17 @@ import android.util.Log;
 import android.view.View;
 
 import com.hammad.omar.outreach.Activities.AuthActivity;
+import com.hammad.omar.outreach.R;
 
 public interface AuthState {
 
     void attemptAuth(Context context);
     int getExtraViewVisibility();
-    String getSwitchTextViewText();
-    String getAuthButtonText();
+    String getSwitchTextViewText(Context context);
+    String getAuthButtonText(Context context);
     float[] getExtraViewAlpha();
     int getForgetPassVisibily();
-    String getTitle();
+    String getTitle(Context context);
     int getTermsVisibility();
 
     class Login implements AuthState {
@@ -27,13 +28,13 @@ public interface AuthState {
         }
 
         @Override
-        public String getSwitchTextViewText() {
-            return "No account? Click here to create one";
+        public String getSwitchTextViewText(Context context) {
+            return context.getResources().getString(R.string.noAccount);
         }
 
         @Override
-        public String getAuthButtonText() {
-            return "SIGN IN";
+        public String getAuthButtonText(Context context) {
+            return context.getResources().getString(R.string.signInCap);
         }
 
         @Override
@@ -44,7 +45,6 @@ public interface AuthState {
 
         @Override
         public void attemptAuth(Context context) {
-            Log.d(TAG,"attempting .. log in from interface ");
             AuthActivity activity = (AuthActivity) context;
             activity.attemptLogin();
         }
@@ -55,8 +55,8 @@ public interface AuthState {
         }
 
         @Override
-        public String getTitle() {
-            return "Sign in";
+        public String getTitle(Context context) {
+            return context.getResources().getString(R.string.signIn);
         }
 
         @Override
@@ -75,13 +75,13 @@ public interface AuthState {
         }
 
         @Override
-        public String getSwitchTextViewText() {
-            return "Already have an account ? Click here to sign in";
+        public String getSwitchTextViewText(Context context) {
+            return context.getResources().getString(R.string.already);
         }
 
         @Override
-        public String getAuthButtonText() {
-            return "CREATE ACCOUNT";
+        public String getAuthButtonText(Context context) {
+            return context.getResources().getString(R.string.createAccount);
         }
 
         @Override
@@ -92,7 +92,6 @@ public interface AuthState {
 
         @Override
         public void attemptAuth(Context context) {
-            Log.d(TAG,"attempting .. sign up from interface ");
             AuthActivity activity = (AuthActivity) context;
             activity.attemptSignup();
         }
@@ -103,8 +102,8 @@ public interface AuthState {
         }
 
         @Override
-        public String getTitle() {
-            return "Create an Account";
+        public String getTitle(Context context) {
+            return context.getResources().getString(R.string.createAnAccount);
         }
 
         @Override

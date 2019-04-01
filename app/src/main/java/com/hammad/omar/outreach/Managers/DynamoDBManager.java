@@ -62,7 +62,8 @@ public class DynamoDBManager {
                 entryDO.setUserId(App.USER_ID);
                 DynamoDBQueryExpression queryExpression = new DynamoDBQueryExpression()
                         .withHashKeyValues(entryDO)
-                        .withConsistentRead(false);
+                        .withConsistentRead(false)
+                        .withLimit(10);
                 PaginatedList<EntryDO> result = dynamoDBMapper.query(EntryDO.class, queryExpression);
 
                 callback.callbackDB(result,CALL_BACK_ID_GET_ENTRIES);

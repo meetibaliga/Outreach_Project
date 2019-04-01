@@ -15,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="​The C70 project is widening a 10-mile stretch of the I-70 Interstate through northeast Denver and is removing an existing viaduct at Brighton Avenue. This major construction project may affect the neighboring communities by exposing the residents to environmental pollutants due to the construction activities and thereby causing health problems."
+        android:text="@string/aboutText"
         android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:onClick="visitButtonClicked"
-        android:text="Visit Our Website"
+        android:text="@string/visit_our_website"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aboutText" />
 </android.support.constraint.ConstraintLayout>

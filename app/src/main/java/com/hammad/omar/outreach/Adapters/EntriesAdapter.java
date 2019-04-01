@@ -137,7 +137,7 @@ public class EntriesAdapter extends BaseAdapter{
             timeText.setText(getTimeFormatted(entry.getCreationDate()));
             setEmotionEmojies(entry.getEmotions(), emotionEmojie_1, emotionEmojie_2);
             setEmotionTexts(entry.getEmotions(), emotionText_1, emotionText_2);
-            activityPlaceText.setText(getActivityPlaceText(entry.getActivities(), entry.getPlace()));
+            activityPlaceText.setText(getActivityPlaceText(entry.getActivities(), getDisplayText("PL",entry.getPlace(),R.array.locations)));
             setEnvEmojies(airEmojie, noiseEmojie, transEmojie, activeEmojie);
             airPercentageText.setImageResource(getPercentage(entry.getOdor()));
             noisePercentageText.setImageResource(getPercentage(entry.getNoise()));
@@ -239,10 +239,11 @@ public class EntriesAdapter extends BaseAdapter{
             return "Null";
         }
 
-        String activityPlaceText = activities.get(0);
+        String activityPlaceText = getDisplayText("AC",activities.get(0),R.array.activities);
 
         if(activities.size() > 1){
-            activityPlaceText += " and " + activities.get(1);
+
+            activityPlaceText += " and " + getDisplayText("AC",activities.get(1),R.array.activities);
         }
 
         activityPlaceText += "\nat " + place;
@@ -257,10 +258,10 @@ public class EntriesAdapter extends BaseAdapter{
         }
 
 
-        emotionText_1.setText(emotions.get(0));
+        emotionText_1.setText(getDisplayText("EM",emotions.get(0),R.array.emotions));
 
         if (emotions.size() > 1){
-            emotionText_2.setText(emotions.get(1));
+            emotionText_2.setText(getDisplayText("EM",emotions.get(1),R.array.emotions));
         }else{
             emotionText_2.setVisibility(View.INVISIBLE);
         }
@@ -375,5 +376,21 @@ public class EntriesAdapter extends BaseAdapter{
         return false;
     }
 
+    /**
+     * Gets the display text from the DB text ( For localization purpose )*/
+
+    private String getDisplayText(String category,String dbText,int arrayId) {
+
+        String text = dbText.replaceAll("/|-| /","_");
+        int id = context.getResources().getIdentifier(category+"_"+text,"string",context.getPackageName());
+        if(id == 0){
+            return dbText;
+        }
+        int index = Integer.parseInt(context.getResources().getString(id));
+        String v = context.getResources().getStringArray(arrayId)[index];
+
+        return v;
+
+    }
 
 }

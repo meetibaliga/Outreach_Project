@@ -125,7 +125,8 @@ public class MeFragment extends Fragment implements BottomNavObserver {
 
         ds = new EntriesDataSource(getActivity());
         Double totalReward = RewardManager.calculateReward(ds.getNumOfItems());
-        rewardTV.setText("$"+totalReward);
+        String totalRewardString = String.format("%.2f", totalReward);
+        rewardTV.setText("$"+totalRewardString);
 
     }
 
@@ -138,7 +139,7 @@ public class MeFragment extends Fragment implements BottomNavObserver {
         }
 
         // setup list view
-        final List<Entry> entriesList = ds.getAllItemsOrderedByDate(true);
+        final List<Entry> entriesList = ds.getAllItemsOrderedByDate(true,"14");
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             public void run() {

@@ -100,6 +100,7 @@ public abstract class FormEntry extends View implements FormEntryInterface{
     }
 
     public abstract View getView();
+
     public abstract List<String> getValues();
 
     @Override

@@ -372,8 +372,8 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         mErrorText.setVisibility(View.VISIBLE);
 
         String modifiedErrorMessage = errorMessage;
-        if(errorMessage.equalsIgnoreCase("user is not confirmed.")){
-            modifiedErrorMessage = "You need to be admitted by the c70 study using the same user email and phone number provided before you cn register in the app. For help please contact c70study@gmail.com";
+        if(errorMessage.equalsIgnoreCase(getString(R.string.user_not_confirmed))){
+            modifiedErrorMessage = getString(R.string.you_need_admit);
         }
 
         mErrorText.setText(modifiedErrorMessage);
@@ -551,10 +551,10 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         emailView.animate().setDuration(500).alpha(authState.getExtraViewAlpha()[1]);
 
         TextView clickHere = findViewById(R.id.switchText);
-        clickHere.setText(authState.getSwitchTextViewText());
+        clickHere.setText(authState.getSwitchTextViewText(this));
 
         Button authButton = findViewById(R.id.email_sign_in_button);
-        authButton.setText(authState.getAuthButtonText());
+        authButton.setText(authState.getAuthButtonText(this));
 
         View forgetPass = findViewById(R.id.forgotPasswordLabel);
         forgetPass.setVisibility(authState.getForgetPassVisibily());
@@ -571,7 +571,7 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
     }
 
     private void changeTitle() {
-        setTitle(authState.getTitle());
+        setTitle(authState.getTitle(this));
     }
 
 

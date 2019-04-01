@@ -36,7 +36,7 @@ public class PreferencesActivity extends AppCompatActivity implements CallBackSy
 
 
         //title
-        setTitle("Settings");
+        setTitle(getString(R.string.action_settings));
 
         //init fragment
         getSupportFragmentManager().beginTransaction()

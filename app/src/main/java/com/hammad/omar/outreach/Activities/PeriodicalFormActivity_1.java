@@ -36,8 +36,8 @@ public class PeriodicalFormActivity_1 extends PeriodicalBaseFormActivity {
     }
 
     @Override
-    protected String[] getFacesArray() {
-        return getResources().getStringArray(R.array.emotions_faces);
+    protected String[] getDefaultNamesArray() {
+        return getResources().getStringArray(R.array.emotions_def);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class PeriodicalFormActivity_1 extends PeriodicalBaseFormActivity {
 
     @Override
     protected void addItemToModel(String text) {
-        String emotionInDefaultLang = App.getEmotionInDefaultLang();
+        //String emotionInDefaultLang = App.getEmotionInDefaultLang();
         App.inputEntry.getEmotions().add(text);
         Log.d(TAG,App.inputEntry.getEmotions().toString());
     }

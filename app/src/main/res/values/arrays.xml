@@ -3,6 +3,23 @@
     <!--EMOTIONS ARRAY-->
     <string-array
         name="emotions">
+        <item name="Surprised">Surprised</item>
+        <item name="Happy">Happy</item>
+        <item name="Sad">Sad</item>
+        <item name="Loved">Loved</item>
+        <item name="Disgusted">Disgusted</item>
+        <item name="Excited">Excited</item>
+        <item name="Relaxed">Relaxed</item>
+        <item name="Angry">Angry</item>
+        <item name="Fearful">Fearful</item>
+        <item name="Confused">Confused</item>
+        <item name="Stressed">Stressed</item>
+        <item name="Bored">Bored</item>
+    </string-array>
+
+    <!--EMOTIONS Images Names-->
+    <string-array
+        name="emotions_image_names">
         <item>Surprised</item>
         <item>Happy</item>
         <item>Sad</item>
@@ -17,9 +34,9 @@
         <item>Bored</item>
     </string-array>
 
-    <!--EMOTIONS Images Names-->
+    <!--EMOTIONS Default lang-->
     <string-array
-        name="emotions_image_names">
+        name="emotions_def">
         <item>Surprised</item>
         <item>Happy</item>
         <item>Sad</item>
@@ -54,6 +71,25 @@
     <!--ACTIVITIES ARRAY-->
     <string-array
         name="activities">
+        <item name="Working">Working</item>
+        <item name="Eating">Eating</item>
+        <item name="Studying">Studying</item>
+        <item name="Exercise">Exercise</item>
+        <item name="Cooking">Cooking</item>
+        <item name="Shopping">Shopping</item>
+        <item name="Socializing">Socializing</item>
+        <item name="TV/Movies">TV/Movies</item>
+        <item name="Social Media">Social Media</item>
+        <item name="Musical">Musical</item>
+        <item name="Reading">Reading</item>
+        <item name="In-Between">In-Between</item>
+        <item name="Religion">Religion</item>
+        <item name="Other">Other</item>
+    </string-array>
+
+    <!--ACTIVITIES ARRAY-->
+    <string-array
+        name="activities_def">
         <item>Working</item>
         <item>Eating</item>
         <item>Studying</item>
@@ -111,6 +147,23 @@
     <!--LOCATIONS ARRAY-->
     <string-array
         name="locations">
+        <item name="Work">Work</item>
+        <item name="Home">Home</item>
+        <item name="School">School</item>
+        <item name="Grocery">Grocery</item>
+        <item name="Retail">Retail</item>
+        <item name="Restaurant">Restaurant</item>
+        <item name="Coffee Shop">Coffee Shop</item>
+        <item name="Gym">Gym</item>
+        <item name="Outdoor">Outdoor</item>
+        <item name="Party/Club">Party/Club</item>
+        <item name="Religious">Religious</item>
+        <item name="Other">Other</item>
+    </string-array>
+
+    <!--LOCATIONS ARRAY-->
+    <string-array
+        name="locations_def">
         <item >Work</item>
         <item >Home</item>
         <item >School</item>

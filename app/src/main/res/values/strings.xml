@@ -201,5 +201,68 @@
     <string name="signUp">Sign up</string>
     <string name="pleaseComplete">Please complete all the form fields</string>
 
+    <!--Map emotions, Activities & places to indexes-->
+
+    <!-- Emotions -->
+
+    <string name="EM_Surprised">0</string>
+    <string name="EM_Happy">1</string>
+    <string name="EM_Sad">2</string>
+    <string name="EM_Loved">3</string>
+    <string name="EM_Disgusted">4</string>
+    <string name="EM_Excited">5</string>
+    <string name="EM_Relaxed">6</string>
+    <string name="EM_Angry">7</string>
+    <string name="EM_Fearful">8</string>
+    <string name="EM_Confused">9</string>
+    <string name="EM_Stressed">10</string>
+    <string name="EM_Bored">11</string>
+
+    <!-- Activitieis -->
+
+    <string name="AC_Working">0</string>
+    <string name="AC_Eating">1</string>
+    <string name="AC_Studying">2</string>
+    <string name="AC_Exercise">3</string>
+    <string name="AC_Cooking">4</string>
+    <string name="AC_Shopping">5</string>
+    <string name="AC_Socializing">6</string>
+    <string name="AC_TV_Movies">7</string>
+    <string name="AC_Social">8</string>
+    <string name="AC_Musical">9</string>
+    <string name="AC_Reading">10</string>
+    <string name="AC_In_Between">11</string>
+    <string name="AC_Religion">12</string>
+    <string name="AC_Other">13</string>
+
+    <!-- Places -->
+
+    <string name="PL_Work">0</string>
+    <string name="PL_Home">1</string>
+    <string name="PL_School">2</string>
+    <string name="PL_Grocery">3</string>
+    <string name="PL_Retail">4</string>
+    <string name="PL_Restaurant">5</string>
+    <string name="PL_Coffee_Shop">7</string>
+    <string name="PL_Gym">8</string>
+    <string name="PL_Outdoor">9</string>
+    <string name="PL_Party_Club">10</string>
+    <string name="PL_Religious">11</string>
+    <string name="PL_Other">12</string>
+
+    <!--Other words-->
+    <string name="Other">Other</string>
+    <string name="Self">Self</string>
+    <string name="aboutText">​The C70 project is widening a 10-mile stretch of the I-70 Interstate through northeast Denver and is removing an existing viaduct at Brighton Avenue. This major construction project may affect the neighboring communities by exposing the residents to environmental pollutants due to the construction activities and thereby causing health problems.</string>
+    <string name="visit_our_website">Visit Our Website</string>
+    <string name="createAnAccount">Create an account</string>
+    <string name="user_not_confirmed">user is not confirmed.</string>
+    <string name="you_need_admit">You need to be admitted by the c70 study using the same user email and phone number provided before you cn register in the app. For help please contact c70study@gmail.com</string>
+    <string name="turn_notif">Turn notification On/Off</string>
+    <string name="enable_notif">Enable Notifications</string>
+    <string name="morninig_notif">Morning Notification Time</string>
+    <string name="evening_notif">Evening Notification Time</string>
+    <string name="notifs">Notifications</string>
+
 
 </resources>

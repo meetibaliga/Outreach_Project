@@ -283,17 +283,16 @@ public class CommunityActivity extends AppCompatActivity
 
         for ( int i = 0 ; i < 12 ; i++){
 
-            Log.d(TAG,"i:"+i);
             emojies[i].setImageResource(App.getImageResourceMappedWith(emotionsCount.get(i).emotion,this));
 
             // calculate percentage
             int per = (int)(emotionsCount.get(i).count / totalCounts * 100);
             per = Math.round(per);
-            percentages[i].setText(per+"%"+"\n"+emotionsCount.get(i).emotion);
+            percentages[i].setText(per+"%"+"\n"+getDisplayText("EM",emotionsCount.get(i).emotion,R.array.emotions));
 
             // calculate sizes for the second row and go on
             if(i < 1){
-                percentages[i].setText(per+"% "+emotionsCount.get(i).emotion);
+                percentages[i].setText(per+"% "+getDisplayText("EM",emotionsCount.get(i).emotion,R.array.emotions));
                 continue;
             }
 
@@ -320,6 +319,20 @@ public class CommunityActivity extends AppCompatActivity
     private void showErrorLabel(boolean show){
         TextView errorLabel = findViewById(R.id.errorLoadingLabel);
         errorLabel.setVisibility(show?View.VISIBLE:View.GONE);
+    }
+
+    private String getDisplayText(String category,String dbText,int arrayId) {
+
+        String text = dbText.replaceAll("/|-| /","_");
+        int id = getResources().getIdentifier(category+"_"+text,"string" ,getPackageName());
+        if(id == 0){
+            return dbText;
+        }
+        int index = Integer.parseInt(getResources().getString(id));
+        String v = getResources().getStringArray(arrayId)[index];
+
+        return v;
+
     }
 
 }
