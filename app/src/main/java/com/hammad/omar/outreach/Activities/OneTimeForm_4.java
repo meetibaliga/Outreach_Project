@@ -7,6 +7,7 @@ import com.hammad.omar.outreach.App;
 import com.hammad.omar.outreach.BaseActivites.RegistrationBaseActivity;
 import com.hammad.omar.outreach.Helping.FormEntries.DropDownFormEntry;
 import com.hammad.omar.outreach.Helping.FormEntries.FormEntry;
+import com.hammad.omar.outreach.Helping.FormEntries.ShortTextFormEntry;
 import com.hammad.omar.outreach.Helping.FormEntries.YesNoFormEntry;
 import com.hammad.omar.outreach.R;
 
@@ -25,6 +26,8 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
     private FormEntry connected;
     private YesNoFormEntry asthma;
     private FormEntry helpless;
+    private ShortTextFormEntry env_exp;
+    private ShortTextFormEntry env_prob;
 
     public void nextButtonClicked(){
 
@@ -41,6 +44,8 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
         App.user.setConnectedToCommunity(connected.getValue());
         App.user.setAsthmaDiagnosed(asthma.getTrueOrFalse());
         App.user.setHelpless(helpless.getValue());
+        App.user.set_env_exp(env_exp.getValue());
+        App.user.set_env_prob(env_prob.getValue());
 
         Log.d("DB",App.user.toString());
 
@@ -71,6 +76,16 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
 
         fresh_air = new YesNoFormEntry(getResources().getString(R.string.fresh_air_question),this);
         entries.add(fresh_air);
+
+        // Env Exposure
+
+        env_exp = new ShortTextFormEntry(getString(R.string.env_exp_quesiton),this);
+        entries.add(env_prob);
+
+        // Env Prob
+
+        env_prob = new ShortTextFormEntry(getString(R.string.env_problem_question),this);
+        entries.add(env_prob);
 
         // life satisfied
 

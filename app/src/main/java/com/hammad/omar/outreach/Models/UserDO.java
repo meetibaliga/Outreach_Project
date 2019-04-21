@@ -53,6 +53,9 @@ public class UserDO extends Model{
     private String _zip;
     private String _heatingSystem;
     private String _coolingSystem;
+    private String _env_exp;
+    private String _env_prob;
+
 
     @DynamoDBHashKey(attributeName = "userId")
     @DynamoDBAttribute(attributeName = "userId")
@@ -410,6 +413,25 @@ public class UserDO extends Model{
         this._coolingSystem = _coolingSystem;
     }
 
+    @DynamoDBAttribute(attributeName = "env_exp")
+    public String get_env_exp() {
+        return _env_exp;
+    }
+
+    public void set_env_exp(String _env_exp) {
+        this._env_exp = _env_exp;
+    }
+
+
+    @DynamoDBAttribute(attributeName = "env_prob")
+
+    public String get_env_prob() {
+        return _env_prob;
+    }
+
+    public void set_env_prob(String _env_prob) {
+        this._env_prob = _env_prob;
+    }
 
     // my methods
 

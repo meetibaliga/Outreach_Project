@@ -18,7 +18,7 @@ import java.util.List;
 
 public class OneTimeForm_1 extends RegistrationBaseActivity {
 
-    // ui
+    // UI
     private FormEntry firstName;
     private FormEntry lastName;
     private FormEntry address_1;

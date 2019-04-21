@@ -257,12 +257,14 @@
     <string name="visit_our_website">Visit Our Website</string>
     <string name="createAnAccount">Create an account</string>
     <string name="user_not_confirmed">user is not confirmed.</string>
-    <string name="you_need_admit">You need to be admitted by the c70 study using the same user email and phone number provided before you cn register in the app. For help please contact c70study@gmail.com</string>
+    <string name="you_need_admit">You need to be admitted by the c70 study using the same user email and phone number provided before you can register in the app. For help please contact c70study@gmail.com</string>
     <string name="turn_notif">Turn notification On/Off</string>
     <string name="enable_notif">Enable Notifications</string>
     <string name="morninig_notif">Morning Notification Time</string>
     <string name="evening_notif">Evening Notification Time</string>
     <string name="notifs">Notifications</string>
+    <string name="env_exp_quesiton">What environmental exposures are of greatest concern to you?</string>
+    <string name="env_problem_question">What do you think the biggest environmental problem is in your community?</string>
 
 
 </resources>

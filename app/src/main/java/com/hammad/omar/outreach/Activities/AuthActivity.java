@@ -82,7 +82,7 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
     private AuthState authState;
 
     //flags
-    private final boolean onlyAuthorizeFromGoogleSheet = false;
+    private final boolean onlyAuthorizeFromGoogleSheet = true;
     // GoogleSheet Id to verify from :
     // https://docs.google.com/spreadsheets/d/11avOioEaR_cW6lq-3PeCfq5i1Z330hiWkIMOMnrCqds/edit#gid=731841134
 
