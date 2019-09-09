@@ -26,8 +26,8 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
     private FormEntry connected;
     private YesNoFormEntry asthma;
     private FormEntry helpless;
-    private ShortTextFormEntry env_exp;
-    private ShortTextFormEntry env_prob;
+//    private ShortTextFormEntry env_exp;
+//    private ShortTextFormEntry env_prob;
 
     public void nextButtonClicked(){
 
@@ -44,8 +44,8 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
         App.user.setConnectedToCommunity(connected.getValue());
         App.user.setAsthmaDiagnosed(asthma.getTrueOrFalse());
         App.user.setHelpless(helpless.getValue());
-        App.user.set_env_exp(env_exp.getValue());
-        App.user.set_env_prob(env_prob.getValue());
+//        App.user.set_env_exp(env_exp.getValue());
+//        App.user.set_env_prob(env_prob.getValue());
 
         Log.d("DB",App.user.toString());
 
@@ -79,13 +79,13 @@ public class OneTimeForm_4 extends RegistrationBaseActivity {
 
         // Env Exposure
 
-        env_exp = new ShortTextFormEntry(getString(R.string.env_exp_quesiton),this);
-        entries.add(env_prob);
+//        env_exp = new ShortTextFormEntry(getString(R.string.env_exp_quesiton),this);
+//        entries.add(env_prob);
 
         // Env Prob
 
-        env_prob = new ShortTextFormEntry(getString(R.string.env_problem_question),this);
-        entries.add(env_prob);
+//        env_prob = new ShortTextFormEntry(getString(R.string.env_problem_question),this);
+//        entries.add(env_prob);
 
         // life satisfied
 
