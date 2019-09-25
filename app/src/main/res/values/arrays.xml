@@ -368,7 +368,7 @@
 
     <!--ventilation type window-->
     <string-array name="exhaust_fan_use">
-        <item>with each use</item>
+        <item>With each use</item>
         <item>Sometimes,not always</item>
         <item>Never</item>
         <item>Other(Specify)</item>
