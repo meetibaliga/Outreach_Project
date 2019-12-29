@@ -185,14 +185,14 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
 
     }
 
-    protected void hideButton() {
+    protected void showButton() {
         nextBtn.setVisibility(View.VISIBLE);
         nextBtn.setEnabled(true);
     }
 
-    protected void showButton() {
+    protected void hideButton() {
 
-        if (maxAllowedSelection < 2) {
+        if (numOfSelected > 0) {
             return;
         }
 
@@ -214,7 +214,7 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
             numOfSelected++;
             view.setSelected(true);
             view.setBackgroundResource(R.drawable.cell_background_selected);
-            hideButton();
+            showButton();
         }
     }
 
@@ -223,7 +223,7 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
             selectedItems.remove(selectedItems.indexOf(position));
             numOfSelected--;
             view.setBackgroundResource(R.drawable.cell_background);
-            showButton();
+            hideButton();
         }
     }
 
