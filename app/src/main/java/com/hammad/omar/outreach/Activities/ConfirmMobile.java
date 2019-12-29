@@ -42,6 +42,8 @@ public class ConfirmMobile extends AppCompatActivity {
     Button mConfirmButton;
     EditText mConfirmCodeView;
     TextView mMobileNumberView;
+    TextView mTextView;
+    TextView mErrorText;
 
     // Auth
     AuthManager authManager;
@@ -81,6 +83,16 @@ public class ConfirmMobile extends AppCompatActivity {
         mConfirmButton = findViewById(R.id.sendButton);
         mConfirmCodeView = findViewById(R.id.codeView);
         mMobileNumberView = findViewById(R.id.mobileNumberView);
+        mTextView = findViewById(R.id.textView5);
+        mErrorText = findViewById(R.id.errorText);
+        mTextView.setText("Enter MFA code");
+
+        final boolean isWrongMFA = getIntent().getBooleanExtra("isWrongMFA", false);
+        if(isWrongMFA) {
+            mErrorText.setText("Wrong MFA. Please try again");
+            mErrorText.setVisibility(View.VISIBLE);
+        }
+
 
         //get mobile number from extras
 
@@ -144,49 +156,9 @@ public class ConfirmMobile extends AppCompatActivity {
 
         showProgress(true);
 
-        final GenericHandler handler = new GenericHandler() {
-
-            @Override
-            public void onSuccess() {
-                App.USER_ID = user.getUserId();
-                goToMainScreen();
-            }
-
-            @Override
-            public void onFailure(Exception exception) {
-
-                showProgress(false);
-
-                String errorMessage = "";
-
-                if(exception instanceof AmazonServiceException){
-
-                    AmazonServiceException awsException = (AmazonServiceException) exception;
-                    errorMessage = awsException.getErrorMessage();
-
-                }else if (exception instanceof  AmazonClientException){
-
-                    AmazonClientException awsException = (AmazonClientException) exception;
-                    errorMessage = awsException.getMessage();
-
-                    if (!App.hasActiveInternetConnection(mThis)) {
-                        errorMessage = getString(R.string.makeSureConnected);
-                    }
-
-                }
-
-
-                Log.d(TAG,errorMessage);
-                TextView errorView = findViewById(R.id.errorText);
-                errorView.setText(errorMessage);
-                errorView.setVisibility(View.VISIBLE);
-
-                mConfirmCodeView.setText(null);
-                mConfirmCodeView.requestFocus();
-            }
-        };
-
-        user.confirmSignUpInBackground(code,false,handler);
+        AuthManager.multiFactorAuthenticationContinuation.setMfaCode(code);
+        AuthManager.multiFactorAuthenticationContinuation.continueTask();
+        App.USER_ID = user.getUserId();
 
     }
 

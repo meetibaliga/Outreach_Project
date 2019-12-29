@@ -128,9 +128,6 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
                 // getting the item clicked
                 select(position, view);
                 addItemToModel(currentSelectionText);
-                if (numOfSelected == maxAllowedSelection) {
-                    navigateToNextScreen();
-                }
             }
         }
 
@@ -183,9 +180,6 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
 
                 select(position, view);
                 addItemToModel(currentSelectionText);
-                if (numOfSelected == maxAllowedSelection) {
-                    navigateToNextScreen();
-                }
             }
         }, 500);
 
@@ -215,18 +209,22 @@ public abstract class PeriodicalBaseFormActivity extends AppCompatActivity {
     }
 
     protected void select(int position, View view) {
-        selectedItems.add(position);
-        numOfSelected++;
-        view.setSelected(true);
-        view.setBackgroundResource(R.drawable.cell_background_selected);
-        hideButton();
+        if (!isSelected(position) && numOfSelected < maxAllowedSelection) {
+            selectedItems.add(position);
+            numOfSelected++;
+            view.setSelected(true);
+            view.setBackgroundResource(R.drawable.cell_background_selected);
+            hideButton();
+        }
     }
 
     protected void unselect(int position, View view) {
-        selectedItems.remove(0);
-        numOfSelected--;
-        view.setBackgroundResource(R.drawable.cell_background);
-        showButton();
+        if (isSelected(position) && numOfSelected > 0) {
+            selectedItems.remove(selectedItems.indexOf(position));
+            numOfSelected--;
+            view.setBackgroundResource(R.drawable.cell_background);
+            showButton();
+        }
     }
 
     protected void navigateToNextScreen() {

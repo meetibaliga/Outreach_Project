@@ -50,7 +50,7 @@
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="450dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:dividerHeight="8.0sp"
@@ -58,7 +58,8 @@
         app:layout_constraintBottom_toTopOf="@id/rewardFrame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"/>
 
     <LinearLayout
         android:id="@+id/emptyScreenView"
@@ -93,5 +94,54 @@
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/formButton"
+        android:layout_width="match_parent"
+        android:layout_height="86dp"
+        android:background="@color/colorWhite"
+        android:elevation="12mm"
+        android:focusable="false"
+        android:paddingLeft="1dp"
+        android:paddingTop="20dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Complete Personal Information... "
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emojieView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="52dp"
+        android:elevation="24mm"
+        android:text="One Time only"
+        app:layout_constraintBottom_toBottomOf="@+id/formButton"
+        app:layout_constraintEnd_toEndOf="@+id/formButton"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="@+id/formButton" />
+
+    <ProgressBar
+        android:id="@+id/formProgressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="388dp"
+        android:layout_height="wrap_content"
+        android:elevation="24mm"
+        android:progress="10"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/formButton"
+        app:layout_constraintEnd_toEndOf="@+id/formButton"
+        app:layout_constraintStart_toStartOf="@+id/formButton" />
+
 
 </android.support.constraint.ConstraintLayout>

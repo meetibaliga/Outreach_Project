@@ -7,7 +7,7 @@
     <string name="env_quesion">Please answer the following environmental questions</string>
     <string name="fillForm">Please fill out the form</string>
     <!--Authentication-->
-    <string name="terms"><![CDATA[By creating an account you agree to the <a href="">Terms & Conditions</a>]]></string>
+    <string name="terms"><![CDATA[By creating an account you agree to the <a href="">Terms & Conditions</a> of this app.]]></string>
 
 
     <!--Environmentak Periodical form qeuestions -->
@@ -152,7 +152,7 @@
     <string name="enableNow">Enable Now</string>
     <string name="later">Later</string>
     <string name="failedConnectionWithMaps">Failed Connection with google maps</string>
-    <string name="passResetSuccess">Password Reset Succesfully</string>
+    <string name="passResetSuccess">Password Reset Successfully</string>
     <string name="enterNewPass">Enter The New Password</string>
     <string name="enterVerif">Enter the verification Code</string>
     <string name="whatOther">What Other Activity are yo doing?</string>
@@ -164,7 +164,7 @@
     <string name="mobileNum">Mobile Number</string>
     <string name="email">Email</string>
     <string name="forgot">Forgot?</string>
-    <string name="byClicking">By Clicking on CREATE ACCOUNT, you agree to the Terms and Conditions</string>
+    <string name="byClicking">By creating an account, you agree to the Terms and Conditions of this app.</string>
     <string name="createAccount">CREATE ACCOUNT</string>
     <string name="already">Already have an account? Click here to sign in</string>
     <string name="confirmationCode">Confirmation Code</string>
@@ -194,7 +194,7 @@
 
     <!-- Auth -->
     <string name="noAccount">No account? Click here to create one</string>
-    <string name="signInCap">SIGN IN</string>
+    <string name="logInCap">LOGIN</string>
     <string name="signIn">Sign in</string>
     <string name="alreadyAcct">Already have an account ? Click here to sign in</string>
     <string name="createAcct">CREATE ACCOUNT</string>

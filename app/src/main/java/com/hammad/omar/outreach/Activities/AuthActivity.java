@@ -82,7 +82,7 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
     private AuthState authState;
 
     //flags
-    private final boolean onlyAuthorizeFromGoogleSheet = true;
+    private final boolean onlyAuthorizeFromGoogleSheet = false;
     // GoogleSheet Id to verify from :
     // https://docs.google.com/spreadsheets/d/11avOioEaR_cW6lq-3PeCfq5i1Z330hiWkIMOMnrCqds/edit#gid=731841134
 
@@ -110,7 +110,7 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         }else{
             authState = new AuthState.Signup();
         }
-
+        authState = new AuthState.Login();
         modifyAuthUIAfterSwitch();
 
     }
@@ -167,8 +167,7 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         if(!error){
             showProgress(true);
             userName = normalizedMobile;
-            password = mPasswordView.getText().toString();
-            authManager.signinUser(userName,password,this);
+            authManager.signinUser(userName,"12345678",this);
         }else{
             focusView.setFocusable(true);
         }
@@ -179,7 +178,6 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         Log.d(TAG," attempting signup ..");
 
         checkLoginFormErrors();
-        checkSignupFormErrors();
 
         String normalizedMobile = normalizeMobileNumber(mMobileView.getText().toString());
 
@@ -191,8 +189,7 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         if(!error){
             showProgress(true);
             userName = normalizedMobile;
-            password = mPasswordView.getText().toString();
-            authManager.signupUser(userName,password,userName,mEmailView.getText().toString(),"","",this);
+            authManager.signupUser(userName,"12345678",this);
         }else{
             focusView.setFocusable(true);
         }
@@ -257,22 +254,9 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
 
         // Store values at the time of the login attempt.
         String mobile = mMobileView.getText().toString();
-        String password = mPasswordView.getText().toString();
 
         error = false;
         focusView = null;
-
-        // Check for a valid password, if the user entered one.
-
-        if (TextUtils.isEmpty(password)) {
-            mPasswordView.setError(getString(R.string.passCannotBeEmpty));
-            focusView = mPasswordView;
-            error = true;
-        }else if (!isPasswordValid(password)){
-            mPasswordView.setError(getString(R.string.passEightChars));
-            focusView = mPasswordView;
-            error = true;
-        }
 
         // Check for a valid mobile number
         if (TextUtils.isEmpty(mobile)) {
@@ -296,13 +280,20 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         if (callbackId == AuthManager.CALL_BACK_ID_LOGIN){
             callbackLogin(object);
 
-        }else if (callbackId == AuthManager.CALL_BACK_ID_SIGNUP){
+        } else if (callbackId == AuthManager.CALL_BACK_ID_SIGNUP){
             callbackSignup(object);
 
-        }else if (callbackId == AuthManager.CALL_BACK_ID_CHALLENGE){
+        } else if (callbackId == AuthManager.CALL_BACK_ID_CHALLENGE){
             callbackChallenge(object);
+        } else if (callbackId == AuthManager.CALL_BACK_GET_MFA){
+            Log.d(TAG," in mfa callback");
+            callbackMFA(object);
         }
 
+    }
+
+    private void callbackMFA(Object object) {
+        goToMFAuthentication(false);
     }
 
     private void callbackLogin(Object object) {
@@ -318,12 +309,21 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
                 errorMessage = awsException.getErrorMessage();
                 errorCode = awsException.getErrorCode();
 
+                if(errorCode.equalsIgnoreCase("UserNotFoundException")) {
+                    attemptSignup();
+                    return;
+                } else if (errorCode.equalsIgnoreCase("CodeMismatchException")) {
+                    goToMFAuthentication(true);
+                    return;
+                } else {
+                    goBackToLoginForm(errorMessage);
+                }
+
             }else if (object instanceof AmazonClientException){
 
                 AmazonClientException awsException = (AmazonClientException) object;
                 errorMessage = awsException.getMessage();
-
-                Log.d(TAG,"Error message" + errorMessage);
+                Log.d(TAG, "ErrorMessage"+errorMessage);
 
                 if (!App.hasActiveInternetConnection(this)) {
                     errorMessage = getString(R.string.makeSureConnected);
@@ -331,28 +331,6 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
 
             }
 
-            // not confirmed exeption
-
-            if (errorCode.equalsIgnoreCase("userNotConfirmedException")){
-
-                if(onlyAuthorizeFromGoogleSheet){
-
-                    goBackToLoginForm(errorMessage);
-
-                }else{
-
-                    // if we allow any user
-                    goToMobileAuthentication();
-
-                }
-
-
-            } else {
-
-                // different exception
-                goBackToLoginForm(errorMessage);
-
-            }
             return;
         }
 
@@ -431,54 +409,19 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         CognitoUser user = (CognitoUser) object;
         App.USER_ID = user.getUserId();
 
-
-        //check if email is verified
-
-        user.getDetails(new GetDetailsHandler() {
-
-            @Override
-            public void onSuccess(CognitoUserDetails cognitoUserDetails) {
-
-                // if email verified sign in user
-
-                Map<String,String> attrs = cognitoUserDetails.getAttributes().getAttributes();
-                String emailVerified = attrs.get("email_verified");
-                Log.d(TAG,emailVerified);
-
-                // if email not verified show message that sorry you have to be verified through our group
-
-            }
-
-            @Override
-            public void onFailure(Exception exception) {
-                Log.d(TAG,"Cannot get details");
-                return;
-            }
-
-        });
-
-
-        // sign in user
-
-        if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)){
-            return;
-        }
-        authManager.signinUser(userName,password,this);
+        authManager.signinUser(userName, "12345678", this);
 
     }
 
-    private void goToMobileAuthentication() {
-
+    private void goToMFAuthentication(boolean isWrongMFA) {
         Intent intent = new Intent(this,ConfirmMobile.class);
         intent.putExtra("Mobile",mMobileView.getText().toString());
 
         String userId = normalizeMobileNumber(mMobileView.getText().toString());
-
         intent.putExtra("uid",userId);
+        intent.putExtra("isWrongMFA", isWrongMFA);
         startActivity(intent);
-
     }
-
 
     private boolean isMobileValid(String mobile) {
 
@@ -545,24 +488,20 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
 
         // add the mobile number field
         View emailView = findViewById(R.id.emailView);
-        emailView.setVisibility(authState.getExtraViewVisibility());
-        emailView.setAlpha(authState.getExtraViewAlpha()[0]);
+        emailView.setVisibility(View.GONE);
 
-        emailView.animate().setDuration(500).alpha(authState.getExtraViewAlpha()[1]);
+        mPasswordView.setVisibility(authState.getExtraViewVisibility());
 
         TextView clickHere = findViewById(R.id.switchText);
-        clickHere.setText(authState.getSwitchTextViewText(this));
+        clickHere.setVisibility(View.GONE);
 
         Button authButton = findViewById(R.id.email_sign_in_button);
         authButton.setText(authState.getAuthButtonText(this));
 
-        View forgetPass = findViewById(R.id.forgotPasswordLabel);
-        forgetPass.setVisibility(authState.getForgetPassVisibily());
-
         TextView terms = findViewById(R.id.terms);
         Spanned sp = Html.fromHtml(getString(R.string.terms));
         terms.setText(sp);
-        terms.setVisibility(authState.getTermsVisibility());
+        terms.setVisibility(View.VISIBLE);
 
         setPasswordAction();
 
@@ -642,7 +581,6 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
     private void callBackEntries(Object object) {
 
         List<Entry> entries = Entry.getEntries((PaginatedList<EntryDO>) object);
-
         // calculate rewards
         App.NUM_OF_ENTRIES = App.entriesList.size();
 
@@ -653,31 +591,30 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         //setup the time and date of the entry
         setupDateAndTimeOfEntries(entries);
 
-
-        // get the user form
-        new DynamoDBManager(this).getUserFirstForm();
+        goToMainScreen();
 
     }
 
     private void setupDateAndTimeOfEntries(List<Entry> entries) {
 
-        if(entries.size() == 0)return;
+        if(entries.size() == 0) return;
+
+        int numOfEntriesToday = 0;
+        //Todays Day
+        String todayDay = new SimpleDateFormat("dd").format(new Date());
 
         Entry latest = entries.get(entries.indexOf(Collections.max(entries)));
         entries.remove(latest);
-        Entry beforeLatest = entries.get(entries.indexOf(Collections.max(entries)));
-
-        int numOfEntriesToday = 0;
-
         String dayOfLates = new SimpleDateFormat("dd").format(App.getDateFromString(latest.getCreationDate(),App.sourceDateFormat));
-        String dayOfBeforeLatest = new SimpleDateFormat("dd").format(App.getDateFromString(beforeLatest.getCreationDate(),App.sourceDateFormat));
-        String todayDay = new SimpleDateFormat("dd").format(new Date());
+        if(todayDay.equals(dayOfLates)){Log.d(TAG,"Adding to numOfEntriesToday"); numOfEntriesToday++;}
 
-        if(todayDay.equals(dayOfLates)){numOfEntriesToday++;}
-        if(todayDay.equals(dayOfBeforeLatest)){numOfEntriesToday++;}
+        if(entries.size() > 0) {
+            Entry beforeLatest = entries.get(entries.indexOf(Collections.max(entries)));
+            String dayOfBeforeLatest = new SimpleDateFormat("dd").format(App.getDateFromString(beforeLatest.getCreationDate(),App.sourceDateFormat));
+            if(todayDay.equals(dayOfBeforeLatest)){Log.d(TAG,"Adding to numOfEntriesToday"); numOfEntriesToday++;}
+        }
 
         String lastEntryHour = new SimpleDateFormat("HH").format(App.getDateFromString(latest.getCreationDate(),App.sourceDateFormat));
-
 
         // update the model
         App.entriesManager.setNumOfDailyUserInteries(numOfEntriesToday);
@@ -691,8 +628,10 @@ public class AuthActivity extends AppCompatActivity implements CallBackAuth,Call
         Intent intent;
 
         if(results.size() == 0 || results == null){
+            Log.d(TAG,"Form not completed");
             intent = new Intent(this,OneTimeForm_1.class);
-        }else{
+        } else{
+            Log.d(TAG,"Form completed");
             App.user = results.get(0);
             new SharedPreferencesManager(this).setUserFormCompleted(true);
             intent = new Intent(this,MainActivity.class);

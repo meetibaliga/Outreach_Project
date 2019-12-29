@@ -1,10 +1,11 @@
+
 {
   "UserAgent": "MobileHub/1.0",
   "Version": "1.0",
   "CredentialsProvider": {
     "CognitoIdentity": {
       "Default": {
-        "PoolId": "us-east-1:e33a6722-ee1a-46aa-a7e4-f29451829e31",
+        "PoolId": "us-east-1:5e838d70-4186-4f69-92b3-74eb494c6c72",
         "Region": "us-east-1"
       }
     }
@@ -14,9 +15,9 @@
   },
   "CognitoUserPool": {
     "Default": {
-      "PoolId": "us-east-1_J2WEK6vIx",
-      "AppClientId": "jb23d45va9vm5971pn1n2nrin",
-      "AppClientSecret": "83pljif5bf8oa9ddorp8a8br23pjrpq09176o14pgn1cmvgc5v5",
+      "PoolId": "us-east-1_nb0vUSMXj",
+      "AppClientId": "49iuqoc2umr6ju4tkdpti80t5p",
+      "AppClientSecret": "126qkgbgghh37nu853ofs2ofjrrkpvq5i414q4fopsmatotauh05",
       "Region": "us-east-1"
     }
   },

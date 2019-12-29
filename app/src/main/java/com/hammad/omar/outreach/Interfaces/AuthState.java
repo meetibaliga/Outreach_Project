@@ -34,7 +34,7 @@ public interface AuthState {
 
         @Override
         public String getAuthButtonText(Context context) {
-            return context.getResources().getString(R.string.signInCap);
+            return context.getResources().getString(R.string.logInCap);
         }
 
         @Override
@@ -51,7 +51,7 @@ public interface AuthState {
 
         @Override
         public int getForgetPassVisibily() {
-            return View.VISIBLE;
+            return View.GONE;
         }
 
         @Override
@@ -61,7 +61,7 @@ public interface AuthState {
 
         @Override
         public int getTermsVisibility() {
-            return View.GONE;
+            return View.VISIBLE;
         }
     }
 

@@ -93,8 +93,7 @@ public class SyncManager implements CallBackDB, CallBackAuth{
 
                 if(!AuthManager.isSignedIn()) {
                     String uid = SharedPreferencesManager.getInstance(context).getUserId();
-                    String pass = SharedPreferencesManager.getInstance(context).getUserPassword();
-                    AuthManager.getInstance(context).signinUser(uid, pass, callBackAuth);
+                    AuthManager.getInstance(context).signinUser(uid, "12345678", callBackAuth);
                     if(callBackSync != null){callBackSync.callbackSync(CALL_BACK_SYNC_FAILED);}
                     return;
                 }

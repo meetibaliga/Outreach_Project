@@ -30,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Button;
 
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.PaginatedList;
 import com.hammad.omar.outreach.App;
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         //action button
         setupDrawer();
         setupActionButton();
+        setupFormButton();
         disableButtonIfNotAllowed();
         showHomeFragment();
 
@@ -132,6 +134,27 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
         }
     }
 
+    private void setupFormButton() {
+
+        final Button formButton = findViewById(R.id.formButton);
+        formButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            if (App.hasActiveInternetConnection(MainActivity.this)) {
+                                new DynamoDBManager(MainActivity.this).getUserFirstForm();
+                            }
+
+                        }
+                    });
+            }
+        });
+    }
+
     private void setupActionButton() {
 
         addEntryButton = findViewById(R.id.floatingActionButton);
@@ -142,9 +165,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
-                startActivity(intent);
 
                 PassingString reason = new PassingString("");
 
@@ -164,8 +184,8 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
                     Snackbar.make(mainView,reason.getPassingString(),Snackbar.LENGTH_LONG).show();
 
                 }else{
-                    //Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
-                    //startActivity(intent);
+                    Intent intent = new Intent(activity, PeriodicalFormActivity_1.class);
+                    startActivity(intent);
                 }
 
             }
@@ -264,27 +284,6 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
             App.authManager.signout();
         }
 
-        //check if the user has filled the first time form
-
-        if(!new SharedPreferencesManager(this).getUserFormCompleted()){
-
-            Log.d(TAG,"form not completed");
-
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-
-                    if(App.hasActiveInternetConnection(MainActivity.this)){
-                        new DynamoDBManager(MainActivity.this).getUserFirstForm();
-                    }
-
-                }
-            });
-
-        }else{
-            Log.d(TAG,"form completed");
-        }
-
         // connect to google play maps service
 
         if (LocationManager.isLocationEnabled(this)) {
@@ -370,12 +369,15 @@ public class MainActivity extends AppCompatActivity implements CallBackMapsConne
 
         if(results.size() == 0 || results == null){
 
+            Log.d(TAG,"Form not completed");
             Intent intent = new Intent(this,OneTimeForm_1.class);
             startActivity(intent);
 
         }else{
+            Log.d(TAG,"Form completed");
 
             App.user = results.get(0);
+            new SharedPreferencesManager(this).setUserFormCompleted(true);
             Log.d("Main",App.user.toString());
 
         }

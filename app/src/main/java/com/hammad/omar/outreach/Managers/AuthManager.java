@@ -52,18 +52,23 @@ public class AuthManager {
     private static CognitoCachingCredentialsProvider credentialsProvider;
 
     //Constants
-    private static String userPoolId = "us-east-1_wgPxciger";
-    private static String clientId = "2ovm654bbe5f3ejdol26uunt0s";
-    private static String clientSecret = "1uoiobva1j1sqep01336ofjvd760vd73v63q51lc1d1jigsi4qfr";
+    private static String userPoolId = "us-east-1_nb0vUSMXj";
+    private static String clientId = "49iuqoc2umr6ju4tkdpti80t5p";
+    private static String clientSecret = "126qkgbgghh37nu853ofs2ofjrrkpvq5i414q4fopsmatotauh05";
     private static Regions cognitoRegion = Regions.US_EAST_1;
-    private static String identityPoolId = "us-east-1:7047bdd8-af02-485b-bc3a-b73cb9eee3f8";
+    private static String identityPoolId = "us-east-1:5e838d70-4186-4f69-92b3-74eb494c6c72";
     private static Regions identityRegion = Regions.US_EAST_1;
-    private String tokenKey = "cognito-idp.us-east-1.amazonaws.com/us-east-1_wgPxciger";
+    private String tokenKey = "cognito-idp.us-east-1.amazonaws.com/us-east-1_nb0vUSMXj";
+
+
+    public static MultiFactorAuthenticationContinuation multiFactorAuthenticationContinuation;
+
 
     // call back
     public static final int CALL_BACK_ID_LOGIN = 0;
     public static final int CALL_BACK_ID_SIGNUP = 1;
     public static final int CALL_BACK_ID_CHALLENGE = 2;
+    public static final int CALL_BACK_GET_MFA = 3;
 
     public static String getIdentityPoolId(){
         return identityPoolId;
@@ -79,17 +84,11 @@ public class AuthManager {
         this.credentialsProvider = new CognitoCachingCredentialsProvider(context, identityPoolId, identityRegion);
     }
 
-    public void signupUser(String username, String password, String phone_number, String email, String birthdate, String address, final CallBackAuth callBackAuth){
+    public void signupUser(String username, String password, final CallBackAuth callBackAuth){
 
 
         // Create a CognitoUserAttributes object and add user attributes
         CognitoUserAttributes userAttributes = new CognitoUserAttributes();
-
-        // required attrs
-        userAttributes.addAttribute("phone_number", phone_number);
-        userAttributes.addAttribute("email", email);
-        userAttributes.addAttribute("birthdate", birthdate);
-        userAttributes.addAttribute("address", address);
 
 
         SignUpHandler signupCallback = new SignUpHandler() {
@@ -134,24 +133,25 @@ public class AuthManager {
                 setupCredintialsProvider(session.getIdToken().getJWTToken());
 
                 // save them in cache
-                cachedUserNameAndPassword(userId,password);
+                cachedUserNameAndPassword(userId, "12345678");
                 callBackAuth.callbackAuth(user,CALL_BACK_ID_LOGIN);
             }
 
             @Override
             public void getAuthenticationDetails(AuthenticationContinuation authenticationContinuation, String userId) {
 
-                AuthenticationDetails authenticationDetails = new AuthenticationDetails(userId, password, null);
+                AuthenticationDetails authenticationDetails = new AuthenticationDetails(userId,"12345678", null);
                 authenticationContinuation.setAuthenticationDetails(authenticationDetails);
                 authenticationContinuation.continueTask();
             }
 
             @Override
-            public void getMFACode(MultiFactorAuthenticationContinuation multiFactorAuthenticationContinuation) {
+            public void getMFACode(MultiFactorAuthenticationContinuation continuation) {
 
                 Log.d(TAG,"MFA Required");
-                multiFactorAuthenticationContinuation.setMfaCode("0000");
-                multiFactorAuthenticationContinuation.continueTask();
+                multiFactorAuthenticationContinuation = continuation;
+                callBackAuth.callbackAuth(null,CALL_BACK_GET_MFA);
+
             }
 
             @Override
@@ -288,9 +288,8 @@ public class AuthManager {
         SharedPreferencesManager pref = SharedPreferencesManager.getInstance(context);
 
         String userName = pref.getUserId();
-        String pass = pref.getUserPassword();
 
-        if (userName == null || pass == null) {
+        if (userName == null) {
             return false;
         }
 
@@ -302,13 +301,12 @@ public class AuthManager {
         SharedPreferencesManager pref = SharedPreferencesManager.getInstance(context);
 
         String userName = pref.getUserId();
-        String pass = pref.getUserPassword();
 
-        if (userName == null || pass == null) {
+        if (userName == null) {
             return;
         }
 
-        signinUser(userName,pass,callBackAuth);
+        signinUser(userName,"12345678",callBackAuth);
 
     }
 
